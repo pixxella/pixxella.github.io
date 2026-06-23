@@ -309,9 +309,10 @@
         .container {
             position: relative;
             border: 3px solid var(--secondary);
-            padding: 35px 50px;
+            padding: 60px 50px;
             width: 100%;
             max-width: 800px;
+            min-height: 580px;
             background: linear-gradient(135deg, #101014 0%, #15152a 100%);
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.08);
             display: flex;
@@ -919,20 +920,37 @@
 
         @media (max-width: 600px) {
             .container {
-                padding: 15px;
-                max-width: 95vw;
-                border-width: 2px;
-                box-shadow: 6px 6px 0px var(--secondary);
+                padding: 30px 20px !important;
+                max-width: 95vw !important;
+                min-height: auto !important;
+                border-width: 2px !important;
             }
 
             h1 {
-                font-size: 1.8rem;
+                font-size: 2rem !important;
             }
 
             a {
-                padding: 10px;
-                font-size: 0.95rem;
+                padding: 12px !important;
+                font-size: 1rem !important;
             }
+
+            #read-more-btn, .src-link {
+                font-size: 0.95rem !important;
+                padding: 10px 14px !important;
+            }
+        }
+
+        /* Blinking terminal console cursor */
+        @keyframes console-blink {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        .console-cursor {
+            color: var(--primary);
+            font-weight: 900;
+            animation: console-blink 1s infinite step-end;
+            margin-left: 2px;
         }
 
         /* Copy Tooltip Confirmation Bubble */
@@ -1215,7 +1233,7 @@
                     pxlzs</span>
 
                 <p style="font-size: 0.85rem; line-height: 1.7; margin: 0 0 15px 0; color: #ccc;" class="selectable">
-                    Hey! I'm nPixel. I'm a vibe coder (I don't design shit) and a tech enthusiast currently learning about virtual machines, operating systems, and kernel-level architecture. I'm also a gamer who loves exploring OS internals.
+                    Hey! I'm nPixel. I'm a vibe coder (I don't design shit) and a tech enthusiast currently learning about virtual machines, operating systems, and kernel-level architecture. I'm also a gamer who loves exploring OS internals.<span class="console-cursor">_</span>
                 </p>
 
                 <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px;">
@@ -1289,8 +1307,8 @@
 
                 <span class="one-liner" style="margin-top: 15px;"><strong>made by pxlzfr (nPixelz)</strong> - "i'm the one developing this-" -pixel</span>
             </div>
-            <div class="dm-section">
-                <div style="display: flex; align-items: center; gap: 8px;">
+            <div class="dm-section" style="justify-content: center; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 8px; justify-content: center;">
                     <div class="discord-icon-container">
                         <svg class="discord-easter-egg" width="18" height="18" viewBox="0 0 24 24" fill="#5865F2">
                             <path
@@ -1301,7 +1319,6 @@
                     <strong>DMS:</strong> <span class="clickable-dm" onclick="copyText('pxlzfr', this)">pxlzfr</span>,
                     <span class="clickable-dm" onclick="copyText('pxlzs', this)">pxlzs</span>
                 </div>
-                <div style="color:var(--primary); font-weight:bold;">VISITS: <span id="total-visits">1</span></div>
             </div>
         </div>
         <div class="copyright">© Copyright 2026 The Huge nPixelz™ | All rights reserved ®</div>
@@ -1558,17 +1575,6 @@
             }
         };
 
-        // Local visitor session counter incrementer
-        const initVisitorCount = () => {
-            let total = parseInt(localStorage.getItem('localVisits')) || 0;
-            if (!sessionStorage.getItem('hasLocalVisited')) {
-                total += 1;
-                localStorage.setItem('localVisits', total);
-                sessionStorage.setItem('hasLocalVisited', 'true');
-            }
-            document.getElementById('total-visits').innerText = total;
-        };
-        initVisitorCount();
     </script>
 
 
