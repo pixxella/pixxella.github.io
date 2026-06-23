@@ -352,6 +352,7 @@
         }
 
         @keyframes dotPulse {
+
             0%,
             100% {
                 box-shadow: 0 0 12px var(--primary), 0 0 25px var(--primary);
@@ -482,6 +483,7 @@
         }
 
         @keyframes buttonFloat {
+
             0%,
             100% {
                 translate: 0px 0px;
@@ -870,6 +872,7 @@
         }
 
         @keyframes badgeGlow {
+
             0%,
             100% {
                 box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -1050,6 +1053,7 @@
         }
 
         @keyframes livePulse {
+
             0%,
             100% {
                 opacity: 0.8;
@@ -1138,84 +1142,7 @@
             box-shadow: 0 0 8px rgba(255, 165, 0, 0.15);
         }
 
-        /* Debug Bottom-Left Widget */
-        .debug-widget {
-            position: fixed;
-            bottom: 15px;
-            left: 15px;
-            z-index: 10000;
-            background: rgba(10, 10, 10, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            padding: 6px 12px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.65rem;
-            color: #aaa;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            user-select: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
 
-        .debug-widget:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(var(--primary-rgb, 255, 0, 128), 0.25), 0 4px 20px rgba(0, 0, 0, 0.6);
-        }
-
-        .debug-header {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border-right: 1px solid rgba(255, 255, 255, 0.15);
-            padding-right: 10px;
-            flex-shrink: 0;
-        }
-
-        .debug-dot-status {
-            width: 6px;
-            height: 6px;
-            background: #00ff00;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #00ff00;
-            flex-shrink: 0;
-            animation: debug-pulse 2s infinite;
-        }
-
-        @keyframes debug-pulse {
-            0% {
-                opacity: 0.4;
-            }
-
-            50% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0.4;
-            }
-        }
-
-        .debug-ver {
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .debug-expanded-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            white-space: nowrap;
-            opacity: 1;
-        }
-
-        .debug-separator {
-            color: rgba(255, 255, 255, 0.15);
-            font-weight: normal;
-        }
 
         @media (max-width: 768px) {
             body {
@@ -1245,26 +1172,7 @@
                 border-radius: 12px !important;
             }
 
-            .debug-widget {
-                width: auto !important;
-                max-width: calc(100vw - 20px) !important;
-                overflow-x: auto !important;
-                white-space: nowrap !important;
-                gap: 6px !important;
-                padding: 4px 8px !important;
-                font-size: 0.52rem !important;
-                bottom: 10px !important;
-                left: 10px !important;
-            }
 
-            .debug-header {
-                padding-right: 6px !important;
-                gap: 4px !important;
-            }
-
-            .debug-expanded-info {
-                gap: 6px !important;
-            }
         }
     </style>
 </head>
@@ -1277,46 +1185,49 @@
 
     <div id="toast">SYSTEM NOTIFICATION</div>
 
-    <div id="change-modal" class="modal-overlay">
-        <div class="modal-box" style="width: 400px; max-height: 60vh; overflow-y: auto;">
-            <div style="color:var(--primary); font-weight:bold; margin-bottom: 10px;">CHANGELOG</div>
-            <div id="changelog-list" style="font-size: 0.8rem;">
-                <div class="log-entry" style="margin-bottom: 8px; line-height: 1.4;">
-                    <span class="log-date">[2026-06-23]</span>
-                    <span class="log-badge feature">FEATURE</span>
-                    <span>Revamped site to a clean local-only portfolio page. Added Info about me, commented out social links, and removed database logic.</span>
-                </div>
-                <div class="log-entry" style="margin-bottom: 8px; line-height: 1.4;">
-                    <span class="log-date">[2026-06-20]</span>
-                    <span class="log-badge maintenance">MAINT</span>
-                    <span>Optimized page performance and micro-animations.</span>
-                </div>
+    <div id="terminal-modal" class="modal-overlay">
+        <div class="modal-box" style="width: 450px; max-width: 90vw; background: #050508; border-color: var(--primary); font-family: 'JetBrains Mono', monospace !important;">
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--secondary); padding-bottom: 8px; margin-bottom: 10px;">
+                <span style="color: var(--primary); font-weight: bold; font-size: 0.8rem;">[SYS_DIAGNOSTIC_TERMINAL]</span>
+                <span style="color: #666; font-size: 0.8rem; cursor: pointer;" onclick="closeModal('terminal-modal')">[X]</span>
             </div>
-            <button onclick="closeModal('change-modal')"
-                style="background:#333; color:#fff; margin-top: 10px;">CLOSE</button>
+            <div id="terminal-content" style="text-align: left; font-size: 0.7rem; line-height: 1.5; color: #00ff00; text-shadow: 0 0 4px rgba(0,255,0,0.5); max-height: 250px; overflow-y: auto; padding: 10px; background: #000; border-radius: 12px; border: 1px solid #222;">
+            </div>
+            <button onclick="closeModal('terminal-modal')" style="background: var(--primary); color: #000; font-weight: bold; margin-top: 10px; width: 100%; border: none; padding: 10px; border-radius: 12px; cursor: pointer;">CLOSE SESSION</button>
         </div>
     </div>
 
     <div class="container">
         <button id="theme-dot" onclick="cycleTheme()"></button>
-        <h1><span id="live-title">nPixel</span><span id="dev-badge">[ABOUT]</span></h1>
+        <h1><span id="live-title">nPixel</span><span id="dev-badge">[TECH]</span></h1>
 
         <div class="links">
             <!-- About Me Card (Active) -->
-            <div class="log-entry" style="margin-bottom: 15px; border: 2px solid var(--secondary); background: rgba(255, 255, 255, 0.04); padding: 20px; border-radius: 20px;">
-                <span class="log-date" style="font-size: 0.85rem; letter-spacing: 1px; color: var(--primary); font-weight: 900;">[WHOAMI]</span>
-                <h2 style="font-size: 1.5rem; margin: 10px 0 5px 0; color: #fff; font-weight: 900; letter-spacing: -0.5px;">nPixel (pixel)</h2>
-                <span class="one-liner" style="margin-top: 0; margin-bottom: 15px; font-size: 0.85rem; opacity: 0.9;">aka pxlzfr, nPixelz, pxlzs</span>
-                
+            <div class="log-entry"
+                style="margin-bottom: 15px; border: 2px solid var(--secondary); background: rgba(255, 255, 255, 0.04); padding: 20px; border-radius: 20px;">
+                <span class="log-date"
+                    style="font-size: 0.85rem; letter-spacing: 1px; color: var(--primary); font-weight: 900;">[WHOAMI]</span>
+                <h2
+                    style="font-size: 1.5rem; margin: 10px 0 5px 0; color: #fff; font-weight: 900; letter-spacing: -0.5px;">
+                    nPixel (pixel)</h2>
+                <span class="one-liner"
+                    style="margin-top: 0; margin-bottom: 15px; font-size: 0.85rem; opacity: 0.9;">aka pxlzfr, nPixelz,
+                    pxlzs</span>
+
                 <p style="font-size: 0.85rem; line-height: 1.7; margin: 0 0 15px 0; color: #ccc;" class="selectable">
-                    Hey! I'm nPixel. I build custom interactive web interfaces and sleek front-ends using premium glassmorphism layouts, glowing micro-animations, and JetBrains Mono fonts. I focus on creating fast, highly responsive designs that look modern and feel smooth.
+                    Hey! I'm nPixel. I'm a vibe coder (I don't design shit) and a tech enthusiast currently learning about virtual machines, operating systems, and kernel-level architecture. I'm also a gamer who loves exploring OS internals.
                 </p>
-                
-                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;">
-                    <span class="log-badge feature">Frontend Dev</span>
-                    <span class="log-badge maintenance">UI/UX Design</span>
-                    <span class="log-badge bugfix">Cyberpunk FX</span>
+
+                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px;">
+                    <span class="log-badge feature">Vibe Coder</span>
+                    <span class="log-badge maintenance">VMs &amp; OS</span>
+                    <span class="log-badge bugfix">Gamer</span>
                 </div>
+
+                <!-- Cool matching glowy Read More button -->
+                <button class="src-link" id="read-more-btn" onclick="openTerminalModal()" style="width: 100%; border-style: solid; border-color: var(--primary); color: var(--primary); font-weight: bold; text-transform: uppercase; letter-spacing: 1px; padding: 12px; margin-top: 10px; background: rgba(255, 162, 253, 0.05); text-shadow: 0 0 8px var(--primary); box-shadow: 0 0 12px rgba(var(--primary), 0.15); border-radius: 12px; transition: all 0.3s ease;">
+                    [BOOT DIAGNOSTIC LOG]
+                </button>
             </div>
 
             <!-- UNCOMMENT TO SHOW BUTTONS -->
@@ -1369,15 +1280,12 @@
         </div>
 
         <div class="footer">
-            <div class="update-log">
-                <strong>latest update:</strong> <span id="latest-update-text" style="color: var(--primary);"><span class="log-badge feature">FEATURE</span> Local portfolio launch</span><br>
-
-                <div class="btn-row-small">
-                    <button class="src-link" onclick="openModal('change-modal')">[CHANGELOG]</button>
-                    <button class="src-code-btn" onclick="window.open('https://github.com/pxlzfr/About')">[Source Code]</button>
+            <div class="update-log" style="text-align: center;">
+                <div class="btn-row-small" style="justify-content: center; margin-top: 10px;">
+                    <button class="src-code-btn" style="max-width: 180px; padding: 8px 12px; border-style: solid;" onclick="window.open('https://github.com/pxlzfr/About')">[Source Code]</button>
                 </div>
 
-                <span class="one-liner"><strong>made by pxlzfr (nPixelz)</strong> - "i'm the one developing this-" -pixel</span>
+                <span class="one-liner" style="margin-top: 12px;"><strong>made by pxlzfr (nPixelz)</strong> - "i'm the one developing this-" -pixel</span>
             </div>
             <div class="dm-section">
                 <div style="display: flex; align-items: center; gap: 8px;">
@@ -1388,7 +1296,8 @@
                         </svg>
                         <div class="discord-egg-tooltip">use DMs tags or copy link!</div>
                     </div>
-                    <strong>DMS:</strong> <span class="clickable-dm" onclick="copyText('pxlzfr', this)">pxlzfr</span>, <span class="clickable-dm" onclick="copyText('pxlzs', this)">pxlzs</span>
+                    <strong>DMS:</strong> <span class="clickable-dm" onclick="copyText('pxlzfr', this)">pxlzfr</span>,
+                    <span class="clickable-dm" onclick="copyText('pxlzs', this)">pxlzs</span>
                 </div>
                 <div style="color:var(--primary); font-weight:bold;">VISITS: <span id="total-visits">1</span></div>
             </div>
@@ -1603,24 +1512,49 @@
         };
         setTimeout(window.generatePreviews, 150);
 
-        // Debug HUD widget updater
-        window.updateDebugWidget = () => {
-            const roleEl = document.getElementById('debug-role-display');
-            const themeEl = document.getElementById('debug-theme-display');
-            const resEl = document.getElementById('debug-res-display');
-            if (roleEl) {
-                roleEl.innerText = 'OWNER';
-                roleEl.style.color = '#47fd48';
-            }
-            if (themeEl) {
-                themeEl.innerText = (typeof currentTheme !== 'undefined' ? currentTheme : 'PINK').toUpperCase();
-            }
-            if (resEl) {
-                resEl.innerText = `${window.innerWidth}x${window.innerHeight}`;
+        // Terminal Boot Sequence (Simulated Virtual Machine Diagnostic)
+        window.openTerminalModal = () => {
+            window.openModal('terminal-modal');
+            const terminal = document.getElementById('terminal-content');
+            if (terminal) {
+                terminal.innerHTML = '';
+                const lines = [
+                    "> INITIALIZING nPixel VIRTUAL HYPERVISOR...",
+                    "> LOADING KERNEL: nPixelOS-Kernel-v4.19... [OK]",
+                    "> ALLOCATING VM CORES: 8 vCPUs [OK]",
+                    "> MEMORY MAP: 16GB ECC DDR4 [OK]",
+                    "> MOUNTING ROOTFS: /dev/vda1 (overlayfs) [OK]",
+                    "> HYPERVISOR STATUS: QEMU/KVM ACCELERATION ENABLED",
+                    "> NETWORK ADAPTER: bridged (tap0) up 1000mbps",
+                    "> ",
+                    "> [nPixel VIBE CHECK]",
+                    "> Design skills: 0% (Vibe coder only)",
+                    "> OS/Kernel knowledge: 99% (Tech enthusiast)",
+                    "> Gaming Mode: ACTIVE (Roblox/Steam running)",
+                    "> STATUS: STABLE - CODES FOR VIBES ONLY."
+                ];
+                let currentLine = 0;
+                const printNextLine = () => {
+                    if (currentLine < lines.length) {
+                        const p = document.createElement('p');
+                        p.innerText = lines[currentLine];
+                        p.style.margin = "4px 0";
+                        if (lines[currentLine].includes('[OK]')) {
+                            p.style.color = '#47fd48';
+                            p.style.textShadow = '0 0 4px #47fd48';
+                        } else if (lines[currentLine].includes('0%')) {
+                            p.style.color = '#ff4d4d';
+                            p.style.textShadow = '0 0 4px #ff4d4d';
+                        }
+                        terminal.appendChild(p);
+                        terminal.scrollTop = terminal.scrollHeight;
+                        currentLine++;
+                        setTimeout(printNextLine, 80 + Math.random() * 50);
+                    }
+                };
+                setTimeout(printNextLine, 150);
             }
         };
-        window.addEventListener('resize', window.updateDebugWidget);
-        setTimeout(window.updateDebugWidget, 300);
 
         // Local visitor session counter incrementer
         const initVisitorCount = () => {
@@ -1635,25 +1569,7 @@
         initVisitorCount();
     </script>
 
-    <!-- Bottom Left Debug HUD Panel -->
-    <div id="debug-overlay-widget" class="debug-widget">
-        <div class="debug-header">
-            <span class="debug-ver">About</span>
-            <div style="display: flex; align-items: center; gap: 4px;">
-                <span style="color: #666; font-weight: bold; font-size: 0.55rem;">v1.0.0</span>
-                <div class="debug-dot-status"></div>
-            </div>
-        </div>
-        <div class="debug-expanded-info">
-            <span>DB: <span id="debug-db-status" style="color:var(--primary); font-weight:bold;">LOCAL</span></span>
-            <span class="debug-separator">|</span>
-            <span>ROLE: <span id="debug-role-display">OWNER</span></span>
-            <span class="debug-separator">|</span>
-            <span>THEME: <span id="debug-theme-display" style="text-transform:uppercase;">PINK</span></span>
-            <span class="debug-separator">|</span>
-            <span>RES: <span id="debug-res-display">1920x1080</span></span>
-        </div>
-    </div>
+
 </body>
 
 </html>
