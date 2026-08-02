@@ -133,7 +133,12 @@
         }
 
         body {
-            background: radial-gradient(circle at 50% 0%, #220618 0%, #080408 65%, #040305 100%);
+            background: 
+                radial-gradient(circle at 10% 10%, rgba(255, 170, 255, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 90% 20%, rgba(114, 137, 248, 0.18) 0%, transparent 50%),
+                radial-gradient(circle at 50% 65%, rgba(199, 125, 255, 0.14) 0%, transparent 60%),
+                radial-gradient(circle at 80% 90%, rgba(0, 245, 212, 0.1) 0%, transparent 45%),
+                radial-gradient(circle at 50% 0%, #160a1c 0%, #0a0710 60%, #040307 100%);
             color: #eeeeee;
             min-height: 100vh;
             margin: 0;
@@ -427,7 +432,7 @@
             font-size: 4rem;
             font-weight: 900;
             margin: 0;
-            background: linear-gradient(135deg, #ffffff 0%, var(--primary) 65%, var(--secondary) 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #ffaaff 35%, #c77dff 65%, #7289da 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -2px;
@@ -1570,12 +1575,14 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
         const particleContainer = document.getElementById('dev-particles-inner');
         if (particleContainer) {
             const variants = ['[pxlz.pro]', '[/dl]', '[/vlinks]', '[/dreamlex]', '[AHK]', '[@pixxella]', '[VMware]', '[Windows 11]', '[WHOAMI]'];
-            const particleCount = 75;
+            const particleColors = ['#ffaaff', '#7289da', '#c77dff', '#00f5d4', '#ff70a6'];
+            const particleCount = 85;
 
             for (let i = 0; i < particleCount; i++) {
                 let span = document.createElement('span');
                 span.innerText = variants[Math.floor(Math.random() * variants.length)];
                 span.className = 'dev-floater';
+                span.style.color = particleColors[Math.floor(Math.random() * particleColors.length)];
                 span.style.top = '0px';
                 span.style.left = Math.random() * 100 + 'vw';
 
