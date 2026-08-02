@@ -10,6 +10,10 @@
     <meta name="description" content="Official developer hub for pxlz.pro (nPixel / pixxella). Featuring subdomains (/dl, /vlinks, /dreamlex), AutoHotkey scripts, VM tweaks, and tech specs.">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
 
+    <!-- Firebase Compatibility SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
     <script>
         const savedTheme = localStorage.getItem('vTheme') || 'pink';
         document.documentElement.setAttribute('data-theme', savedTheme);
@@ -551,6 +555,15 @@
             opacity: 0.2;
         }
 
+        /* Live Dev Mode Editable Outline */
+        .dev-mode-active [contenteditable="true"] {
+            border: 1.5px dashed #47fd48 !important;
+            padding: 4px 8px !important;
+            border-radius: 8px !important;
+            box-shadow: 0 0 12px rgba(71, 253, 72, 0.3) !important;
+            outline: none !important;
+        }
+
         /* Domains Grid - Ultra Wide */
         .domain-grid {
             display: grid;
@@ -559,7 +572,7 @@
         }
 
         .domain-card {
-            background: linear-gradient(135deg, rgba(22, 22, 36, 0.6) 0%, rgba(12, 12, 22, 0.85) 100%);
+            background: linear-gradient(135deg, rgba(24, 12, 24, 0.6) 0%, rgba(12, 8, 14, 0.85) 100%);
             border: 1.5px solid rgba(255, 255, 255, 0.12);
             border-top: 3.5px solid var(--primary);
             border-radius: 26px;
@@ -579,7 +592,7 @@
             border-color: var(--primary);
             transform: translateY(-6px) scale(1.015);
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 35px rgba(var(--primary-rgb), 0.25);
-            background: linear-gradient(135deg, rgba(32, 32, 50, 0.75) 0%, rgba(18, 18, 28, 0.92) 100%);
+            background: linear-gradient(135deg, rgba(34, 16, 32, 0.75) 0%, rgba(18, 10, 18, 0.92) 100%);
         }
 
         .domain-card-header {
@@ -637,7 +650,7 @@
         }
 
         .dev-card {
-            background: linear-gradient(135deg, rgba(20, 20, 32, 0.65) 0%, rgba(10, 10, 18, 0.85) 100%);
+            background: linear-gradient(135deg, rgba(24, 12, 24, 0.65) 0%, rgba(10, 8, 14, 0.88) 100%);
             border: 1.5px solid rgba(255, 255, 255, 0.12);
             border-left: 4px solid var(--primary);
             border-radius: 26px;
@@ -761,7 +774,7 @@
         }
 
         .contact-card {
-            background: linear-gradient(135deg, rgba(24, 24, 38, 0.75) 0%, rgba(12, 12, 22, 0.9) 100%);
+            background: linear-gradient(135deg, rgba(28, 14, 28, 0.75) 0%, rgba(14, 8, 16, 0.9) 100%);
             border: 1.5px solid rgba(255, 255, 255, 0.14);
             border-left: 5px solid var(--primary);
             padding: 28px 32px;
@@ -781,7 +794,7 @@
             border-color: var(--primary);
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(var(--primary-rgb), 0.3);
             transform: translateY(-6px) scale(1.015);
-            background: linear-gradient(135deg, rgba(32, 32, 52, 0.85) 0%, rgba(18, 18, 30, 0.95) 100%);
+            background: linear-gradient(135deg, rgba(36, 18, 36, 0.85) 0%, rgba(18, 10, 20, 0.95) 100%);
         }
 
         .contact-card-top {
@@ -1044,6 +1057,7 @@
             </ul>
 
             <div class="nav-actions">
+                <span id="nav-dev-badge" style="display: none; background: rgba(71, 253, 72, 0.15); border: 1px solid #47fd48; color: #47fd48; font-size: 0.7rem; font-weight: 900; padding: 4px 10px; border-radius: 8px;">[DEV MODE]</span>
                 <a href="https://github.com/pixxella" class="nav-github-btn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
@@ -1086,7 +1100,7 @@
             </div>
         </section>
 
-        <!-- Creator Bio & WHOAMI Card (Restyled Original About Me) -->
+        <!-- Creator Bio & WHOAMI Card (With Secret Dev Activation Green Dot) -->
         <section id="whoami" class="section-block">
             <div class="section-header">
                 <div>
@@ -1107,10 +1121,12 @@
                             aka pxlzfr, nPixelz, pxlzs
                         </span>
                     </div>
-                    <span class="hero-badge online" style="font-size: 0.82rem; padding: 6px 16px;">● VIBE CODER</span>
+                    <span class="hero-badge online" id="vibe-badge" style="font-size: 0.82rem; padding: 6px 16px;">
+                        <span id="secret-green-dot" onclick="triggerDevSystem(event)" style="cursor: pointer; display: inline-block; font-size: 1.1rem; vertical-align: middle; transition: all 0.3s ease;" title="Click green dot to activate Dev Authentication System">●</span> VIBE CODER
+                    </span>
                 </div>
 
-                <p style="font-size: 0.98rem; line-height: 1.75; margin: 20px 0; color: #eee;" class="selectable">
+                <p id="whoami-bio-text" style="font-size: 0.98rem; line-height: 1.75; margin: 20px 0; color: #eee;" class="selectable">
                     Hey! I'm nPixel. I'm a vibe coder (I don't design shit) and a tech enthusiast learning about virtual machines, operating systems, and kernel-level architecture. I'm also a gamer who loves exploring OS internals.<span class="console-cursor">_</span>
                 </p>
 
@@ -1389,12 +1405,12 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
 
                         <div class="contact-details">
                             <span class="contact-title-text">Official Email Address</span>
-                            <span class="contact-main-value selectable clickable-dm" onclick="copyText('pxlz@pxlz.pro', this)" title="Click to copy email">pxlz@pxlz.pro</span>
+                            <span id="email-value-text" class="contact-main-value selectable clickable-dm" onclick="copyText(this.innerText, this)" title="Click to copy email">pxlz@pxlz.pro</span>
                         </div>
                     </div>
 
                     <div class="contact-actions-row">
-                        <button class="btn-cyber btn-cyber-outline btn-sm" onclick="copyText('pxlz@pxlz.pro', this)" style="width: 100%;">
+                        <button class="btn-cyber btn-cyber-outline btn-sm" onclick="copyText(document.getElementById('email-value-text').innerText, this)" style="width: 100%;">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                             COPY EMAIL ADDRESS
                         </button>
@@ -1417,12 +1433,12 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
 
                         <div class="contact-details">
                             <span class="contact-title-text">Discord Username / Tag</span>
-                            <span class="contact-main-value selectable clickable-dm" onclick="copyText('pxlzfr', this)" style="color: #7289da;" title="Click to copy username">pxlzfr</span>
+                            <span id="discord-value-text" class="contact-main-value selectable clickable-dm" onclick="copyText(this.innerText, this)" style="color: #7289da;" title="Click to copy username">pxlzfr</span>
                         </div>
                     </div>
 
                     <div class="contact-actions-row">
-                        <button class="btn-cyber btn-cyber-outline btn-sm" onclick="copyText('pxlzfr', this)" style="width: 100%; border-color: rgba(88, 101, 242, 0.4); color: #7289da;">
+                        <button class="btn-cyber btn-cyber-outline btn-sm" onclick="copyText(document.getElementById('discord-value-text').innerText, this)" style="width: 100%; border-color: rgba(88, 101, 242, 0.4); color: #7289da;">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                             COPY DISCORD USERNAME
                         </button>
@@ -1456,7 +1472,90 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
         </div>
     </div>
 
+    <!-- Secret Cyber Dev Command Auth Modal -->
+    <div id="dev-prompt-modal" class="modal-overlay">
+        <div class="modal-box" style="border-color: #47fd48; box-shadow: 0 30px 100px rgba(0, 0, 0, 0.9), 0 0 45px rgba(71, 253, 72, 0.35);">
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #47fd48; padding-bottom: 8px;">
+                <span style="color: #47fd48; font-weight: bold; font-size: 0.85rem;">[SECRET_DEV_ACTIVATION_SYSTEM]</span>
+                <span style="color: #666; font-size: 0.8rem; cursor: pointer;" onclick="closeModal('dev-prompt-modal')">[X]</span>
+            </div>
+            <p style="font-size: 0.85rem; color: #ccc; text-align: left; margin: 5px 0;">
+                Green Dot System Triggered! Type <strong>"dev"</strong> to authenticate and enable Live Dev Mode (editing Email, Discord, Bio, etc.):
+            </p>
+            <input type="text" id="dev-cmd-input" placeholder="type 'dev' here..." style="width: 100%; padding: 12px 16px; background: #000; border: 2px solid #47fd48; border-radius: 12px; color: #47fd48; font-weight: 900; font-size: 1rem; outline: none; box-shadow: 0 0 15px rgba(71, 253, 72, 0.2);" onkeyup="checkDevCmd(event)">
+            <button onclick="submitDevCmd()" class="btn-cyber btn-cyber-primary" style="width: 100%; background: linear-gradient(135deg, rgba(71, 253, 72, 0.3) 0%, rgba(0, 143, 17, 0.5) 100%); border-color: #47fd48; color: #47fd48; text-shadow: 0 0 10px #47fd48;">AUTHENTICATE DEV MODE</button>
+        </div>
+    </div>
+
+    <!-- Floating Dev Mode Control Bar -->
+    <div id="dev-save-bar" style="display: none; position: fixed; bottom: 25px; right: 25px; z-index: 25000; background: rgba(10, 10, 15, 0.9); border: 2px solid #47fd48; padding: 12px 20px; border-radius: 20px; backdrop-filter: blur(20px); box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 25px rgba(71, 253, 72, 0.3); align-items: center; gap: 12px;">
+        <span style="color: #47fd48; font-weight: 900; font-size: 0.82rem;">⚡ DEV MODE ACTIVE:</span>
+        <button onclick="saveDevEdits()" class="btn-cyber btn-cyber-primary btn-sm" style="border-color: #47fd48; color: #47fd48;">SAVE EDITS TO FIREBASE</button>
+    </div>
+
     <script>
+        // Firebase Initialization & Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyPxlzProHubDevKeyPlaceholder",
+            authDomain: "pxlz-pro-hub.firebaseapp.com",
+            databaseURL: "https://pxlz-pro-hub-default-rtdb.firebaseio.com",
+            projectId: "pxlz-pro-hub",
+            storageBucket: "pxlz-pro-hub.appspot.com",
+            messagingSenderId: "109876543210",
+            appId: "1:109876543210:web:pxlzprohub"
+        };
+
+        let db = null;
+        try {
+            if (typeof firebase !== 'undefined') {
+                firebase.initializeApp(firebaseConfig);
+                db = firebase.database();
+                console.log("Firebase initialized successfully.");
+            }
+        } catch (e) {
+            console.warn("Firebase initialization notice:", e.message);
+        }
+
+        // Load Saved Configuration from LocalStorage / Firebase
+        const loadSavedConfig = () => {
+            const savedEmail = localStorage.getItem('pxlz_email');
+            const savedDiscord = localStorage.getItem('pxlz_discord');
+            const savedBio = localStorage.getItem('pxlz_bio');
+
+            if (savedEmail) {
+                const el = document.getElementById('email-value-text');
+                if (el) el.innerText = savedEmail;
+            }
+            if (savedDiscord) {
+                const el = document.getElementById('discord-value-text');
+                if (el) el.innerText = savedDiscord;
+            }
+            if (savedBio) {
+                const el = document.getElementById('whoami-bio-text');
+                if (el) el.innerHTML = savedBio + '<span class="console-cursor">_</span>';
+            }
+
+            if (db) {
+                db.ref('siteConfig').on('value', (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        if (data.email) {
+                            const el = document.getElementById('email-value-text');
+                            if (el) el.innerText = data.email;
+                        }
+                        if (data.discord) {
+                            const el = document.getElementById('discord-value-text');
+                            if (el) el.innerText = data.discord;
+                        }
+                        if (data.bio) {
+                            const el = document.getElementById('whoami-bio-text');
+                            if (el) el.innerHTML = data.bio + '<span class="console-cursor">_</span>';
+                        }
+                    }
+                });
+            }
+        };
+
         // Interactive Mouse Parallax for Ambient Particles
         document.addEventListener('mousemove', (e) => {
             const x = (window.innerWidth / 2 - e.clientX) / 45;
@@ -1586,6 +1685,114 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             }
         };
 
+        // Secret Dev Mode System Mechanics
+        let secretKeyBuffer = '';
+        let devModeActive = false;
+
+        window.triggerDevSystem = (e) => {
+            if (e) e.stopPropagation();
+            const greenDot = document.getElementById('secret-green-dot');
+            if (greenDot) {
+                greenDot.style.transform = 'scale(1.6) rotate(360deg)';
+                greenDot.style.textShadow = '0 0 20px #47fd48, 0 0 35px #47fd48';
+                setTimeout(() => { greenDot.style.transform = 'none'; }, 600);
+            }
+            window.showToast('[SYSTEM: KEYLISTENER ACTIVE - TYPE "dev"]');
+            window.openModal('dev-prompt-modal');
+            const input = document.getElementById('dev-cmd-input');
+            if (input) {
+                input.value = '';
+                setTimeout(() => input.focus(), 150);
+            }
+        };
+
+        window.checkDevCmd = (e) => {
+            if (e.key === 'Enter') {
+                window.submitDevCmd();
+            }
+        };
+
+        window.submitDevCmd = () => {
+            const input = document.getElementById('dev-cmd-input');
+            if (input && input.value.trim().toLowerCase() === 'dev') {
+                window.closeModal('dev-prompt-modal');
+                window.activateDevMode();
+            } else {
+                window.showToast('[AUTH FAILED: INCORRECT COMMAND]');
+            }
+        };
+
+        // Global Secret Key Listener for "dev"
+        document.addEventListener('keydown', (e) => {
+            if (devModeActive) return;
+            secretKeyBuffer += e.key.toLowerCase();
+            if (secretKeyBuffer.length > 5) {
+                secretKeyBuffer = secretKeyBuffer.slice(-5);
+            }
+            if (secretKeyBuffer.endsWith('dev')) {
+                window.activateDevMode();
+                secretKeyBuffer = '';
+            }
+        });
+
+        window.activateDevMode = () => {
+            devModeActive = true;
+            document.body.classList.add('dev-mode-active');
+            window.showToast('[DEV MODE ACTIVATED: LIVE EDITING ENABLED]');
+
+            const navBadge = document.getElementById('nav-dev-badge');
+            if (navBadge) navBadge.style.display = 'inline-block';
+
+            const saveBar = document.getElementById('dev-save-bar');
+            if (saveBar) saveBar.style.display = 'flex';
+
+            // Enable Live ContentEditable for Email, Discord, and Bio
+            const editableElements = [
+                document.getElementById('email-value-text'),
+                document.getElementById('discord-value-text'),
+                document.getElementById('whoami-bio-text')
+            ];
+
+            editableElements.forEach(el => {
+                if (el) {
+                    el.contentEditable = "true";
+                    el.style.border = "1.5px dashed #47fd48";
+                    el.style.padding = "4px 8px";
+                    el.style.borderRadius = "8px";
+                    el.style.boxShadow = "0 0 15px rgba(71, 253, 72, 0.3)";
+                }
+            });
+        };
+
+        window.saveDevEdits = () => {
+            const emailEl = document.getElementById('email-value-text');
+            const discordEl = document.getElementById('discord-value-text');
+            const bioEl = document.getElementById('whoami-bio-text');
+
+            const emailVal = emailEl ? emailEl.innerText.trim() : 'pxlz@pxlz.pro';
+            const discordVal = discordEl ? discordEl.innerText.trim() : 'pxlzfr';
+            const bioVal = bioEl ? bioEl.innerText.replace('_', '').trim() : '';
+
+            localStorage.setItem('pxlz_email', emailVal);
+            localStorage.setItem('pxlz_discord', discordVal);
+            localStorage.setItem('pxlz_bio', bioVal);
+
+            if (db) {
+                try {
+                    db.ref('siteConfig').set({
+                        email: emailVal,
+                        discord: discordVal,
+                        bio: bioVal,
+                        updatedAt: new Date().toISOString()
+                    });
+                } catch (err) {
+                    console.error("Firebase Sync error:", err);
+                }
+            }
+
+            window.showToast('[EDITS SAVED & SYNCED TO FIREBASE]');
+        };
+
         // Hover spotlight reflection effect setup
         const setupSpotlights = () => {
             const targets = document.querySelectorAll('.btn-cyber, .domain-card, .dev-card, .contact-card');
@@ -1620,6 +1827,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                     "> DOMAIN STATUS: pxlz.pro/dreamlex [ONLINE]",
                     "> GITHUB AUTHOR: pixxella [ACTIVE]",
                     "> AHK v2 UTILITIES: LOADED [OK]",
+                    "> FIREBASE SYNC: INITIALIZED [OK]",
                     "> STATUS: STABLE - ALL SYSTEMS NOMINAL."
                 ];
                 let currentLine = 0;
@@ -1641,6 +1849,9 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                 setTimeout(printNextLine, 150);
             }
         };
+
+        // Initialize Saved Config on Page Load
+        loadSavedConfig();
 
     </script>
 </body>
