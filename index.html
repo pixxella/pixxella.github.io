@@ -1120,6 +1120,7 @@
     <div id="dev-quick-bar">
         <span style="color: #47fd48; font-weight: 900; font-size: 0.78rem;">⚡ DEV CONTROLS:</span>
         <button onclick="openModal('dev-panel-modal')" class="btn-cyber btn-sm" style="border-color: #47fd48; color: #47fd48; font-size: 0.72rem; padding: 5px 12px;">[⚡ DASHBOARD]</button>
+        <button onclick="toggleLiveAutoSave()" id="quick-btn-autosave" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #47fd48; color: #47fd48; background: rgba(71,253,72,0.15); font-size: 0.72rem; padding: 5px 12px;">[⚡ LIVE AUTOSAVE: ON]</button>
         <button onclick="toggleInlineEditMode()" id="quick-btn-inline" class="btn-cyber btn-cyber-outline btn-sm" style="font-size: 0.72rem; padding: 5px 12px;">[✏️ INLINE EDIT: OFF]</button>
         <button onclick="toggleMaintenanceMode()" id="quick-btn-maint" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #ff9900; color: #ff9900; font-size: 0.72rem; padding: 5px 12px;">[🛠️ MAINT MODE]</button>
     </div>
@@ -1137,7 +1138,7 @@
             </div>
 
             <h1 class="hero-title">pxlz.pro</h1>
-            <p class="hero-subtitle selectable">
+            <p class="hero-subtitle selectable" id="hero-subtitle-text">
                 Central developer hub & ecosystem for <strong>nPixel (pixxella)</strong>. Vibe coding, OS internal mechanics, kernel tweaks, custom AutoHotkey scripts, and hypervisor optimizations.
             </p>
 
@@ -1521,14 +1522,14 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                 <!-- v3.5 -->
                 <div class="dev-card" style="border-left: 4px solid #47fd48;">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                        <span style="color: #47fd48; font-weight: 900; font-size: 1.1rem;">v3.5 - Physical Light Shader & Dev Panel</span>
+                        <span style="color: #47fd48; font-weight: 900; font-size: 1.1rem;">v3.5 - Zero-Latency Live Auto-Sync & Sound FX</span>
                         <span class="domain-tag" style="background: rgba(71,253,72,0.15); border-color: #47fd48; color: #47fd48;">[CURRENT RELEASE]</span>
                     </div>
                     <p style="font-size: 0.88rem; color: #ccc; margin: 6px 0; line-height: 1.6;">
-                        • Added Web Audio API cyber synth sound effects for clicks & modals.<br>
+                        • Instant live sync engine (BroadcastChannel & Firebase listener) — type anywhere, updates everywhere live with zero page refreshes!<br>
+                        • Added Web Audio API cyber synth sound effects for clicks & modal operations.<br>
                         • Integrated Physical Point Light simulation canvas with dynamic inverse-square falloff.<br>
-                        • Created Permanent Sleek Cyber Control Dashboard & Quick Toolbar.<br>
-                        • Added real-time System Maintenance Banner mode & Firebase Realtime DB sync.
+                        • Real-time System Maintenance Banner mode & Quick Control Bar.
                     </p>
                 </div>
 
@@ -1655,7 +1656,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             </div>
 
             <div style="display: flex; gap: 12px; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 15px; margin-top: 15px; flex-wrap: wrap;">
-                <button onclick="saveDevPanelEdits()" class="btn-cyber btn-cyber-primary" style="flex: 1; border-color: #47fd48; color: #47fd48; background: linear-gradient(135deg, rgba(71,253,72,0.25) 0%, rgba(0,143,17,0.45) 100%);">SAVE EDITS & SYNC TO FIREBASE</button>
+                <button onclick="toggleLiveAutoSave()" class="btn-cyber btn-cyber-primary" id="btn-toggle-autosave" style="flex: 1; border-color: #47fd48; color: #47fd48; background: linear-gradient(135deg, rgba(71,253,72,0.25) 0%, rgba(0,143,17,0.45) 100%);">[⚡ LIVE AUTOSAVE: ON]</button>
                 <button onclick="toggleInlineEditMode()" class="btn-cyber btn-cyber-outline btn-sm" id="btn-toggle-inline">[INLINE EDIT: OFF]</button>
                 <button onclick="toggleMaintenanceMode()" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #ff9900; color: #ff9900;">[MAINTENANCE MODE]</button>
                 <button onclick="resetDevDefaults()" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #ff4d4d; color: #ff4d4d;">[RESET DEFAULTS]</button>
@@ -1664,6 +1665,9 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
     </div>
 
     <script>
+        // BroadcastChannel for Zero-Latency Multi-Tab Live Sync
+        const liveChannel = new BroadcastChannel('pxlz_live_channel');
+
         // Web Audio API Procedural Synth Sound Effects
         const playCyberBeep = (freq = 880, duration = 0.08, type = 'sine') => {
             try {
@@ -1683,9 +1687,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
 
                 osc.start();
                 osc.stop(ctx.currentTime + duration);
-            } catch (e) {
-                // Ignore audio restriction warnings
-            }
+            } catch (e) {}
         };
 
         // Firebase Initialization & Configuration
@@ -1709,6 +1711,121 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
         } catch (e) {
             console.warn("Firebase initialization notice:", e.message);
         }
+
+        // Live Auto-Save Toggle State
+        let isLiveAutoSave = true;
+
+        window.toggleLiveAutoSave = () => {
+            playCyberBeep(900, 0.08, 'sine');
+            isLiveAutoSave = !isLiveAutoSave;
+            const btn = document.getElementById('btn-toggle-autosave');
+            const qBtn = document.getElementById('quick-btn-autosave');
+
+            if (isLiveAutoSave) {
+                if (btn) btn.innerText = '[⚡ LIVE AUTOSAVE: ON]';
+                if (qBtn) qBtn.innerText = '[⚡ LIVE AUTOSAVE: ON]';
+                window.showToast('[ZERO-LATENCY LIVE AUTOSAVE & SYNC: ON]');
+            } else {
+                if (btn) btn.innerText = '[⚡ LIVE AUTOSAVE: OFF]';
+                if (qBtn) qBtn.innerText = '[⚡ LIVE AUTOSAVE: OFF]';
+                window.showToast('[LIVE AUTOSAVE & SYNC: OFF]');
+            }
+        };
+
+        // Core Live Sync Update Engine — Instantly updates DOM + Storage + Firebase without refreshing!
+        window.applyLiveConfigUpdate = (data, broadcast = true) => {
+            if (!data) return;
+
+            const emailEl = document.getElementById('email-value-text');
+            const discordEl = document.getElementById('discord-value-text');
+            const bioEl = document.getElementById('whoami-bio-text');
+            const cpuEl = document.getElementById('spec-cpu-val');
+            const gpuEl = document.getElementById('spec-gpu-val');
+            const ramEl = document.getElementById('spec-ram-val');
+            const osEl = document.getElementById('spec-os-val');
+
+            const emailInp = document.getElementById('dev-input-email');
+            const discordInp = document.getElementById('dev-input-discord');
+            const bioInp = document.getElementById('dev-input-bio');
+            const cpuInp = document.getElementById('dev-input-cpu');
+            const gpuInp = document.getElementById('dev-input-gpu');
+            const ramInp = document.getElementById('dev-input-ram');
+            const osInp = document.getElementById('dev-input-os');
+
+            if (data.email !== undefined) {
+                if (emailEl && emailEl.innerText !== data.email) emailEl.innerText = data.email;
+                if (emailInp && emailInp.value !== data.email) emailInp.value = data.email;
+                localStorage.setItem('pxlz_email', data.email);
+            }
+            if (data.discord !== undefined) {
+                if (discordEl && discordEl.innerText !== data.discord) discordEl.innerText = data.discord;
+                if (discordInp && discordInp.value !== data.discord) discordInp.value = data.discord;
+                localStorage.setItem('pxlz_discord', data.discord);
+            }
+            if (data.bio !== undefined) {
+                if (bioEl) bioEl.innerHTML = data.bio + '<span class="console-cursor">_</span>';
+                if (bioInp && bioInp.value !== data.bio) bioInp.value = data.bio;
+                localStorage.setItem('pxlz_bio', data.bio);
+            }
+            if (data.cpu !== undefined) {
+                if (cpuEl && cpuEl.innerText !== data.cpu) cpuEl.innerText = data.cpu;
+                if (cpuInp && cpuInp.value !== data.cpu) cpuInp.value = data.cpu;
+                localStorage.setItem('pxlz_cpu', data.cpu);
+            }
+            if (data.gpu !== undefined) {
+                if (gpuEl && gpuEl.innerText !== data.gpu) gpuEl.innerText = data.gpu;
+                if (gpuInp && gpuInp.value !== data.gpu) gpuInp.value = data.gpu;
+                localStorage.setItem('pxlz_gpu', data.gpu);
+            }
+            if (data.ram !== undefined) {
+                if (ramEl && ramEl.innerText !== data.ram) ramEl.innerText = data.ram;
+                if (ramInp && ramInp.value !== data.ram) ramInp.value = data.ram;
+                localStorage.setItem('pxlz_ram', data.ram);
+            }
+            if (data.os !== undefined) {
+                if (osEl && osEl.innerText !== data.os) osEl.innerText = data.os;
+                if (osInp && osInp.value !== data.os) osInp.value = data.os;
+                localStorage.setItem('pxlz_os', data.os);
+            }
+
+            if (broadcast) {
+                liveChannel.postMessage(data);
+                if (db && isLiveAutoSave) {
+                    try {
+                        db.ref('siteConfig').update(data);
+                    } catch (e) {}
+                }
+            }
+        };
+
+        // Listen for multi-tab live BroadcastChannel sync messages
+        liveChannel.onmessage = (event) => {
+            applyLiveConfigUpdate(event.data, false);
+        };
+
+        // Attach Instant Input Listeners to Dev Dashboard Inputs
+        const attachLiveInputListeners = () => {
+            const inputs = [
+                { id: 'dev-input-email', key: 'email' },
+                { id: 'dev-input-discord', key: 'discord' },
+                { id: 'dev-input-bio', key: 'bio' },
+                { id: 'dev-input-cpu', key: 'cpu' },
+                { id: 'dev-input-gpu', key: 'gpu' },
+                { id: 'dev-input-ram', key: 'ram' },
+                { id: 'dev-input-os', key: 'os' }
+            ];
+
+            inputs.forEach(item => {
+                const el = document.getElementById(item.id);
+                if (el) {
+                    el.addEventListener('input', (e) => {
+                        if (isLiveAutoSave) {
+                            applyLiveConfigUpdate({ [item.key]: e.target.value }, true);
+                        }
+                    });
+                }
+            });
+        };
 
         // Toggle System Maintenance Mode
         let isMaintenanceMode = false;
@@ -1744,73 +1861,23 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
 
         // Load Saved Configuration from LocalStorage / Firebase
         const loadSavedConfig = () => {
-            const savedEmail = localStorage.getItem('pxlz_email');
-            const savedDiscord = localStorage.getItem('pxlz_discord');
-            const savedBio = localStorage.getItem('pxlz_bio');
-            const savedCpu = localStorage.getItem('pxlz_cpu');
-            const savedGpu = localStorage.getItem('pxlz_gpu');
-            const savedRam = localStorage.getItem('pxlz_ram');
-            const savedOs = localStorage.getItem('pxlz_os');
+            const config = {
+                email: localStorage.getItem('pxlz_email') || 'pxlz@pxlz.pro',
+                discord: localStorage.getItem('pxlz_discord') || 'pxlzfr',
+                bio: localStorage.getItem('pxlz_bio') || "Hey! I'm nPixel. I'm a vibe coder (I don't design shit) and a tech enthusiast learning about virtual machines, operating systems, and kernel-level architecture. I'm also a gamer who loves exploring OS internals.",
+                cpu: localStorage.getItem('pxlz_cpu') || 'AMD Ryzen 5 7600X (6C/12T)',
+                gpu: localStorage.getItem('pxlz_gpu') || 'AMD Radeon RX 6700XT XTX',
+                ram: localStorage.getItem('pxlz_ram') || '32GB DDR5 Dual-Channel',
+                os: localStorage.getItem('pxlz_os') || 'Windows 11 Pro'
+            };
 
-            if (savedEmail) {
-                const el = document.getElementById('email-value-text');
-                const inp = document.getElementById('dev-input-email');
-                if (el) el.innerText = savedEmail;
-                if (inp) inp.value = savedEmail;
-            }
-            if (savedDiscord) {
-                const el = document.getElementById('discord-value-text');
-                const inp = document.getElementById('dev-input-discord');
-                if (el) el.innerText = savedDiscord;
-                if (inp) inp.value = savedDiscord;
-            }
-            if (savedBio) {
-                const el = document.getElementById('whoami-bio-text');
-                const inp = document.getElementById('dev-input-bio');
-                if (el) el.innerHTML = savedBio + '<span class="console-cursor">_</span>';
-                if (inp) inp.value = savedBio;
-            }
-            if (savedCpu) {
-                const el = document.getElementById('spec-cpu-val');
-                const inp = document.getElementById('dev-input-cpu');
-                if (el) el.innerText = savedCpu;
-                if (inp) inp.value = savedCpu;
-            }
-            if (savedGpu) {
-                const el = document.getElementById('spec-gpu-val');
-                const inp = document.getElementById('dev-input-gpu');
-                if (el) el.innerText = savedGpu;
-                if (inp) inp.value = savedGpu;
-            }
-            if (savedRam) {
-                const el = document.getElementById('spec-ram-val');
-                const inp = document.getElementById('dev-input-ram');
-                if (el) el.innerText = savedRam;
-                if (inp) inp.value = savedRam;
-            }
-            if (savedOs) {
-                const el = document.getElementById('spec-os-val');
-                const inp = document.getElementById('dev-input-os');
-                if (el) el.innerText = savedOs;
-                if (inp) inp.value = savedOs;
-            }
+            applyLiveConfigUpdate(config, false);
 
             if (db) {
                 db.ref('siteConfig').on('value', (snapshot) => {
                     const data = snapshot.val();
                     if (data) {
-                        if (data.email) {
-                            const el = document.getElementById('email-value-text');
-                            if (el) el.innerText = data.email;
-                        }
-                        if (data.discord) {
-                            const el = document.getElementById('discord-value-text');
-                            if (el) el.innerText = data.discord;
-                        }
-                        if (data.bio) {
-                            const el = document.getElementById('whoami-bio-text');
-                            if (el) el.innerHTML = data.bio + '<span class="console-cursor">_</span>';
-                        }
+                        applyLiveConfigUpdate(data, false);
                     }
                 });
             }
@@ -2056,63 +2123,22 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             const ramInp = document.getElementById('dev-input-ram');
             const osInp = document.getElementById('dev-input-os');
 
-            const emailVal = emailInp ? emailInp.value.trim() : 'pxlz@pxlz.pro';
-            const discordVal = discordInp ? discordInp.value.trim() : 'pxlzfr';
-            const bioVal = bioInp ? bioInp.value.trim() : '';
-            const cpuVal = cpuInp ? cpuInp.value.trim() : '';
-            const gpuVal = gpuInp ? gpuInp.value.trim() : '';
-            const ramVal = ramInp ? ramInp.value.trim() : '';
-            const osVal = osInp ? osInp.value.trim() : '';
+            const data = {
+                email: emailInp ? emailInp.value.trim() : 'pxlz@pxlz.pro',
+                discord: discordInp ? discordInp.value.trim() : 'pxlzfr',
+                bio: bioInp ? bioInp.value.trim() : '',
+                cpu: cpuInp ? cpuInp.value.trim() : '',
+                gpu: gpuInp ? gpuInp.value.trim() : '',
+                ram: ramInp ? ramInp.value.trim() : '',
+                os: osInp ? osInp.value.trim() : ''
+            };
 
-            // Update UI elements
-            const emailEl = document.getElementById('email-value-text');
-            const discordEl = document.getElementById('discord-value-text');
-            const bioEl = document.getElementById('whoami-bio-text');
-            const cpuEl = document.getElementById('spec-cpu-val');
-            const gpuEl = document.getElementById('spec-gpu-val');
-            const ramEl = document.getElementById('spec-ram-val');
-            const osEl = document.getElementById('spec-os-val');
-
-            if (emailEl) emailEl.innerText = emailVal;
-            if (discordEl) discordEl.innerText = discordVal;
-            if (bioEl) bioEl.innerHTML = bioVal + '<span class="console-cursor">_</span>';
-            if (cpuEl) cpuEl.innerText = cpuVal;
-            if (gpuEl) gpuEl.innerText = gpuVal;
-            if (ramEl) ramEl.innerText = ramVal;
-            if (osEl) osEl.innerText = osVal;
-
-            // Cache to LocalStorage
-            localStorage.setItem('pxlz_email', emailVal);
-            localStorage.setItem('pxlz_discord', discordVal);
-            localStorage.setItem('pxlz_bio', bioVal);
-            localStorage.setItem('pxlz_cpu', cpuVal);
-            localStorage.setItem('pxlz_gpu', gpuVal);
-            localStorage.setItem('pxlz_ram', ramVal);
-            localStorage.setItem('pxlz_os', osVal);
-
-            // Sync to Firebase
-            if (db) {
-                try {
-                    db.ref('siteConfig').set({
-                        email: emailVal,
-                        discord: discordVal,
-                        bio: bioVal,
-                        cpu: cpuVal,
-                        gpu: gpuVal,
-                        ram: ramVal,
-                        os: osVal,
-                        updatedAt: new Date().toISOString()
-                    });
-                } catch (e) {
-                    console.warn("Firebase sync error:", e);
-                }
-            }
-
-            window.showToast('[DASHBOARD EDITS SAVED & SYNCED]');
+            applyLiveConfigUpdate(data, true);
+            window.showToast('[DASHBOARD EDITS SAVED & SYNCED LIVE]');
             window.closeModal('dev-panel-modal');
         };
 
-        // Inline Direct Click-To-Edit Toggle
+        // Inline Direct Click-To-Edit Toggle & Input Listeners
         let inlineEditingEnabled = false;
         window.toggleInlineEditMode = () => {
             playCyberBeep(750, 0.08, 'sawtooth');
@@ -2126,7 +2152,20 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                 if (btn) btn.innerText = '[INLINE EDIT: ON]';
                 if (qBtn) qBtn.innerText = '[✏️ INLINE EDIT: ON]';
                 editableElements.forEach(el => {
-                    if (el) el.contentEditable = "true";
+                    if (el) {
+                        el.contentEditable = "true";
+                        el.oninput = () => {
+                            if (isLiveAutoSave) {
+                                if (el.id === 'email-value-text') applyLiveConfigUpdate({ email: el.innerText }, true);
+                                if (el.id === 'discord-value-text') applyLiveConfigUpdate({ discord: el.innerText }, true);
+                                if (el.id === 'whoami-bio-text') applyLiveConfigUpdate({ bio: el.innerText.replace('_', '') }, true);
+                                if (el.id === 'spec-cpu-val') applyLiveConfigUpdate({ cpu: el.innerText }, true);
+                                if (el.id === 'spec-gpu-val') applyLiveConfigUpdate({ gpu: el.innerText }, true);
+                                if (el.id === 'spec-ram-val') applyLiveConfigUpdate({ ram: el.innerText }, true);
+                                if (el.id === 'spec-os-val') applyLiveConfigUpdate({ os: el.innerText }, true);
+                            }
+                        };
+                    }
                 });
                 window.showToast('[INLINE DIRECT CLICK-TO-EDIT ENABLED]');
             } else {
@@ -2197,7 +2236,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                     "> DOMAIN STATUS: pxlz.pro/dreamlex [ONLINE]",
                     "> GITHUB AUTHOR: pixxella [ACTIVE]",
                     "> AHK v2 UTILITIES: LOADED [OK]",
-                    "> FIREBASE REALTIME SYNC: ACTIVE [OK]",
+                    "> ZERO-LATENCY LIVE SYNC: ONLINE [OK]",
                     "> PHYSICAL LIGHT ENGINE: SIMULATING [OK]",
                     "> STATUS: STABLE - ALL SYSTEMS NOMINAL."
                 ];
@@ -2222,8 +2261,9 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             }
         };
 
-        // Initialize Saved Config on Page Load
+        // Initialize Saved Config and Live Listeners on Page Load
         loadSavedConfig();
+        attachLiveInputListeners();
 
     </script>
 </body>
