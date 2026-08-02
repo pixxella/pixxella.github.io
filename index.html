@@ -503,16 +503,16 @@
             margin-top: 10px;
         }
 
-        /* Blinking terminal console cursor */
+        /* Blinking terminal console cursor via CSS ::after (Clean, Non-Buggy Typing) */
         @keyframes console-blink {
             0%, 100% { opacity: 0; }
             50% { opacity: 1; }
         }
-        .console-cursor {
+        #whoami-bio-text::after {
+            content: ' _';
             color: var(--primary);
             font-weight: 900;
             animation: console-blink 1s infinite step-end;
-            margin-left: 2px;
         }
 
         /* Cyber Acrylic Buttons — Fixed Color Stability (No Plain White Flash) */
@@ -617,13 +617,39 @@
             background: rgba(71, 253, 72, 0.08) !important;
         }
 
-        /* Persistent Floating Dev Toolbar */
+        /* Real-Time Live Editing Indicator Green Box for Normal Viewers */
+        .being-live-edited {
+            border: 2px solid #47fd48 !important;
+            border-radius: 12px !important;
+            box-shadow: 0 0 22px rgba(71, 253, 72, 0.65) !important;
+            position: relative !important;
+            animation: devPulse 1.2s infinite !important;
+            background: rgba(71, 253, 72, 0.07) !important;
+        }
+
+        .being-live-edited::before {
+            content: '⚡ [CREATOR IS EDITING THIS LIVE...]';
+            position: absolute;
+            top: -26px;
+            left: 0;
+            background: #47fd48;
+            color: #000;
+            font-size: 0.68rem;
+            font-weight: 900;
+            padding: 2px 10px;
+            border-radius: 6px;
+            z-index: 500;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            letter-spacing: 0.5px;
+        }
+
+        /* Movable / Draggable Toolbar styling */
         #dev-quick-bar {
             position: fixed;
             bottom: 25px;
             right: 25px;
             z-index: 25000;
-            background: rgba(10, 8, 16, 0.92);
+            background: rgba(10, 8, 16, 0.94);
             border: 2px solid #47fd48;
             padding: 10px 18px;
             border-radius: 20px;
@@ -633,6 +659,21 @@
             align-items: center;
             gap: 10px;
             flex-wrap: wrap;
+            cursor: default;
+        }
+
+        .drag-handle {
+            cursor: move;
+            font-weight: 900;
+            color: #47fd48;
+            font-size: 1.1rem;
+            padding: 0 4px;
+            user-select: none;
+            opacity: 0.75;
+        }
+
+        .drag-handle:hover {
+            opacity: 1;
         }
 
         /* Domains Grid - Ultra Wide */
@@ -1007,6 +1048,7 @@
             width: 680px;
             max-width: 92vw;
             border-radius: 28px;
+            position: relative;
         }
 
         /* Toast Notifications */
@@ -1151,7 +1193,7 @@
                 <button id="nav-dev-panel-btn" onclick="openModal('dev-panel-modal')" class="btn-cyber btn-sm" style="border-color: #47fd48; color: #47fd48; background: rgba(71,253,72,0.15);">[⚡ DEV DASHBOARD]</button>
                 <a href="https://github.com/pixxella" class="nav-github-btn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
                     </svg>
                     @pixxella
                 </a>
@@ -1160,9 +1202,10 @@
         </div>
     </header>
 
-    <!-- Permanent Floating Dev Quick Bar -->
+    <!-- Movable / Draggable Permanent Floating Dev Quick Bar -->
     <div id="dev-quick-bar">
-        <span style="color: #47fd48; font-weight: 900; font-size: 0.78rem;">⚡ DEV CONTROLS:</span>
+        <span class="drag-handle" id="quick-bar-handle" title="Click and drag to move toolbar">⋮⋮</span>
+        <span style="color: #47fd48; font-weight: 900; font-size: 0.78rem;">DEV CONTROLS:</span>
         <button onclick="openModal('dev-panel-modal')" class="btn-cyber btn-sm" style="border-color: #47fd48; color: #47fd48; font-size: 0.72rem; padding: 5px 12px;">[⚡ DASHBOARD]</button>
         <button onclick="toggleLiveAutoSave()" id="quick-btn-autosave" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #47fd48; color: #47fd48; background: rgba(71,253,72,0.15); font-size: 0.72rem; padding: 5px 12px;">[⚡ LIVE AUTOSAVE: ON]</button>
         <button onclick="toggleInlineEditMode()" id="quick-btn-inline" class="btn-cyber btn-cyber-outline btn-sm" style="font-size: 0.72rem; padding: 5px 12px;">[✏️ INLINE EDIT: OFF]</button>
@@ -1228,7 +1271,7 @@
                 </div>
 
                 <p id="whoami-bio-text" style="font-size: 0.98rem; line-height: 1.75; margin: 20px 0; color: #eee;" class="selectable">
-                    Hey! I'm nPixel. I'm a vibe coder (I don't design shit) and a tech enthusiast learning about virtual machines, operating systems, and kernel-level architecture. I'm also a gamer who loves exploring OS internals.<span class="console-cursor">_</span>
+                    Hey! I'm nPixel. I'm a vibe coder (I don't design shit) and a tech enthusiast learning about virtual machines, operating systems, and kernel-level architecture. I'm also a gamer who loves exploring OS internals.
                 </p>
 
                 <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 18px;">
@@ -1567,14 +1610,14 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                 <!-- v3.5 -->
                 <div class="dev-card" style="border-left: 4px solid #47fd48;">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                        <span style="color: #47fd48; font-weight: 900; font-size: 1.1rem;">v3.5 - Zero-Latency Live Auto-Sync & Sound FX</span>
+                        <span style="color: #47fd48; font-weight: 900; font-size: 1.1rem;">v3.5 - Zero-Latency Live Auto-Sync & Movable Controls</span>
                         <span class="domain-tag" style="background: rgba(71,253,72,0.15); border-color: #47fd48; color: #47fd48;">[CURRENT RELEASE]</span>
                     </div>
                     <p style="font-size: 0.88rem; color: #ccc; margin: 6px 0; line-height: 1.6;">
-                        • Instant live sync engine (BroadcastChannel & Firebase listener) — type anywhere, updates everywhere live with zero page refreshes!<br>
-                        • Added Web Audio API cyber synth sound effects for clicks & modal operations.<br>
-                        • Integrated Physical Point Light simulation canvas with dynamic inverse-square falloff.<br>
-                        • Fixed button color stability, added secret stealth mode toggle & vLinks version badge.
+                        • Fixed inline typing range/focus bugs — native non-disruptive contenteditable editing!<br>
+                        • Added Draggable / Movable Dev Quick Controls Toolbar & Dashboard Modal.<br>
+                        • Added Live Editing Green Focus Highlight Box for non-dev users in real time.<br>
+                        • Instant live sync engine (BroadcastChannel & Firebase listener) with secret stealth toggle.
                     </p>
                 </div>
 
@@ -1632,9 +1675,10 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
 
     <!-- Sleek Cyber Dev Control Dashboard Panel Modal -->
     <div id="dev-panel-modal" class="modal-overlay">
-        <div class="modal-box" style="width: 680px; max-width: 95vw; border-color: #47fd48; box-shadow: 0 35px 120px rgba(0, 0, 0, 0.95), 0 0 50px rgba(71, 253, 72, 0.35); max-height: 90vh; overflow-y: auto;">
-            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #47fd48; padding-bottom: 12px; margin-bottom: 8px;">
+        <div class="modal-box" id="dev-modal-box" style="width: 680px; max-width: 95vw; border-color: #47fd48; box-shadow: 0 35px 120px rgba(0, 0, 0, 0.95), 0 0 50px rgba(71, 253, 72, 0.35); max-height: 90vh; overflow-y: auto;">
+            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #47fd48; padding-bottom: 12px; margin-bottom: 8px; cursor: move;" id="dev-modal-handle">
                 <div style="display: flex; align-items: center; gap: 10px;">
+                    <span class="drag-handle">⋮⋮</span>
                     <span style="color: #47fd48; font-weight: 900; font-size: 0.95rem;">⚡ [PXLZ.PRO CENTRAL DEV CONTROL DASHBOARD]</span>
                 </div>
                 <span style="color: #888; font-size: 1rem; cursor: pointer; font-weight: 900;" onclick="closeModal('dev-panel-modal')">[X]</span>
@@ -1712,7 +1756,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
     </div>
 
     <script>
-        // BroadcastChannel for Zero-Latency Multi-Tab Live Sync
+        // BroadcastChannel for Zero-Latency Multi-Tab Live Sync & Editing Focus Indicators
         const liveChannel = new BroadcastChannel('pxlz_live_channel');
 
         // Web Audio API Procedural Synth Sound Effects
@@ -1758,6 +1802,52 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
         } catch (e) {
             console.warn("Firebase initialization notice:", e.message);
         }
+
+        // Draggable Element Utility
+        const makeElementDraggable = (elmnt, handle) => {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            const dragTarget = handle || elmnt;
+
+            dragTarget.onmousedown = dragMouseDown;
+
+            function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+            }
+
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+                elmnt.style.bottom = "auto";
+                elmnt.style.right = "auto";
+            }
+
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        };
+
+        // Initialize Draggable Quick Toolbar & Dev Modal
+        const initDraggables = () => {
+            const quickBar = document.getElementById('dev-quick-bar');
+            const quickHandle = document.getElementById('quick-bar-handle');
+            if (quickBar && quickHandle) makeElementDraggable(quickBar, quickHandle);
+
+            const modalBox = document.getElementById('dev-modal-box');
+            const modalHandle = document.getElementById('dev-modal-handle');
+            if (modalBox && modalHandle) makeElementDraggable(modalBox, modalHandle);
+        };
 
         // Live Auto-Save Toggle State
         let isLiveAutoSave = true;
@@ -1821,9 +1911,36 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             }
         });
 
+        // Broadcast Focus Edit State to all clients for live green editing box
+        const broadcastEditFocusState = (fieldId, isEditing) => {
+            const editPayload = { type: 'LIVE_EDIT_FOCUS', fieldId, isEditing };
+            liveChannel.postMessage(editPayload);
+            if (db) {
+                try {
+                    db.ref('liveEditState').set(editPayload);
+                } catch (e) {}
+            }
+        };
+
+        // Apply Live Edit Focus Green Box to target element for normal users
+        const handleLiveEditFocusIndicator = (data) => {
+            if (!data || data.type !== 'LIVE_EDIT_FOCUS') return;
+            const targetEl = document.getElementById(data.fieldId);
+            if (targetEl) {
+                if (data.isEditing) {
+                    targetEl.classList.add('being-live-edited');
+                } else {
+                    targetEl.classList.remove('being-live-edited');
+                }
+            }
+        };
+
         // Core Live Sync Update Engine — Instantly updates DOM + Storage + Firebase without refreshing!
         window.applyLiveConfigUpdate = (data, broadcast = true) => {
-            if (!data) return;
+            if (!data || data.type === 'LIVE_EDIT_FOCUS') {
+                handleLiveEditFocusIndicator(data);
+                return;
+            }
 
             const emailEl = document.getElementById('email-value-text');
             const discordEl = document.getElementById('discord-value-text');
@@ -1841,39 +1958,41 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             const ramInp = document.getElementById('dev-input-ram');
             const osInp = document.getElementById('dev-input-os');
 
+            const activeElem = document.activeElement;
+
             if (data.email !== undefined) {
-                if (emailEl && emailEl.innerText !== data.email) emailEl.innerText = data.email;
-                if (emailInp && emailInp.value !== data.email) emailInp.value = data.email;
+                if (emailEl && activeElem !== emailEl && emailEl.innerText !== data.email) emailEl.innerText = data.email;
+                if (emailInp && activeElem !== emailInp && emailInp.value !== data.email) emailInp.value = data.email;
                 localStorage.setItem('pxlz_email', data.email);
             }
             if (data.discord !== undefined) {
-                if (discordEl && discordEl.innerText !== data.discord) discordEl.innerText = data.discord;
-                if (discordInp && discordInp.value !== data.discord) discordInp.value = data.discord;
+                if (discordEl && activeElem !== discordEl && discordEl.innerText !== data.discord) discordEl.innerText = data.discord;
+                if (discordInp && activeElem !== discordInp && discordInp.value !== data.discord) discordInp.value = data.discord;
                 localStorage.setItem('pxlz_discord', data.discord);
             }
             if (data.bio !== undefined) {
-                if (bioEl) bioEl.innerHTML = data.bio + '<span class="console-cursor">_</span>';
-                if (bioInp && bioInp.value !== data.bio) bioInp.value = data.bio;
+                if (bioEl && activeElem !== bioEl && bioEl.innerText !== data.bio) bioEl.innerText = data.bio;
+                if (bioInp && activeElem !== bioInp && bioInp.value !== data.bio) bioInp.value = data.bio;
                 localStorage.setItem('pxlz_bio', data.bio);
             }
             if (data.cpu !== undefined) {
-                if (cpuEl && cpuEl.innerText !== data.cpu) cpuEl.innerText = data.cpu;
-                if (cpuInp && cpuInp.value !== data.cpu) cpuInp.value = data.cpu;
+                if (cpuEl && activeElem !== cpuEl && cpuEl.innerText !== data.cpu) cpuEl.innerText = data.cpu;
+                if (cpuInp && activeElem !== cpuInp && cpuInp.value !== data.cpu) cpuInp.value = data.cpu;
                 localStorage.setItem('pxlz_cpu', data.cpu);
             }
             if (data.gpu !== undefined) {
-                if (gpuEl && gpuEl.innerText !== data.gpu) gpuEl.innerText = data.gpu;
-                if (gpuInp && gpuInp.value !== data.gpu) gpuInp.value = data.gpu;
+                if (gpuEl && activeElem !== gpuEl && gpuEl.innerText !== data.gpu) gpuEl.innerText = data.gpu;
+                if (gpuInp && activeElem !== gpuInp && gpuInp.value !== data.gpu) gpuInp.value = data.gpu;
                 localStorage.setItem('pxlz_gpu', data.gpu);
             }
             if (data.ram !== undefined) {
-                if (ramEl && ramEl.innerText !== data.ram) ramEl.innerText = data.ram;
-                if (ramInp && ramInp.value !== data.ram) ramInp.value = data.ram;
+                if (ramEl && activeElem !== ramEl && ramEl.innerText !== data.ram) ramEl.innerText = data.ram;
+                if (ramInp && activeElem !== ramInp && ramInp.value !== data.ram) ramInp.value = data.ram;
                 localStorage.setItem('pxlz_ram', data.ram);
             }
             if (data.os !== undefined) {
-                if (osEl && osEl.innerText !== data.os) osEl.innerText = data.os;
-                if (osInp && osInp.value !== data.os) osInp.value = data.os;
+                if (osEl && activeElem !== osEl && osEl.innerText !== data.os) osEl.innerText = data.os;
+                if (osInp && activeElem !== osInp && osInp.value !== data.os) osInp.value = data.os;
                 localStorage.setItem('pxlz_os', data.os);
             }
 
@@ -1967,6 +2086,13 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                     const data = snapshot.val();
                     if (data) {
                         applyLiveConfigUpdate(data, false);
+                    }
+                });
+
+                db.ref('liveEditState').on('value', (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        handleLiveEditFocusIndicator(data);
                     }
                 });
             }
@@ -2227,7 +2353,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             window.closeModal('dev-panel-modal');
         };
 
-        // Inline Direct Click-To-Edit Toggle & Input Listeners
+        // Smooth Bug-Free Inline Direct Click-To-Edit & Real-Time Focus Indicators
         let inlineEditingEnabled = false;
         window.toggleInlineEditMode = () => {
             playCyberBeep(750, 0.08, 'sawtooth');
@@ -2243,15 +2369,28 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                 editableElements.forEach(el => {
                     if (el) {
                         el.contentEditable = "true";
+
+                        // Focus event -> Show live green editing box to normal users
+                        el.onfocus = () => {
+                            broadcastEditFocusState(el.id, true);
+                        };
+
+                        // Blur event -> Remove live green editing box
+                        el.onblur = () => {
+                            broadcastEditFocusState(el.id, false);
+                        };
+
+                        // Input event -> Update text without re-rendering innerHTML (Bug-free typing!)
                         el.oninput = () => {
                             if (isLiveAutoSave) {
-                                if (el.id === 'email-value-text') applyLiveConfigUpdate({ email: el.innerText }, true);
-                                if (el.id === 'discord-value-text') applyLiveConfigUpdate({ discord: el.innerText }, true);
-                                if (el.id === 'whoami-bio-text') applyLiveConfigUpdate({ bio: el.innerText.replace('_', '') }, true);
-                                if (el.id === 'spec-cpu-val') applyLiveConfigUpdate({ cpu: el.innerText }, true);
-                                if (el.id === 'spec-gpu-val') applyLiveConfigUpdate({ gpu: el.innerText }, true);
+                                const cleanText = el.innerText.trim();
+                                if (el.id === 'email-value-text') applyLiveConfigUpdate({ email: cleanText }, true);
+                                if (el.id === 'discord-value-text') applyLiveConfigUpdate({ discord: cleanText }, true);
+                                if (el.id === 'whoami-bio-text') applyLiveConfigUpdate({ bio: cleanText }, true);
+                                if (el.id === 'spec-cpu-val') applyLiveConfigUpdate({ cpu: cleanText }, true);
+                                if (el.id === 'spec-gpu-val') applyLiveConfigUpdate({ gpu: cleanText }, true);
                                 if (el.id === 'spec-ram-val') applyLiveConfigUpdate({ ram: el.innerText }, true);
-                                if (el.id === 'spec-os-val') applyLiveConfigUpdate({ os: el.innerText }, true);
+                                if (el.id === 'spec-os-val') applyLiveConfigUpdate({ os: cleanText }, true);
                             }
                         };
                     }
@@ -2262,7 +2401,11 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                 if (btn) btn.innerText = '[INLINE EDIT: OFF]';
                 if (qBtn) qBtn.innerText = '[✏️ INLINE EDIT: OFF]';
                 editableElements.forEach(el => {
-                    if (el) el.contentEditable = "false";
+                    if (el) {
+                        el.contentEditable = "false";
+                        el.onfocus = null;
+                        el.onblur = null;
+                    }
                 });
                 window.showToast('[INLINE DIRECT CLICK-TO-EDIT DISABLED]');
             }
@@ -2326,7 +2469,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                     "> GITHUB AUTHOR: pixxella [ACTIVE]",
                     "> AHK v2 UTILITIES: LOADED [OK]",
                     "> ZERO-LATENCY LIVE SYNC: ONLINE [OK]",
-                    "> PHYSICAL LIGHT ENGINE: SIMULATING [OK]",
+                    "> DRAGGABLE DEV CONTROLS: ACTIVE [OK]",
                     "> STATUS: STABLE - ALL SYSTEMS NOMINAL."
                 ];
                 let currentLine = 0;
@@ -2350,8 +2493,9 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             }
         };
 
-        // Initialize Saved Config and Live Listeners on Page Load
+        // Initialize Saved Config, Draggables, and Live Listeners on Page Load
         loadSavedConfig();
+        initDraggables();
         attachLiveInputListeners();
 
     </script>
