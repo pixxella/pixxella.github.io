@@ -273,7 +273,7 @@
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
         }
 
         .nav-github-btn {
@@ -561,7 +561,7 @@
         }
 
         /* Live Dev Mode Editable Outline */
-        .dev-mode-active [contenteditable="true"] {
+        .inline-editable-active [contenteditable="true"] {
             border: 1.5px dashed #47fd48 !important;
             padding: 4px 8px !important;
             border-radius: 8px !important;
@@ -1062,7 +1062,7 @@
             </ul>
 
             <div class="nav-actions">
-                <span id="nav-dev-badge" style="display: none; background: rgba(71, 253, 72, 0.15); border: 1px solid #47fd48; color: #47fd48; font-size: 0.7rem; font-weight: 900; padding: 4px 10px; border-radius: 8px;">[DEV MODE]</span>
+                <button id="nav-dev-panel-btn" onclick="openModal('dev-panel-modal')" class="btn-cyber btn-sm" style="border-color: #47fd48; color: #47fd48; background: rgba(71,253,72,0.15);">[⚡ DEV DASHBOARD]</button>
                 <a href="https://github.com/pixxella" class="nav-github-btn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
@@ -1127,7 +1127,7 @@
                         </span>
                     </div>
                     <span class="hero-badge online" id="vibe-badge" style="font-size: 0.82rem; padding: 6px 16px;">
-                        <span id="secret-green-dot" onclick="triggerDevSystem(event)" style="cursor: pointer; display: inline-block; font-size: 1.1rem; vertical-align: middle; transition: all 0.3s ease;" title="Click green dot to activate Dev Authentication System">●</span> VIBE CODER
+                        <span id="secret-green-dot" onclick="openModal('dev-panel-modal')" style="cursor: pointer; display: inline-block; font-size: 1.1rem; vertical-align: middle; transition: all 0.3s ease;" title="Click dot to open Developer Control Dashboard">●</span> VIBE CODER
                     </span>
                 </div>
 
@@ -1140,9 +1140,14 @@
                         <strong>made by pxlzfr (nPixelz)</strong> - <span style="color: var(--primary);">"i'm the one developing this-" -pixel</span>
                     </span>
 
-                    <button class="btn-cyber btn-cyber-primary btn-sm" onclick="openTerminalModal()">
-                        [BOOT DIAGNOSTIC LOG]
-                    </button>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn-cyber btn-cyber-outline btn-sm" onclick="openModal('dev-panel-modal')" style="border-color: #47fd48; color: #47fd48;">
+                            [⚡ DEV PANEL]
+                        </button>
+                        <button class="btn-cyber btn-cyber-primary btn-sm" onclick="openTerminalModal()">
+                            [BOOT DIAGNOSTIC LOG]
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1170,7 +1175,7 @@
                         </p>
                     </div>
                     <div class="domain-actions">
-                        <a href="https://pxlz.pro/dl" class="btn-cyber btn-cyber-primary btn-sm">VISIT /DL</a>
+                        <a href="https://pxlz.pro/dl" id="link-dl-btn" class="btn-cyber btn-cyber-primary btn-sm">VISIT /DL</a>
                         <button class="btn-cyber btn-cyber-outline btn-sm" onclick="copyText('https://pxlz.pro/dl', this)">COPY LINK</button>
                     </div>
                 </div>
@@ -1321,7 +1326,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                     <span class="spec-column-header">[ENV_SOFTWARE]</span>
                     <div class="spec-item">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="#0078d4"><path d="M0 0h11v11H0zm13 0h11v11H13zM0 13h11v11H0zm13 0h11v11H13z"/></svg>
-                        <span>OS: <strong>Windows 11 Pro</strong></span>
+                        <span>OS: <strong id="spec-os-val">Windows 11 Pro</strong></span>
                     </div>
                     <div class="spec-item">
                         <img src="https://api.iconify.design/devicon:vsphere.svg" width="18" height="18" alt="VMware">
@@ -1338,15 +1343,15 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                     <span class="spec-column-header">[PC_SPECS]</span>
                     <div class="spec-item">
                         <img src="https://api.iconify.design/simple-icons:amd.svg?color=%23ED1C24" width="18" height="18" alt="AMD CPU">
-                        <span>CPU: <strong>AMD Ryzen 5 7600X (6C/12T)</strong></span>
+                        <span>CPU: <strong id="spec-cpu-val">AMD Ryzen 5 7600X (6C/12T)</strong></span>
                     </div>
                     <div class="spec-item">
                         <img src="https://api.iconify.design/simple-icons:amd.svg?color=%23ED1C24" width="18" height="18" alt="AMD GPU">
-                        <span>GPU: <strong>AMD Radeon RX 6700XT XTX</strong></span>
+                        <span>GPU: <strong id="spec-gpu-val">AMD Radeon RX 6700XT XTX</strong></span>
                     </div>
                     <div class="spec-item">
                         <img src="https://api.iconify.design/bi:memory.svg?color=%2300E676" width="18" height="18" alt="RAM">
-                        <span>RAM: <strong>32GB DDR5 Dual-Channel</strong></span>
+                        <span>RAM: <strong id="spec-ram-val">32GB DDR5 Dual-Channel</strong></span>
                     </div>
                     <div class="spec-item">
                         <img src="https://api.iconify.design/lucide:hard-drive.svg?color=%2300B0FF" width="18" height="18" alt="SSD">
@@ -1477,25 +1482,82 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
         </div>
     </div>
 
-    <!-- Secret Cyber Dev Command Auth Modal -->
-    <div id="dev-prompt-modal" class="modal-overlay">
-        <div class="modal-box" style="border-color: #47fd48; box-shadow: 0 30px 100px rgba(0, 0, 0, 0.9), 0 0 45px rgba(71, 253, 72, 0.35);">
-            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #47fd48; padding-bottom: 8px;">
-                <span style="color: #47fd48; font-weight: bold; font-size: 0.85rem;">[SECRET_DEV_ACTIVATION_SYSTEM]</span>
-                <span style="color: #666; font-size: 0.8rem; cursor: pointer;" onclick="closeModal('dev-prompt-modal')">[X]</span>
+    <!-- High-Tech Central Dev Control Dashboard Panel Modal -->
+    <div id="dev-panel-modal" class="modal-overlay">
+        <div class="modal-box" style="width: 720px; max-width: 95vw; border-color: #47fd48; box-shadow: 0 35px 120px rgba(0, 0, 0, 0.95), 0 0 50px rgba(71, 253, 72, 0.35); max-height: 90vh; overflow-y: auto;">
+            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #47fd48; padding-bottom: 12px; margin-bottom: 8px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #47fd48; font-weight: 900; font-size: 1rem;">⚡ [PXLZ.PRO CENTRAL DEV CONTROL DASHBOARD]</span>
+                </div>
+                <span style="color: #888; font-size: 1rem; cursor: pointer; font-weight: 900;" onclick="closeModal('dev-panel-modal')">[X]</span>
             </div>
-            <p style="font-size: 0.85rem; color: #ccc; text-align: left; margin: 5px 0;">
-                Green Dot System Triggered! Type <strong>"dev"</strong> to authenticate and enable Live Dev Mode (editing Email, Discord, Bio, etc.):
-            </p>
-            <input type="text" id="dev-cmd-input" placeholder="type 'dev' here..." style="width: 100%; padding: 12px 16px; background: #000; border: 2px solid #47fd48; border-radius: 12px; color: #47fd48; font-weight: 900; font-size: 1rem; outline: none; box-shadow: 0 0 15px rgba(71, 253, 72, 0.2);" onkeyup="checkDevCmd(event)">
-            <button onclick="submitDevCmd()" class="btn-cyber btn-cyber-primary" style="width: 100%; background: linear-gradient(135deg, rgba(71, 253, 72, 0.3) 0%, rgba(0, 143, 17, 0.5) 100%); border-color: #47fd48; color: #47fd48; text-shadow: 0 0 10px #47fd48;">AUTHENTICATE DEV MODE</button>
-        </div>
-    </div>
 
-    <!-- Floating Dev Mode Control Bar -->
-    <div id="dev-save-bar" style="display: none; position: fixed; bottom: 25px; right: 25px; z-index: 25000; background: rgba(10, 10, 15, 0.9); border: 2px solid #47fd48; padding: 12px 20px; border-radius: 20px; backdrop-filter: blur(20px); box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 25px rgba(71, 253, 72, 0.3); align-items: center; gap: 12px;">
-        <span style="color: #47fd48; font-weight: 900; font-size: 0.82rem;">⚡ DEV MODE ACTIVE:</span>
-        <button onclick="saveDevEdits()" class="btn-cyber btn-cyber-primary btn-sm" style="border-color: #47fd48; color: #47fd48;">SAVE EDITS TO FIREBASE</button>
+            <div style="display: flex; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                <button class="btn-cyber btn-sm dev-tab-btn" onclick="switchDevTab('contact-tab', this)" style="border-color: #47fd48; color: #47fd48; background: rgba(71,253,72,0.15);">[1. CONTACT & LINKS]</button>
+                <button class="btn-cyber btn-sm dev-tab-btn" onclick="switchDevTab('bio-tab', this)">[2. CREATOR BIO]</button>
+                <button class="btn-cyber btn-sm dev-tab-btn" onclick="switchDevTab('theme-tab', this)">[3. THEME & COLORS]</button>
+                <button class="btn-cyber btn-sm dev-tab-btn" onclick="switchDevTab('specs-tab', this)">[4. PC & VM SPECS]</button>
+            </div>
+
+            <!-- Tab 1: Contact & Links -->
+            <div id="dev-tab-contact" class="dev-panel-tab" style="display: flex; flex-direction: column; gap: 14px;">
+                <div>
+                    <label style="font-size: 0.78rem; color: #47fd48; font-weight: 900; text-transform: uppercase;">Official Contact Email:</label>
+                    <input type="text" id="dev-input-email" value="pxlz@pxlz.pro" style="width: 100%; margin-top: 5px; padding: 10px 14px; background: #000; border: 1.5px solid rgba(71,253,72,0.5); border-radius: 10px; color: #fff; font-weight: 700;">
+                </div>
+                <div>
+                    <label style="font-size: 0.78rem; color: #7289da; font-weight: 900; text-transform: uppercase;">Discord Tag / Username:</label>
+                    <input type="text" id="dev-input-discord" value="pxlzfr" style="width: 100%; margin-top: 5px; padding: 10px 14px; background: #000; border: 1.5px solid #7289da; border-radius: 10px; color: #7289da; font-weight: 700;">
+                </div>
+            </div>
+
+            <!-- Tab 2: Creator Bio -->
+            <div id="dev-tab-bio" class="dev-panel-tab" style="display: none; flex-direction: column; gap: 14px;">
+                <div>
+                    <label style="font-size: 0.78rem; color: #47fd48; font-weight: 900; text-transform: uppercase;">WHOAMI Creator Bio Text:</label>
+                    <textarea id="dev-input-bio" rows="4" style="width: 100%; margin-top: 5px; padding: 12px 14px; background: #000; border: 1.5px solid rgba(71,253,72,0.5); border-radius: 12px; color: #fff; line-height: 1.6;">Hey! I'm nPixel. I'm a vibe coder (I don't design shit) and a tech enthusiast learning about virtual machines, operating systems, and kernel-level architecture. I'm also a gamer who loves exploring OS internals.</textarea>
+                </div>
+            </div>
+
+            <!-- Tab 3: Theme & Colors -->
+            <div id="dev-tab-theme" class="dev-panel-tab" style="display: none; flex-direction: column; gap: 14px;">
+                <label style="font-size: 0.78rem; color: #47fd48; font-weight: 900; text-transform: uppercase;">Preset Theme Colors:</label>
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <button onclick="setCustomPrimary('#ffaaff', '#d966d9')" class="btn-cyber btn-sm" style="border-color: #ffaaff; color: #ffaaff;">#ffaaff (Soft Pink)</button>
+                    <button onclick="setCustomPrimary('#00f5d4', '#00b894')" class="btn-cyber btn-sm" style="border-color: #00f5d4; color: #00f5d4;">#00f5d4 (Cyber Mint)</button>
+                    <button onclick="setCustomPrimary('#c77dff', '#7b2cbf')" class="btn-cyber btn-sm" style="border-color: #c77dff; color: #c77dff;">#c77dff (Neon Violet)</button>
+                    <button onclick="setCustomPrimary('#7289da', '#5865F2')" class="btn-cyber btn-sm" style="border-color: #7289da; color: #7289da;">#7289da (Discord Blue)</button>
+                </div>
+            </div>
+
+            <!-- Tab 4: PC & VM Specs -->
+            <div id="dev-tab-specs" class="dev-panel-tab" style="display: none; flex-direction: column; gap: 14px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div>
+                        <label style="font-size: 0.72rem; color: #aaa;">CPU Model:</label>
+                        <input type="text" id="dev-input-cpu" value="AMD Ryzen 5 7600X (6C/12T)" style="width: 100%; margin-top: 4px; padding: 8px 12px; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff;">
+                    </div>
+                    <div>
+                        <label style="font-size: 0.72rem; color: #aaa;">GPU Model:</label>
+                        <input type="text" id="dev-input-gpu" value="AMD Radeon RX 6700XT XTX" style="width: 100%; margin-top: 4px; padding: 8px 12px; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff;">
+                    </div>
+                    <div>
+                        <label style="font-size: 0.72rem; color: #aaa;">RAM Memory:</label>
+                        <input type="text" id="dev-input-ram" value="32GB DDR5 Dual-Channel" style="width: 100%; margin-top: 4px; padding: 8px 12px; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff;">
+                    </div>
+                    <div>
+                        <label style="font-size: 0.72rem; color: #aaa;">Operating System:</label>
+                        <input type="text" id="dev-input-os" value="Windows 11 Pro" style="width: 100%; margin-top: 4px; padding: 8px 12px; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff;">
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 15px; margin-top: 15px; flex-wrap: wrap;">
+                <button onclick="saveDevPanelEdits()" class="btn-cyber btn-cyber-primary" style="flex: 1; border-color: #47fd48; color: #47fd48; background: linear-gradient(135deg, rgba(71,253,72,0.25) 0%, rgba(0,143,17,0.45) 100%);">SAVE & SYNC TO FIREBASE</button>
+                <button onclick="toggleInlineEditMode()" class="btn-cyber btn-cyber-outline btn-sm" id="btn-toggle-inline">[INLINE EDITING: OFF]</button>
+                <button onclick="resetDevDefaults()" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #ff4d4d; color: #ff4d4d;">[RESET DEFAULTS]</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1526,18 +1588,52 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             const savedEmail = localStorage.getItem('pxlz_email');
             const savedDiscord = localStorage.getItem('pxlz_discord');
             const savedBio = localStorage.getItem('pxlz_bio');
+            const savedCpu = localStorage.getItem('pxlz_cpu');
+            const savedGpu = localStorage.getItem('pxlz_gpu');
+            const savedRam = localStorage.getItem('pxlz_ram');
+            const savedOs = localStorage.getItem('pxlz_os');
 
             if (savedEmail) {
                 const el = document.getElementById('email-value-text');
+                const inp = document.getElementById('dev-input-email');
                 if (el) el.innerText = savedEmail;
+                if (inp) inp.value = savedEmail;
             }
             if (savedDiscord) {
                 const el = document.getElementById('discord-value-text');
+                const inp = document.getElementById('dev-input-discord');
                 if (el) el.innerText = savedDiscord;
+                if (inp) inp.value = savedDiscord;
             }
             if (savedBio) {
                 const el = document.getElementById('whoami-bio-text');
+                const inp = document.getElementById('dev-input-bio');
                 if (el) el.innerHTML = savedBio + '<span class="console-cursor">_</span>';
+                if (inp) inp.value = savedBio;
+            }
+            if (savedCpu) {
+                const el = document.getElementById('spec-cpu-val');
+                const inp = document.getElementById('dev-input-cpu');
+                if (el) el.innerText = savedCpu;
+                if (inp) inp.value = savedCpu;
+            }
+            if (savedGpu) {
+                const el = document.getElementById('spec-gpu-val');
+                const inp = document.getElementById('dev-input-gpu');
+                if (el) el.innerText = savedGpu;
+                if (inp) inp.value = savedGpu;
+            }
+            if (savedRam) {
+                const el = document.getElementById('spec-ram-val');
+                const inp = document.getElementById('dev-input-ram');
+                if (el) el.innerText = savedRam;
+                if (inp) inp.value = savedRam;
+            }
+            if (savedOs) {
+                const el = document.getElementById('spec-os-val');
+                const inp = document.getElementById('dev-input-os');
+                if (el) el.innerText = savedOs;
+                if (inp) inp.value = savedOs;
             }
 
             if (db) {
@@ -1692,112 +1788,142 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             }
         };
 
-        // Secret Dev Mode System Mechanics
-        let secretKeyBuffer = '';
-        let devModeActive = false;
-
-        window.triggerDevSystem = (e) => {
-            if (e) e.stopPropagation();
-            const greenDot = document.getElementById('secret-green-dot');
-            if (greenDot) {
-                greenDot.style.transform = 'scale(1.6) rotate(360deg)';
-                greenDot.style.textShadow = '0 0 20px #47fd48, 0 0 35px #47fd48';
-                setTimeout(() => { greenDot.style.transform = 'none'; }, 600);
-            }
-            window.showToast('[SYSTEM: KEYLISTENER ACTIVE - TYPE "dev"]');
-            window.openModal('dev-prompt-modal');
-            const input = document.getElementById('dev-cmd-input');
-            if (input) {
-                input.value = '';
-                setTimeout(() => input.focus(), 150);
-            }
-        };
-
-        window.checkDevCmd = (e) => {
-            if (e.key === 'Enter') {
-                window.submitDevCmd();
-            }
-        };
-
-        window.submitDevCmd = () => {
-            const input = document.getElementById('dev-cmd-input');
-            if (input && input.value.trim().toLowerCase() === 'dev') {
-                window.closeModal('dev-prompt-modal');
-                window.activateDevMode();
-            } else {
-                window.showToast('[AUTH FAILED: INCORRECT COMMAND]');
-            }
-        };
-
-        // Global Secret Key Listener for "dev"
-        document.addEventListener('keydown', (e) => {
-            if (devModeActive) return;
-            secretKeyBuffer += e.key.toLowerCase();
-            if (secretKeyBuffer.length > 5) {
-                secretKeyBuffer = secretKeyBuffer.slice(-5);
-            }
-            if (secretKeyBuffer.endsWith('dev')) {
-                window.activateDevMode();
-                secretKeyBuffer = '';
-            }
-        });
-
-        window.activateDevMode = () => {
-            devModeActive = true;
-            document.body.classList.add('dev-mode-active');
-            window.showToast('[DEV MODE ACTIVATED: LIVE EDITING ENABLED]');
-
-            const navBadge = document.getElementById('nav-dev-badge');
-            if (navBadge) navBadge.style.display = 'inline-block';
-
-            const saveBar = document.getElementById('dev-save-bar');
-            if (saveBar) saveBar.style.display = 'flex';
-
-            // Enable Live ContentEditable for Email, Discord, and Bio
-            const editableElements = [
-                document.getElementById('email-value-text'),
-                document.getElementById('discord-value-text'),
-                document.getElementById('whoami-bio-text')
-            ];
-
-            editableElements.forEach(el => {
-                if (el) {
-                    el.contentEditable = "true";
-                    el.style.border = "1.5px dashed #47fd48";
-                    el.style.padding = "4px 8px";
-                    el.style.borderRadius = "8px";
-                    el.style.boxShadow = "0 0 15px rgba(71, 253, 72, 0.3)";
-                }
+        // Dev Dashboard Tabs
+        window.switchDevTab = (tabName, btn) => {
+            const tabs = document.querySelectorAll('.dev-panel-tab');
+            tabs.forEach(t => t.style.display = 'none');
+            const btns = document.querySelectorAll('.dev-tab-btn');
+            btns.forEach(b => {
+                b.style.borderColor = 'var(--primary)';
+                b.style.color = 'var(--primary)';
+                b.style.background = 'rgba(var(--primary-rgb), 0.08)';
             });
+
+            if (btn) {
+                btn.style.borderColor = '#47fd48';
+                btn.style.color = '#47fd48';
+                btn.style.background = 'rgba(71,253,72,0.15)';
+            }
+
+            if (tabName === 'contact-tab') document.getElementById('dev-tab-contact').style.display = 'flex';
+            if (tabName === 'bio-tab') document.getElementById('dev-tab-bio').style.display = 'flex';
+            if (tabName === 'theme-tab') document.getElementById('dev-tab-theme').style.display = 'flex';
+            if (tabName === 'specs-tab') document.getElementById('dev-tab-specs').style.display = 'flex';
         };
 
-        window.saveDevEdits = () => {
+        // Dev Dashboard Save Logic
+        window.saveDevPanelEdits = () => {
+            const emailInp = document.getElementById('dev-input-email');
+            const discordInp = document.getElementById('dev-input-discord');
+            const bioInp = document.getElementById('dev-input-bio');
+            const cpuInp = document.getElementById('dev-input-cpu');
+            const gpuInp = document.getElementById('dev-input-gpu');
+            const ramInp = document.getElementById('dev-input-ram');
+            const osInp = document.getElementById('dev-input-os');
+
+            const emailVal = emailInp ? emailInp.value.trim() : 'pxlz@pxlz.pro';
+            const discordVal = discordInp ? discordInp.value.trim() : 'pxlzfr';
+            const bioVal = bioInp ? bioInp.value.trim() : '';
+            const cpuVal = cpuInp ? cpuInp.value.trim() : '';
+            const gpuVal = gpuInp ? gpuInp.value.trim() : '';
+            const ramVal = ramInp ? ramInp.value.trim() : '';
+            const osVal = osInp ? osInp.value.trim() : '';
+
+            // Update UI elements
             const emailEl = document.getElementById('email-value-text');
             const discordEl = document.getElementById('discord-value-text');
             const bioEl = document.getElementById('whoami-bio-text');
+            const cpuEl = document.getElementById('spec-cpu-val');
+            const gpuEl = document.getElementById('spec-gpu-val');
+            const ramEl = document.getElementById('spec-ram-val');
+            const osEl = document.getElementById('spec-os-val');
 
-            const emailVal = emailEl ? emailEl.innerText.trim() : 'pxlz@pxlz.pro';
-            const discordVal = discordEl ? discordEl.innerText.trim() : 'pxlzfr';
-            const bioVal = bioEl ? bioEl.innerText.replace('_', '').trim() : '';
+            if (emailEl) emailEl.innerText = emailVal;
+            if (discordEl) discordEl.innerText = discordVal;
+            if (bioEl) bioEl.innerHTML = bioVal + '<span class="console-cursor">_</span>';
+            if (cpuEl) cpuEl.innerText = cpuVal;
+            if (gpuEl) gpuEl.innerText = gpuVal;
+            if (ramEl) ramEl.innerText = ramVal;
+            if (osEl) osEl.innerText = osVal;
 
+            // Cache to LocalStorage
             localStorage.setItem('pxlz_email', emailVal);
             localStorage.setItem('pxlz_discord', discordVal);
             localStorage.setItem('pxlz_bio', bioVal);
+            localStorage.setItem('pxlz_cpu', cpuVal);
+            localStorage.setItem('pxlz_gpu', gpuVal);
+            localStorage.setItem('pxlz_ram', ramVal);
+            localStorage.setItem('pxlz_os', osVal);
 
+            // Sync to Firebase
             if (db) {
                 try {
                     db.ref('siteConfig').set({
                         email: emailVal,
                         discord: discordVal,
                         bio: bioVal,
+                        cpu: cpuVal,
+                        gpu: gpuVal,
+                        ram: ramVal,
+                        os: osVal,
                         updatedAt: new Date().toISOString()
                     });
-                } catch (err) {
-                    console.error("Firebase Sync error:", err);
+                } catch (e) {
+                    console.warn("Firebase sync error:", e);
                 }
             }
 
-            window.showToast('[EDITS SAVED & SYNCED TO FIREBASE]');
+            window.showToast('[DASHBOARD EDITS SAVED & SYNCED]');
+            window.closeModal('dev-panel-modal');
+        };
+
+        // Inline Direct Click-To-Edit Toggle
+        let inlineEditingEnabled = false;
+        window.toggleInlineEditMode = () => {
+            inlineEditingEnabled = !inlineEditingEnabled;
+            const btn = document.getElementById('btn-toggle-inline');
+            const editableElements = [
+                document.getElementById('email-value-text'),
+                document.getElementById('discord-value-text'),
+                document.getElementById('whoami-bio-text')
+            ];
+
+            if (inlineEditingEnabled) {
+                document.body.classList.add('inline-editable-active');
+                if (btn) btn.innerText = '[INLINE EDITING: ON]';
+                editableElements.forEach(el => {
+                    if (el) el.contentEditable = "true";
+                });
+                window.showToast('[INLINE DIRECT CLICK-TO-EDIT ENABLED]');
+            } else {
+                document.body.classList.remove('inline-editable-active');
+                if (btn) btn.innerText = '[INLINE EDITING: OFF]';
+                editableElements.forEach(el => {
+                    if (el) el.contentEditable = "false";
+                });
+                window.showToast('[INLINE DIRECT CLICK-TO-EDIT DISABLED]');
+            }
+        };
+
+        // Custom Primary Theme Setter
+        window.setCustomPrimary = (hexColor, secColor) => {
+            document.documentElement.style.setProperty('--primary', hexColor);
+            if (secColor) {
+                document.documentElement.style.setProperty('--secondary', secColor);
+            }
+            window.showToast(`THEME ACCENT CHANGED: ${hexColor}`);
+        };
+
+        // Reset Defaults
+        window.resetDevDefaults = () => {
+            localStorage.removeItem('pxlz_email');
+            localStorage.removeItem('pxlz_discord');
+            localStorage.removeItem('pxlz_bio');
+            localStorage.removeItem('pxlz_cpu');
+            localStorage.removeItem('pxlz_gpu');
+            localStorage.removeItem('pxlz_ram');
+            localStorage.removeItem('pxlz_os');
+            location.reload();
         };
 
         // Hover spotlight reflection effect setup
@@ -1834,7 +1960,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                     "> DOMAIN STATUS: pxlz.pro/dreamlex [ONLINE]",
                     "> GITHUB AUTHOR: pixxella [ACTIVE]",
                     "> AHK v2 UTILITIES: LOADED [OK]",
-                    "> FIREBASE SYNC: INITIALIZED [OK]",
+                    "> FIREBASE REALTIME SYNC: ACTIVE [OK]",
                     "> STATUS: STABLE - ALL SYSTEMS NOMINAL."
                 ];
                 let currentLine = 0;
