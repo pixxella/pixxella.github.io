@@ -115,91 +115,6 @@
             background: rgba(5, 5, 10, 0.85);
         }
 
-        /* Cyberpunk Site Opening Shutter Overlay */
-        #site-intro-overlay {
-            position: fixed;
-            inset: 0;
-            background: #040307;
-            z-index: 99999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            transition: opacity 0.8s cubic-bezier(0.77, 0, 0.175, 1), transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
-            pointer-events: none;
-        }
-
-        #site-intro-overlay.fade-out {
-            opacity: 0;
-            transform: translateY(-100%) scaleY(0.9);
-        }
-
-        .intro-title-text {
-            font-size: 2.2rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 4px;
-            animation: textPulse 1s infinite alternate;
-        }
-
-        .intro-progress-bar {
-            width: 240px;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .intro-progress-fill {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), #47fd48);
-            box-shadow: 0 0 15px var(--primary);
-            animation: fillProgress 0.7s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-        }
-
-        @keyframes fillProgress {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
-
-        /* Slick Opening Entrance Keyframes */
-        @keyframes navSlideDown {
-            0% { transform: translateY(-70px); opacity: 0; filter: blur(10px); }
-            100% { transform: translateY(0); opacity: 1; filter: blur(0); }
-        }
-
-        @keyframes heroScaleUp {
-            0% { transform: translateY(40px) scale(0.94); opacity: 0; filter: blur(15px); }
-            100% { transform: translateY(0) scale(1); opacity: 1; filter: blur(0); }
-        }
-
-        .cyber-nav {
-            animation: navSlideDown 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards;
-        }
-
-        .hero-banner {
-            animation: heroScaleUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s backwards;
-        }
-
-        /* Scroll Reveal Animation Classes */
-        .slick-scroll-item {
-            opacity: 0;
-            transform: translateY(35px) scale(0.97);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
-            filter: blur(8px);
-        }
-
-        .slick-scroll-item.revealed {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            filter: blur(0);
-        }
-
         /* vLinks Classic Animations */
         @keyframes devPulse {
             0% {
@@ -1246,15 +1161,6 @@
 
 <body>
 
-    <!-- Cyberpunk Site Opening Intro Shutter Overlay -->
-    <div id="site-intro-overlay">
-        <span class="intro-title-text">PXLZ.PRO</span>
-        <div class="intro-progress-bar">
-            <div class="intro-progress-fill"></div>
-        </div>
-        <span style="color: #888; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;">[INITIALIZING CENTRAL HYPERVISOR ECOSYSTEM...]</span>
-    </div>
-
     <!-- Physical Ambient Light Simulation Canvas -->
     <canvas id="physical-light-canvas" style="position: fixed; inset: 0; pointer-events: none; z-index: 0; width: 100vw; height: 100vh;"></canvas>
 
@@ -1660,10 +1566,10 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                         <span class="domain-tag" style="border-color: #c77dff; color: #c77dff; background: rgba(199, 125, 255, 0.12);">[HOTFIXES]</span>
                     </div>
                     <p style="font-size: 0.88rem; color: #ccc; margin: 6px 0; line-height: 1.6;">
-                        • <strong>v3.5.4</strong>: Added slick cyberpunk site opening intro shutter sequence & scroll entrance animations.<br>
                         • <strong>v3.5.3</strong>: Updated changelog entries and removed passcode disclosure.<br>
                         • <strong>v3.5.2</strong>: Enabled universal dynamic live sync for all page text elements.<br>
-                        • <strong>v3.5.1</strong>: Fixed inline text range editing focus jumping bugs.
+                        • <strong>v3.5.1</strong>: Fixed inline text range editing focus jumping bugs.<br>
+                        • <strong>v3.5.0</strong>: Added draggable Dev Controls toolbar and live editing focus indicators.
                     </p>
                 </div>
 
@@ -1870,36 +1776,6 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
     </div>
 
     <script>
-        // Cyberpunk Site Opening Shutter Sequence & Chime
-        const initOpeningShutter = () => {
-            const overlay = document.getElementById('site-intro-overlay');
-            if (overlay) {
-                setTimeout(() => {
-                    playCyberBeep(1200, 0.25, 'sine');
-                    overlay.classList.add('fade-out');
-                    setTimeout(() => {
-                        overlay.style.display = 'none';
-                    }, 850);
-                }, 750);
-            }
-        };
-
-        // Scroll Reveal Entrance Observer
-        const initSlickScrollObserver = () => {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('revealed');
-                    }
-                });
-            }, { threshold: 0.12 });
-
-            document.querySelectorAll('.section-block, .domain-card, .dev-card, .contact-card, .spec-column').forEach(el => {
-                el.classList.add('slick-scroll-item');
-                observer.observe(el);
-            });
-        };
-
         // Developer Authentication State
         let isDev = localStorage.getItem('isDev') === 'true';
 
@@ -2571,7 +2447,6 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                     "> DOMAIN STATUS: pxlz.pro/dreamlex [ONLINE]",
                     "> GITHUB AUTHOR: pixxella [ACTIVE]",
                     "> UNIVERSAL INLINE LIVE SYNC: ONLINE [OK]",
-                    "> SLICK ENTRANCE ANIMATION: READY [OK]",
                     "> STATUS: STABLE - ALL SYSTEMS NOMINAL."
                 ];
                 let currentLine = 0;
@@ -2595,9 +2470,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             }
         };
 
-        // Initialize Saved Config, Opening Animations, Draggables, and Live Listeners on Page Load
-        initOpeningShutter();
-        initSlickScrollObserver();
+        // Initialize Saved Config, Dev Visibility, Draggables, and Live Listeners on Page Load
         loadSavedConfig();
         updateDevVisibility();
         initDraggables();
