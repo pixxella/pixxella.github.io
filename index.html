@@ -503,7 +503,7 @@
             margin-top: 10px;
         }
 
-        /* Blinking terminal console cursor via CSS ::after (Clean, Non-Buggy Typing) */
+        /* Blinking terminal console cursor via CSS ::after */
         @keyframes console-blink {
             0%, 100% { opacity: 0; }
             50% { opacity: 1; }
@@ -515,7 +515,7 @@
             animation: console-blink 1s infinite step-end;
         }
 
-        /* Cyber Acrylic Buttons — Fixed Color Stability (No Plain White Flash) */
+        /* Cyber Acrylic Buttons — Fixed Color Stability */
         .btn-cyber {
             padding: 14px 28px;
             font-size: 0.9rem;
@@ -621,29 +621,34 @@
         .being-live-edited {
             border: 2px solid #47fd48 !important;
             border-radius: 12px !important;
-            box-shadow: 0 0 22px rgba(71, 253, 72, 0.65) !important;
+            box-shadow: 0 0 25px rgba(71, 253, 72, 0.8) !important;
             position: relative !important;
+            display: inline-block !important;
             animation: devPulse 1.2s infinite !important;
-            background: rgba(71, 253, 72, 0.07) !important;
+            background: rgba(71, 253, 72, 0.12) !important;
+            z-index: 9999 !important;
+            overflow: visible !important;
         }
 
         .being-live-edited::before {
             content: '⚡ [CREATOR IS EDITING THIS LIVE...]';
             position: absolute;
-            top: -26px;
+            top: -28px;
             left: 0;
             background: #47fd48;
             color: #000;
-            font-size: 0.68rem;
+            font-size: 0.7rem;
             font-weight: 900;
-            padding: 2px 10px;
+            padding: 3px 10px;
             border-radius: 6px;
-            z-index: 500;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            z-index: 10000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
             letter-spacing: 0.5px;
+            white-space: nowrap;
+            pointer-events: none;
         }
 
-        /* Movable / Draggable Toolbar styling — Hidden for normal users */
+        /* Movable / Draggable Toolbar styling */
         #dev-quick-bar {
             display: none;
             position: fixed;
@@ -676,7 +681,7 @@
             opacity: 1;
         }
 
-        /* Header Dev Button — Hidden for normal users by default */
+        /* Header Dev Button */
         #nav-dev-panel-btn {
             display: none;
         }
@@ -1198,7 +1203,7 @@
                 <button id="nav-dev-panel-btn" onclick="openDevDashboardProtected()" class="btn-cyber btn-sm" style="border-color: #47fd48; color: #47fd48; background: rgba(71,253,72,0.15);">[⚡ DEV DASHBOARD]</button>
                 <a href="https://github.com/pixxella" class="nav-github-btn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
                     </svg>
                     @pixxella
                 </a>
@@ -1230,7 +1235,7 @@
                 <span class="hero-badge">🔥 AHK & UTILS: READY</span>
             </div>
 
-            <h1 class="hero-title">pxlz.pro</h1>
+            <h1 class="hero-title selectable" id="hero-main-title">pxlz.pro</h1>
             <p class="hero-subtitle selectable" id="hero-subtitle-text">
                 Central developer hub & ecosystem for <strong>nPixel (pixxella)</strong>. Vibe coding, OS internal mechanics, kernel tweaks, custom AutoHotkey scripts, and hypervisor optimizations.
             </p>
@@ -1263,10 +1268,10 @@
                 <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
                     <div>
                         <span style="font-size: 0.82rem; letter-spacing: 1.5px; color: var(--primary); font-weight: 900;">[WHOAMI]</span>
-                        <h3 style="font-size: 2rem; margin: 8px 0 4px 0; color: #fff; font-weight: 900; letter-spacing: -0.5px;">
+                        <h3 id="whoami-title-name" class="selectable" style="font-size: 2rem; margin: 8px 0 4px 0; color: #fff; font-weight: 900; letter-spacing: -0.5px;">
                             nPixel (pixel)
                         </h3>
-                        <span style="font-size: 0.88rem; color: var(--primary); opacity: 0.9; font-style: italic;">
+                        <span id="whoami-title-aka" class="selectable" style="font-size: 0.88rem; color: var(--primary); opacity: 0.9; font-style: italic;">
                             aka pxlzfr, nPixelz, pxlzs
                         </span>
                     </div>
@@ -1310,8 +1315,8 @@
                         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 6px var(--primary));"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                     </div>
                     <div>
-                        <h3 class="domain-url selectable">pxlz.pro/dl</h3>
-                        <p class="domain-desc selectable">
+                        <h3 id="domain-dl-url" class="domain-url selectable">pxlz.pro/dl</h3>
+                        <p id="domain-dl-desc" class="domain-desc selectable">
                             High-speed script & utility payload downloader. Tailored for instant environment setup on clean Windows installations and VMware virtual machines.
                         </p>
                     </div>
@@ -1328,8 +1333,8 @@
                         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 6px var(--primary));"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                     </div>
                     <div>
-                        <h3 class="domain-url selectable">pxlz.pro/vlinks</h3>
-                        <p class="domain-desc selectable">
+                        <h3 id="domain-vlinks-url" class="domain-url selectable">pxlz.pro/vlinks</h3>
+                        <p id="domain-vlinks-desc" class="domain-desc selectable">
                             Virtual link directory & resource database. Collection of hypervisor downloads, OS ISO mirrors, registry tweaks, and developer bookmarks.
                         </p>
                     </div>
@@ -1346,8 +1351,8 @@
                         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 6px var(--primary));"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
                     </div>
                     <div>
-                        <h3 class="domain-url selectable">pxlz.pro/dreamlex</h3>
-                        <p class="domain-desc selectable">
+                        <h3 id="domain-dreamlex-url" class="domain-url selectable">pxlz.pro/dreamlex</h3>
+                        <p id="domain-dreamlex-desc" class="domain-desc selectable">
                             DreamLex custom suite & kernel-level experimental scripts. Built for ultra-low latency, input responsiveness, and high-performance gaming tweaks.
                         </p>
                     </div>
@@ -1372,11 +1377,11 @@
             <div class="dev-grid">
                 <!-- AHK Script Showcase -->
                 <div class="dev-card">
-                    <h3 class="dev-card-title selectable">
+                    <h3 id="dev-ahk-title" class="dev-card-title selectable">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
                         AutoHotkey v2 Multitool & Macros
                     </h3>
-                    <p class="dev-card-desc selectable">
+                    <p id="dev-ahk-desc" class="dev-card-desc selectable">
                         Custom AHK v2 script for fast window pinning, rapid VM toggling, memory purging, and key remapping for gaming & dev workflows.
                     </p>
 
@@ -1420,11 +1425,11 @@ SetWorkingDir A_ScriptDir
 
                 <!-- VMware & Kernel Tweaks -->
                 <div class="dev-card">
-                    <h3 class="dev-card-title selectable">
+                    <h3 id="dev-vmware-title" class="dev-card-title selectable">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                         VMware & Hypervisor Latency Tweaks
                     </h3>
-                    <p class="dev-card-desc selectable">
+                    <p id="dev-vmware-desc" class="dev-card-desc selectable">
                         Optimized VMX parameter configurations for VMware Workstation. Reduces input latency, disables hypervisor throttling, and optimizes 3D acceleration.
                     </p>
 
@@ -1471,11 +1476,11 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                     </div>
                     <div class="spec-item">
                         <img src="https://api.iconify.design/devicon:vsphere.svg" width="18" height="18" alt="VMware">
-                        <span>Hypervisor: <strong>VMware Workstation Pro</strong></span>
+                        <span>Hypervisor: <strong id="spec-hypervisor-val" class="selectable">VMware Workstation Pro</strong></span>
                     </div>
                     <div class="spec-item">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                        <span>Role: <strong>Vibe Coder & OS Enthusiast</strong></span>
+                        <span>Role: <strong id="spec-role-val" class="selectable">Vibe Coder & OS Enthusiast</strong></span>
                     </div>
                 </div>
 
@@ -1496,7 +1501,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                     </div>
                     <div class="spec-item">
                         <img src="https://api.iconify.design/lucide:hard-drive.svg?color=%2300B0FF" width="18" height="18" alt="SSD">
-                        <span>Storage: <strong>2TB Gen4 NVMe SSD</strong></span>
+                        <span>Storage: <strong id="spec-ssd-val" class="selectable">2TB Gen4 NVMe SSD</strong></span>
                     </div>
                 </div>
 
@@ -1505,19 +1510,19 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                     <span class="spec-column-header">[GAMING_LOG]</span>
                     <div class="spec-item">
                         <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/236390/logo.png" width="18" height="18" alt="War Thunder">
-                        <span><strong>War Thunder</strong></span>
+                        <span><strong id="game-1-name" class="selectable">War Thunder</strong></span>
                     </div>
                     <div class="spec-item">
                         <img src="https://api.iconify.design/simple-icons:roblox.svg?color=%23FF3E3E" width="18" height="18" alt="Roblox">
-                        <span><strong>Roblox</strong></span>
+                        <span><strong id="game-2-name" class="selectable">Roblox</strong></span>
                     </div>
                     <div class="spec-item">
                         <img src="https://api.iconify.design/simple-icons:minecraft.svg?color=%235A8F29" width="18" height="18" alt="Minecraft">
-                        <span><strong>Minecraft</strong></span>
+                        <span><strong id="game-3-name" class="selectable">Minecraft</strong></span>
                     </div>
                     <div class="spec-item">
                         <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/250900/logo.png" width="18" height="18" alt="Geometry Dash">
-                        <span><strong>Geometry Dash</strong></span>
+                        <span><strong id="game-4-name" class="selectable">Geometry Dash</strong></span>
                     </div>
                 </div>
             </div>
@@ -1612,14 +1617,14 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                 <!-- v3.5 -->
                 <div class="dev-card" style="border-left: 4px solid #47fd48;">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                        <span style="color: #47fd48; font-weight: 900; font-size: 1.1rem;">v3.5 - Developer Authentication Protection & Live Indicators</span>
+                        <span style="color: #47fd48; font-weight: 900; font-size: 1.1rem;">v3.5 - Universal Inline Live Editing & Dynamic Focus Indicators</span>
                         <span class="domain-tag" style="background: rgba(71,253,72,0.15); border-color: #47fd48; color: #47fd48;">[CURRENT RELEASE]</span>
                     </div>
                     <p style="font-size: 0.88rem; color: #ccc; margin: 6px 0; line-height: 1.6;">
-                        • Strict Dev Authentication Protection — normal visitors see zero dev controls by default!<br>
-                        • Dev Mode activated via secret passcode prompt ('dev') or secret green dot.<br>
-                        • Fixed inline typing bugs & added draggable dev controls.<br>
-                        • Real-time green live-editing indicator box for normal users when dev is editing live.
+                        • Universal Inline Editing — every text box, card, domain title, and spec across the site now edits & syncs live!<br>
+                        • Fixed real-time green live-editing indicator box for all viewers when dev focuses on any field.<br>
+                        • Dev Mode protected behind developer authentication passcode ('dev').<br>
+                        • Movable / Draggable Dev Controls Toolbar & Dashboard Modal.
                     </p>
                 </div>
 
@@ -1927,6 +1932,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
 
         // Broadcast Focus Edit State to all clients for live green editing box
         const broadcastEditFocusState = (fieldId, isEditing) => {
+            if (!fieldId) return;
             const editPayload = { type: 'LIVE_EDIT_FOCUS', fieldId, isEditing };
             liveChannel.postMessage(editPayload);
             if (db) {
@@ -1938,7 +1944,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
 
         // Apply Live Edit Focus Green Box to target element for normal users
         const handleLiveEditFocusIndicator = (data) => {
-            if (!data || data.type !== 'LIVE_EDIT_FOCUS') return;
+            if (!data || data.type !== 'LIVE_EDIT_FOCUS' || !data.fieldId) return;
             const targetEl = document.getElementById(data.fieldId);
             if (targetEl) {
                 if (data.isEditing) {
@@ -1949,66 +1955,46 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             }
         };
 
-        // Core Live Sync Update Engine — Instantly updates DOM + Storage + Firebase without refreshing!
+        // Universal Dynamic Live Sync Update Engine — Instantly updates DOM + Storage + Firebase
         window.applyLiveConfigUpdate = (data, broadcast = true) => {
-            if (!data || data.type === 'LIVE_EDIT_FOCUS') {
+            if (!data) return;
+            if (data.type === 'LIVE_EDIT_FOCUS') {
                 handleLiveEditFocusIndicator(data);
                 return;
             }
 
-            const emailEl = document.getElementById('email-value-text');
-            const discordEl = document.getElementById('discord-value-text');
-            const bioEl = document.getElementById('whoami-bio-text');
-            const cpuEl = document.getElementById('spec-cpu-val');
-            const gpuEl = document.getElementById('spec-gpu-val');
-            const ramEl = document.getElementById('spec-ram-val');
-            const osEl = document.getElementById('spec-os-val');
-
-            const emailInp = document.getElementById('dev-input-email');
-            const discordInp = document.getElementById('dev-input-discord');
-            const bioInp = document.getElementById('dev-input-bio');
-            const cpuInp = document.getElementById('dev-input-cpu');
-            const gpuInp = document.getElementById('dev-input-gpu');
-            const ramInp = document.getElementById('dev-input-ram');
-            const osInp = document.getElementById('dev-input-os');
-
             const activeElem = document.activeElement;
 
-            if (data.email !== undefined) {
-                if (emailEl && activeElem !== emailEl && emailEl.innerText !== data.email) emailEl.innerText = data.email;
-                if (emailInp && activeElem !== emailInp && emailInp.value !== data.email) emailInp.value = data.email;
-                localStorage.setItem('pxlz_email', data.email);
-            }
-            if (data.discord !== undefined) {
-                if (discordEl && activeElem !== discordEl && discordEl.innerText !== data.discord) discordEl.innerText = data.discord;
-                if (discordInp && activeElem !== discordInp && discordInp.value !== data.discord) discordInp.value = data.discord;
-                localStorage.setItem('pxlz_discord', data.discord);
-            }
-            if (data.bio !== undefined) {
-                if (bioEl && activeElem !== bioEl && bioEl.innerText !== data.bio) bioEl.innerText = data.bio;
-                if (bioInp && activeElem !== bioInp && bioInp.value !== data.bio) bioInp.value = data.bio;
-                localStorage.setItem('pxlz_bio', data.bio);
-            }
-            if (data.cpu !== undefined) {
-                if (cpuEl && activeElem !== cpuEl && cpuEl.innerText !== data.cpu) cpuEl.innerText = data.cpu;
-                if (cpuInp && activeElem !== cpuInp && cpuInp.value !== data.cpu) cpuInp.value = data.cpu;
-                localStorage.setItem('pxlz_cpu', data.cpu);
-            }
-            if (data.gpu !== undefined) {
-                if (gpuEl && activeElem !== gpuEl && gpuEl.innerText !== data.gpu) gpuEl.innerText = data.gpu;
-                if (gpuInp && activeElem !== gpuInp && gpuInp.value !== data.gpu) gpuInp.value = data.gpu;
-                localStorage.setItem('pxlz_gpu', data.gpu);
-            }
-            if (data.ram !== undefined) {
-                if (ramEl && activeElem !== ramEl && ramEl.innerText !== data.ram) ramEl.innerText = data.ram;
-                if (ramInp && activeElem !== ramInp && ramInp.value !== data.ram) ramInp.value = data.ram;
-                localStorage.setItem('pxlz_ram', data.ram);
-            }
-            if (data.os !== undefined) {
-                if (osEl && activeElem !== osEl && osEl.innerText !== data.os) osEl.innerText = data.os;
-                if (osInp && activeElem !== osInp && osInp.value !== data.os) osInp.value = data.os;
-                localStorage.setItem('pxlz_os', data.os);
-            }
+            Object.keys(data).forEach(key => {
+                if (key === 'type' || key === 'fieldId' || key === 'isEditing') return;
+                const value = data[key];
+                if (value === undefined) return;
+
+                // Sync matching DOM element on page
+                const targetEl = document.getElementById(key);
+                if (targetEl) {
+                    if (activeElem !== targetEl && targetEl.innerText.trim() !== value) {
+                        targetEl.innerText = value;
+                    }
+                }
+
+                // Sync matching input in Dev Dashboard Panel
+                let inputKey = key;
+                if (key === 'email-value-text') inputKey = 'email';
+                if (key === 'discord-value-text') inputKey = 'discord';
+                if (key === 'whoami-bio-text') inputKey = 'bio';
+                if (key === 'spec-cpu-val') inputKey = 'cpu';
+                if (key === 'spec-gpu-val') inputKey = 'gpu';
+                if (key === 'spec-ram-val') inputKey = 'ram';
+                if (key === 'spec-os-val') inputKey = 'os';
+
+                const inputEl = document.getElementById('dev-input-' + inputKey);
+                if (inputEl && activeElem !== inputEl && inputEl.value !== value) {
+                    inputEl.value = value;
+                }
+
+                localStorage.setItem('pxlz_' + key, value);
+            });
 
             if (broadcast) {
                 liveChannel.postMessage(data);
@@ -2028,13 +2014,13 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
         // Attach Instant Input Listeners to Dev Dashboard Inputs
         const attachLiveInputListeners = () => {
             const inputs = [
-                { id: 'dev-input-email', key: 'email' },
-                { id: 'dev-input-discord', key: 'discord' },
-                { id: 'dev-input-bio', key: 'bio' },
-                { id: 'dev-input-cpu', key: 'cpu' },
-                { id: 'dev-input-gpu', key: 'gpu' },
-                { id: 'dev-input-ram', key: 'ram' },
-                { id: 'dev-input-os', key: 'os' }
+                { id: 'dev-input-email', key: 'email-value-text' },
+                { id: 'dev-input-discord', key: 'discord-value-text' },
+                { id: 'dev-input-bio', key: 'whoami-bio-text' },
+                { id: 'dev-input-cpu', key: 'spec-cpu-val' },
+                { id: 'dev-input-gpu', key: 'spec-gpu-val' },
+                { id: 'dev-input-ram', key: 'spec-ram-val' },
+                { id: 'dev-input-os', key: 'spec-os-val' }
             ];
 
             inputs.forEach(item => {
@@ -2047,6 +2033,63 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                     });
                 }
             });
+        };
+
+        // Universal Inline Click-To-Edit & Real-Time Focus Indicators for ALL Page Elements
+        let inlineEditingEnabled = false;
+        window.toggleInlineEditMode = () => {
+            playCyberBeep(750, 0.08, 'sawtooth');
+            inlineEditingEnabled = !inlineEditingEnabled;
+            const btn = document.getElementById('btn-toggle-inline');
+            const qBtn = document.getElementById('quick-btn-inline');
+
+            const editableElements = document.querySelectorAll('.selectable, .contact-main-value, .domain-url, .domain-desc, .dev-card-title, .dev-card-desc, .hero-subtitle');
+
+            if (inlineEditingEnabled) {
+                document.body.classList.add('inline-editable-active');
+                if (btn) btn.innerText = '[INLINE EDIT: ON]';
+                if (qBtn) qBtn.innerText = '[✏️ INLINE EDIT: ON]';
+
+                editableElements.forEach((el, idx) => {
+                    if (el) {
+                        if (!el.id) {
+                            el.id = 'inline-editable-' + idx;
+                        }
+                        el.contentEditable = "true";
+
+                        // Focus event -> Show live green editing box to normal users
+                        el.onfocus = () => {
+                            broadcastEditFocusState(el.id, true);
+                        };
+
+                        // Blur event -> Remove live green editing box
+                        el.onblur = () => {
+                            broadcastEditFocusState(el.id, false);
+                        };
+
+                        // Input event -> Universal instant live sync for ANY text element!
+                        el.oninput = () => {
+                            if (isLiveAutoSave) {
+                                const cleanText = el.innerText.trim();
+                                applyLiveConfigUpdate({ [el.id]: cleanText }, true);
+                            }
+                        };
+                    }
+                });
+                window.showToast('[UNIVERSAL INLINE CLICK-TO-EDIT ENABLED]');
+            } else {
+                document.body.classList.remove('inline-editable-active');
+                if (btn) btn.innerText = '[INLINE EDIT: OFF]';
+                if (qBtn) qBtn.innerText = '[✏️ INLINE EDIT: OFF]';
+                editableElements.forEach(el => {
+                    if (el) {
+                        el.contentEditable = "false";
+                        el.onfocus = null;
+                        el.onblur = null;
+                    }
+                });
+                window.showToast('[UNIVERSAL INLINE CLICK-TO-EDIT DISABLED]');
+            }
         };
 
         // Toggle System Maintenance Mode
@@ -2083,15 +2126,15 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
 
         // Load Saved Configuration from LocalStorage / Firebase
         const loadSavedConfig = () => {
-            const config = {
-                email: localStorage.getItem('pxlz_email') || 'pxlz@pxlz.pro',
-                discord: localStorage.getItem('pxlz_discord') || 'pxlzfr',
-                bio: localStorage.getItem('pxlz_bio') || "Hey! I'm nPixel. I'm a vibe coder (I don't design shit) and a tech enthusiast learning about virtual machines, operating systems, and kernel-level architecture. I'm also a gamer who loves exploring OS internals.",
-                cpu: localStorage.getItem('pxlz_cpu') || 'AMD Ryzen 5 7600X (6C/12T)',
-                gpu: localStorage.getItem('pxlz_gpu') || 'AMD Radeon RX 6700XT XTX',
-                ram: localStorage.getItem('pxlz_ram') || '32GB DDR5 Dual-Channel',
-                os: localStorage.getItem('pxlz_os') || 'Windows 11 Pro'
-            };
+            const savedKeys = ['email-value-text', 'discord-value-text', 'whoami-bio-text', 'spec-cpu-val', 'spec-gpu-val', 'spec-ram-val', 'spec-os-val', 'hero-subtitle-text', 'domain-dl-url', 'domain-dl-desc', 'domain-vlinks-url', 'domain-vlinks-desc', 'domain-dreamlex-url', 'domain-dreamlex-desc'];
+            const config = {};
+
+            savedKeys.forEach(key => {
+                const val = localStorage.getItem('pxlz_' + key);
+                if (val !== null) {
+                    config[key] = val;
+                }
+            });
 
             applyLiveConfigUpdate(config, false);
 
@@ -2122,7 +2165,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             }
         });
 
-        // Physical Point Light Engine (Inverse-Square Attenuation & Radial Specular Bloom)
+        // Physical Point Light Engine
         const initPhysicalLightEngine = () => {
             const canvas = document.getElementById('physical-light-canvas');
             if (!canvas) return;
@@ -2155,7 +2198,6 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                 ctx.clearRect(0, 0, width, height);
                 const time = Date.now() * 0.001;
 
-                // Render Orbiting Physical Background Emitters
                 lights.forEach((light) => {
                     const curX = light.x + Math.sin(time * light.speed * 10 + light.phase) * 90;
                     const curY = light.y + Math.cos(time * light.speed * 10 + light.phase) * 70;
@@ -2172,7 +2214,6 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                     ctx.fill();
                 });
 
-                // Render Cursor Physical Point Light (Interactive Pink Glow)
                 const mouseRadius = 400;
                 const mouseGrad = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, mouseRadius);
                 mouseGrad.addColorStop(0, 'rgba(255, 170, 255, 0.24)');
@@ -2341,90 +2382,6 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             if (tabName === 'specs-tab') document.getElementById('dev-tab-specs').style.display = 'flex';
         };
 
-        // Dev Dashboard Save Logic
-        window.saveDevPanelEdits = () => {
-            playCyberBeep(1100, 0.1, 'sine');
-            const emailInp = document.getElementById('dev-input-email');
-            const discordInp = document.getElementById('dev-input-discord');
-            const bioInp = document.getElementById('dev-input-bio');
-            const cpuInp = document.getElementById('dev-input-cpu');
-            const gpuInp = document.getElementById('dev-input-gpu');
-            const ramInp = document.getElementById('dev-input-ram');
-            const osInp = document.getElementById('dev-input-os');
-
-            const data = {
-                email: emailInp ? emailInp.value.trim() : 'pxlz@pxlz.pro',
-                discord: discordInp ? discordInp.value.trim() : 'pxlzfr',
-                bio: bioInp ? bioInp.value.trim() : '',
-                cpu: cpuInp ? cpuInp.value.trim() : '',
-                gpu: gpuInp ? gpuInp.value.trim() : '',
-                ram: ramInp ? ramInp.value.trim() : '',
-                os: osInp ? osInp.value.trim() : ''
-            };
-
-            applyLiveConfigUpdate(data, true);
-            window.showToast('[DASHBOARD EDITS SAVED & SYNCED LIVE]');
-            window.closeModal('dev-panel-modal');
-        };
-
-        // Smooth Bug-Free Inline Direct Click-To-Edit & Real-Time Focus Indicators
-        let inlineEditingEnabled = false;
-        window.toggleInlineEditMode = () => {
-            playCyberBeep(750, 0.08, 'sawtooth');
-            inlineEditingEnabled = !inlineEditingEnabled;
-            const btn = document.getElementById('btn-toggle-inline');
-            const qBtn = document.getElementById('quick-btn-inline');
-            const editableElements = document.querySelectorAll('.selectable, .contact-main-value, .domain-url, .domain-desc, .dev-card-title, .dev-card-desc');
-
-            if (inlineEditingEnabled) {
-                document.body.classList.add('inline-editable-active');
-                if (btn) btn.innerText = '[INLINE EDIT: ON]';
-                if (qBtn) qBtn.innerText = '[✏️ INLINE EDIT: ON]';
-                editableElements.forEach(el => {
-                    if (el) {
-                        el.contentEditable = "true";
-
-                        // Focus event -> Show live green editing box to normal users
-                        el.onfocus = () => {
-                            broadcastEditFocusState(el.id, true);
-                        };
-
-                        // Blur event -> Remove live green editing box
-                        el.onblur = () => {
-                            broadcastEditFocusState(el.id, false);
-                        };
-
-                        // Input event -> Update text without re-rendering innerHTML (Bug-free typing!)
-                        el.oninput = () => {
-                            if (isLiveAutoSave) {
-                                const cleanText = el.innerText.trim();
-                                if (el.id === 'email-value-text') applyLiveConfigUpdate({ email: cleanText }, true);
-                                if (el.id === 'discord-value-text') applyLiveConfigUpdate({ discord: cleanText }, true);
-                                if (el.id === 'whoami-bio-text') applyLiveConfigUpdate({ bio: cleanText }, true);
-                                if (el.id === 'spec-cpu-val') applyLiveConfigUpdate({ cpu: cleanText }, true);
-                                if (el.id === 'spec-gpu-val') applyLiveConfigUpdate({ gpu: cleanText }, true);
-                                if (el.id === 'spec-ram-val') applyLiveConfigUpdate({ ram: el.innerText }, true);
-                                if (el.id === 'spec-os-val') applyLiveConfigUpdate({ os: cleanText }, true);
-                            }
-                        };
-                    }
-                });
-                window.showToast('[INLINE DIRECT CLICK-TO-EDIT ENABLED]');
-            } else {
-                document.body.classList.remove('inline-editable-active');
-                if (btn) btn.innerText = '[INLINE EDIT: OFF]';
-                if (qBtn) qBtn.innerText = '[✏️ INLINE EDIT: OFF]';
-                editableElements.forEach(el => {
-                    if (el) {
-                        el.contentEditable = "false";
-                        el.onfocus = null;
-                        el.onblur = null;
-                    }
-                });
-                window.showToast('[INLINE DIRECT CLICK-TO-EDIT DISABLED]');
-            }
-        };
-
         // Custom Primary Theme Setter
         window.setCustomPrimary = (hexColor, secColor) => {
             playCyberBeep(1000, 0.08, 'sine');
@@ -2438,14 +2395,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
         // Reset Defaults
         window.resetDevDefaults = () => {
             playCyberBeep(400, 0.15, 'sawtooth');
-            localStorage.removeItem('pxlz_email');
-            localStorage.removeItem('pxlz_discord');
-            localStorage.removeItem('pxlz_bio');
-            localStorage.removeItem('pxlz_cpu');
-            localStorage.removeItem('pxlz_gpu');
-            localStorage.removeItem('pxlz_ram');
-            localStorage.removeItem('pxlz_os');
-            localStorage.removeItem('isDev');
+            localStorage.clear();
             location.reload();
         };
 
@@ -2464,7 +2414,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
         };
         setupSpotlights();
 
-        // Terminal Boot Sequence (Simulated Virtual Machine Diagnostic)
+        // Terminal Boot Sequence
         window.openTerminalModal = () => {
             window.openModal('terminal-modal');
             const terminal = document.getElementById('terminal-content');
@@ -2482,9 +2432,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                     "> DOMAIN STATUS: pxlz.pro/vlinks [ONLINE]",
                     "> DOMAIN STATUS: pxlz.pro/dreamlex [ONLINE]",
                     "> GITHUB AUTHOR: pixxella [ACTIVE]",
-                    "> AHK v2 UTILITIES: LOADED [OK]",
-                    "> ZERO-LATENCY LIVE SYNC: ONLINE [OK]",
-                    "> DRAGGABLE DEV CONTROLS: ACTIVE [OK]",
+                    "> UNIVERSAL INLINE LIVE SYNC: ONLINE [OK]",
                     "> STATUS: STABLE - ALL SYSTEMS NOMINAL."
                 ];
                 let currentLine = 0;
