@@ -77,6 +77,40 @@
             scroll-behavior: smooth;
         }
 
+        /* Firefox Custom Scrollbar */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) rgba(5, 5, 10, 0.85);
+        }
+
+        /* Custom Cyberpunk Acrylic Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(5, 5, 10, 0.85);
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50px;
+            border: 2px solid rgba(5, 5, 10, 0.85);
+            box-shadow: 0 0 12px rgba(var(--primary-rgb), 0.5);
+            transition: all 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+            box-shadow: 0 0 20px var(--primary), 0 0 35px var(--primary);
+        }
+
+        ::-webkit-scrollbar-corner {
+            background: rgba(5, 5, 10, 0.85);
+        }
+
         @keyframes devPulse {
             0% {
                 border-color: var(--secondary);
