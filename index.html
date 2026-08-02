@@ -220,6 +220,7 @@
 
         /* Bottom-Left vLinks Style Version Badge */
         #vlinks-version-badge {
+            display: none;
             position: fixed;
             bottom: 20px;
             left: 20px;
@@ -234,7 +235,6 @@
             box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.35);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            display: flex;
             align-items: center;
             gap: 8px;
             transition: all 0.35s ease;
@@ -643,8 +643,9 @@
             letter-spacing: 0.5px;
         }
 
-        /* Movable / Draggable Toolbar styling */
+        /* Movable / Draggable Toolbar styling — Hidden for normal users */
         #dev-quick-bar {
+            display: none;
             position: fixed;
             bottom: 25px;
             right: 25px;
@@ -655,7 +656,6 @@
             border-radius: 20px;
             backdrop-filter: blur(24px) saturate(200%);
             box-shadow: 0 15px 45px rgba(0,0,0,0.85), 0 0 30px rgba(71, 253, 72, 0.35);
-            display: flex;
             align-items: center;
             gap: 10px;
             flex-wrap: wrap;
@@ -674,6 +674,11 @@
 
         .drag-handle:hover {
             opacity: 1;
+        }
+
+        /* Header Dev Button — Hidden for normal users by default */
+        #nav-dev-panel-btn {
+            display: none;
         }
 
         /* Domains Grid - Ultra Wide */
@@ -1167,7 +1172,7 @@
         ⚡ [SYSTEM MAINTENANCE ACTIVE: VIBE CODING & KERNEL UTILITY UPDATES IN PROGRESS]
     </div>
 
-    <!-- Bottom-Left vLinks Style Version Badge Widget -->
+    <!-- Bottom-Left vLinks Style Version Badge Widget (Dev Auth Only) -->
     <div id="vlinks-version-badge">
         <span style="color: #47fd48; font-size: 1rem; line-height: 1;">●</span>
         <span>pxlz.pro v3.5 • HYPERVISOR STABLE</span>
@@ -1190,10 +1195,10 @@
             </ul>
 
             <div class="nav-actions">
-                <button id="nav-dev-panel-btn" onclick="openModal('dev-panel-modal')" class="btn-cyber btn-sm" style="border-color: #47fd48; color: #47fd48; background: rgba(71,253,72,0.15);">[⚡ DEV DASHBOARD]</button>
+                <button id="nav-dev-panel-btn" onclick="openDevDashboardProtected()" class="btn-cyber btn-sm" style="border-color: #47fd48; color: #47fd48; background: rgba(71,253,72,0.15);">[⚡ DEV DASHBOARD]</button>
                 <a href="https://github.com/pixxella" class="nav-github-btn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
                     </svg>
                     @pixxella
                 </a>
@@ -1202,7 +1207,7 @@
         </div>
     </header>
 
-    <!-- Movable / Draggable Permanent Floating Dev Quick Bar -->
+    <!-- Movable / Draggable Permanent Floating Dev Quick Bar (Dev Auth Only) -->
     <div id="dev-quick-bar">
         <span class="drag-handle" id="quick-bar-handle" title="Click and drag to move toolbar">⋮⋮</span>
         <span style="color: #47fd48; font-weight: 900; font-size: 0.78rem;">DEV CONTROLS:</span>
@@ -1210,7 +1215,7 @@
         <button onclick="toggleLiveAutoSave()" id="quick-btn-autosave" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #47fd48; color: #47fd48; background: rgba(71,253,72,0.15); font-size: 0.72rem; padding: 5px 12px;">[⚡ LIVE AUTOSAVE: ON]</button>
         <button onclick="toggleInlineEditMode()" id="quick-btn-inline" class="btn-cyber btn-cyber-outline btn-sm" style="font-size: 0.72rem; padding: 5px 12px;">[✏️ INLINE EDIT: OFF]</button>
         <button onclick="toggleMaintenanceMode()" id="quick-btn-maint" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #ff9900; color: #ff9900; font-size: 0.72rem; padding: 5px 12px;">[🛠️ MAINT MODE]</button>
-        <button onclick="toggleDevStealthMode()" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #c77dff; color: #c77dff; font-size: 0.72rem; padding: 5px 12px;" title="Temporarily hide all dev UI elements until page refresh">[👻 HIDE DEV UI]</button>
+        <button onclick="logoutDevMode()" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #ff4d4d; color: #ff4d4d; font-size: 0.72rem; padding: 5px 12px;" title="Lock & hide developer mode">[🔒 LOGOUT DEV]</button>
     </div>
 
     <!-- Ultra Wide Layout Wrapper -->
@@ -1238,7 +1243,7 @@
                     [EXPLORE DOMAINS]
                 </a>
                 <a href="https://github.com/pixxella" class="btn-cyber btn-cyber-outline">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                     GITHUB REPOS
                 </a>
             </div>
@@ -1266,7 +1271,7 @@
                         </span>
                     </div>
                     <span class="hero-badge online" id="vibe-badge" style="font-size: 0.82rem; padding: 6px 16px;">
-                        <span id="secret-green-dot" onclick="openModal('dev-panel-modal')" style="cursor: pointer; display: inline-block; font-size: 1.1rem; vertical-align: middle; transition: all 0.3s ease;" title="Click dot to open Developer Control Dashboard">●</span> VIBE CODER
+                        <span id="secret-green-dot" onclick="openDevDashboardProtected()" style="cursor: pointer; display: inline-block; font-size: 1.1rem; vertical-align: middle; transition: all 0.3s ease;" title="Click dot to open Developer Control Dashboard">●</span> VIBE CODER
                     </span>
                 </div>
 
@@ -1280,9 +1285,6 @@
                     </span>
 
                     <div style="display: flex; gap: 10px;">
-                        <button class="btn-cyber btn-cyber-outline btn-sm" onclick="openModal('dev-panel-modal')" style="border-color: #47fd48; color: #47fd48;">
-                            [⚡ DEV PANEL]
-                        </button>
                         <button class="btn-cyber btn-cyber-primary btn-sm" onclick="openTerminalModal()">
                             [BOOT DIAGNOSTIC LOG]
                         </button>
@@ -1610,14 +1612,14 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                 <!-- v3.5 -->
                 <div class="dev-card" style="border-left: 4px solid #47fd48;">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                        <span style="color: #47fd48; font-weight: 900; font-size: 1.1rem;">v3.5 - Zero-Latency Live Auto-Sync & Movable Controls</span>
+                        <span style="color: #47fd48; font-weight: 900; font-size: 1.1rem;">v3.5 - Developer Authentication Protection & Live Indicators</span>
                         <span class="domain-tag" style="background: rgba(71,253,72,0.15); border-color: #47fd48; color: #47fd48;">[CURRENT RELEASE]</span>
                     </div>
                     <p style="font-size: 0.88rem; color: #ccc; margin: 6px 0; line-height: 1.6;">
-                        • Fixed inline typing range/focus bugs — native non-disruptive contenteditable editing!<br>
-                        • Added Draggable / Movable Dev Quick Controls Toolbar & Dashboard Modal.<br>
-                        • Added Live Editing Green Focus Highlight Box for non-dev users in real time.<br>
-                        • Instant live sync engine (BroadcastChannel & Firebase listener) with secret stealth toggle.
+                        • Strict Dev Authentication Protection — normal visitors see zero dev controls by default!<br>
+                        • Dev Mode activated via secret passcode prompt ('dev') or secret green dot.<br>
+                        • Fixed inline typing bugs & added draggable dev controls.<br>
+                        • Real-time green live-editing indicator box for normal users when dev is editing live.
                     </p>
                 </div>
 
@@ -1746,16 +1748,63 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
 
             <div style="display: flex; gap: 12px; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 15px; margin-top: 15px; flex-wrap: wrap;">
                 <button onclick="toggleLiveAutoSave()" class="btn-cyber btn-cyber-primary" id="btn-toggle-autosave" style="flex: 1; border-color: #47fd48; color: #47fd48; background: linear-gradient(135deg, rgba(71,253,72,0.25) 0%, rgba(0,143,17,0.45) 100%);">[⚡ LIVE AUTOSAVE: ON]</button>
-                <button onclick="toggleVersionBadge()" class="btn-cyber btn-cyber-outline btn-sm" id="btn-toggle-badge" style="border-color: #47fd48; color: #47fd48;">[📌 VERSION BADGE: ON]</button>
                 <button onclick="toggleInlineEditMode()" class="btn-cyber btn-cyber-outline btn-sm" id="btn-toggle-inline">[INLINE EDIT: OFF]</button>
                 <button onclick="toggleMaintenanceMode()" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #ff9900; color: #ff9900;">[MAINTENANCE MODE]</button>
-                <button onclick="toggleDevStealthMode()" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #c77dff; color: #c77dff;">[👻 HIDE DEV UI]</button>
+                <button onclick="logoutDevMode()" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #ff4d4d; color: #ff4d4d;">[🔒 LOGOUT DEV]</button>
                 <button onclick="resetDevDefaults()" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #ff4d4d; color: #ff4d4d;">[RESET DEFAULTS]</button>
             </div>
         </div>
     </div>
 
     <script>
+        // Developer Authentication State
+        let isDev = localStorage.getItem('isDev') === 'true';
+
+        // Update Dev Visibility Control
+        const updateDevVisibility = () => {
+            const quickBar = document.getElementById('dev-quick-bar');
+            const navBtn = document.getElementById('nav-dev-panel-btn');
+            const badge = document.getElementById('vlinks-version-badge');
+
+            if (isDev) {
+                if (quickBar) quickBar.style.display = 'flex';
+                if (navBtn) navBtn.style.display = 'inline-flex';
+                if (badge) badge.style.display = 'flex';
+            } else {
+                if (quickBar) quickBar.style.display = 'none';
+                if (navBtn) navBtn.style.display = 'none';
+                if (badge) badge.style.display = 'none';
+            }
+        };
+
+        // Open Dev Dashboard Protected
+        window.openDevDashboardProtected = () => {
+            if (isDev) {
+                openModal('dev-panel-modal');
+            } else {
+                const pass = prompt("[AUTHENTICATION REQUIRED] Enter Developer Passcode:");
+                if (pass && pass.toLowerCase().trim() === 'dev') {
+                    isDev = true;
+                    localStorage.setItem('isDev', 'true');
+                    updateDevVisibility();
+                    openModal('dev-panel-modal');
+                    window.showToast('[AUTHENTICATED: DEVELOPER ACCESS GRANTED]');
+                } else if (pass !== null) {
+                    window.showToast('[ACCESS DENIED: INVALID PASSCODE]');
+                }
+            }
+        };
+
+        // Logout Dev Mode
+        window.logoutDevMode = () => {
+            playCyberBeep(450, 0.12, 'sawtooth');
+            isDev = false;
+            localStorage.removeItem('isDev');
+            updateDevVisibility();
+            window.closeModal('dev-panel-modal');
+            window.showToast('[DEV MODE LOCKED & HIDDEN]');
+        };
+
         // BroadcastChannel for Zero-Latency Multi-Tab Live Sync & Editing Focus Indicators
         const liveChannel = new BroadcastChannel('pxlz_live_channel');
 
@@ -1869,45 +1918,10 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             }
         };
 
-        // Version Badge Toggle
-        let showVersionBadge = true;
-        window.toggleVersionBadge = () => {
-            playCyberBeep(820, 0.08, 'sine');
-            showVersionBadge = !showVersionBadge;
-            const badge = document.getElementById('vlinks-version-badge');
-            const btn = document.getElementById('btn-toggle-badge');
-            if (showVersionBadge) {
-                if (badge) badge.style.display = 'flex';
-                if (btn) btn.innerText = '[📌 VERSION BADGE: ON]';
-                window.showToast('[VERSION BADGE SHOWN]');
-            } else {
-                if (badge) badge.style.display = 'none';
-                if (btn) btn.innerText = '[📌 VERSION BADGE: OFF]';
-                window.showToast('[VERSION BADGE HIDDEN]');
-            }
-        };
-
-        // Secret Dev Stealth Mode Toggle — Hides Dev UI until page refresh!
-        window.toggleDevStealthMode = () => {
-            playCyberBeep(450, 0.15, 'sawtooth');
-            const quickBar = document.getElementById('dev-quick-bar');
-            const navBtn = document.getElementById('nav-dev-panel-btn');
-            const secretDot = document.getElementById('secret-green-dot');
-            const badge = document.getElementById('vlinks-version-badge');
-
-            if (quickBar) quickBar.style.display = 'none';
-            if (navBtn) navBtn.style.display = 'none';
-            if (secretDot) secretDot.style.display = 'none';
-            if (badge) badge.style.display = 'none';
-
-            window.closeModal('dev-panel-modal');
-            window.showToast('[DEV STEALTH MODE: HIDE DEV UI UNTIL REFRESH]');
-        };
-
-        // Keyboard Shortcut: Ctrl + Shift + H for Dev Stealth Mode
+        // Keyboard Shortcut: Ctrl + Shift + D for Developer Authentication
         document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'h') {
-                window.toggleDevStealthMode();
+            if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'd') {
+                window.openDevDashboardProtected();
             }
         });
 
@@ -2431,6 +2445,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             localStorage.removeItem('pxlz_gpu');
             localStorage.removeItem('pxlz_ram');
             localStorage.removeItem('pxlz_os');
+            localStorage.removeItem('isDev');
             location.reload();
         };
 
@@ -2493,8 +2508,9 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             }
         };
 
-        // Initialize Saved Config, Draggables, and Live Listeners on Page Load
+        // Initialize Saved Config, Dev Visibility, Draggables, and Live Listeners on Page Load
         loadSavedConfig();
+        updateDevVisibility();
         initDraggables();
         attachLiveInputListeners();
 
