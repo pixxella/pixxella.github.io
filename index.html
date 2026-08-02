@@ -115,6 +115,7 @@
             background: rgba(5, 5, 10, 0.85);
         }
 
+        /* vLinks Classic Animations */
         @keyframes devPulse {
             0% {
                 border-color: var(--secondary);
@@ -130,6 +131,11 @@
                 border-color: var(--secondary);
                 box-shadow: inset 0 0 20px rgba(var(--secondary-rgb), 0.2), 0 0 15px rgba(var(--secondary-rgb), 0.15);
             }
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
         }
 
         body {
@@ -210,6 +216,33 @@
             box-shadow: 0 4px 20px rgba(255, 77, 77, 0.4);
             position: relative;
             z-index: 2000;
+        }
+
+        /* Bottom-Left vLinks Style Version Badge */
+        #vlinks-version-badge {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 20000;
+            background: rgba(8, 6, 12, 0.88);
+            border: 1.5px solid var(--primary);
+            padding: 8px 16px;
+            border-radius: 14px;
+            font-size: 0.74rem;
+            font-weight: 900;
+            color: var(--primary);
+            box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.35);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.35s ease;
+        }
+
+        #vlinks-version-badge:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 0 30px var(--primary);
         }
 
         /* Navigation Header - Acrylic Glass */
@@ -482,7 +515,7 @@
             margin-left: 2px;
         }
 
-        /* Cyber Acrylic Buttons & Spotlight */
+        /* Cyber Acrylic Buttons — Fixed Color Stability (No Plain White Flash) */
         .btn-cyber {
             padding: 14px 28px;
             font-size: 0.9rem;
@@ -500,7 +533,7 @@
             position: relative;
             overflow: hidden;
             border: 2px solid var(--primary);
-            color: var(--primary);
+            color: var(--primary) !important;
             text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.65);
             backdrop-filter: blur(20px) saturate(200%);
             -webkit-backdrop-filter: blur(20px) saturate(200%);
@@ -508,8 +541,8 @@
         }
 
         .btn-cyber svg {
-            color: var(--primary);
-            stroke: var(--primary);
+            color: var(--primary) !important;
+            stroke: var(--primary) !important;
             transition: all 0.3s ease;
             filter: drop-shadow(0 0 6px var(--primary));
         }
@@ -517,7 +550,7 @@
         .btn-cyber-primary {
             background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.22) 0%, rgba(var(--secondary-rgb), 0.4) 100%);
             border-color: var(--primary);
-            color: var(--primary);
+            color: var(--primary) !important;
             text-shadow: 0 0 12px rgba(var(--primary-rgb), 0.8);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(var(--primary-rgb), 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
@@ -526,36 +559,36 @@
             transform: translateY(-4px) scale(1.035);
             background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.38) 0%, rgba(var(--secondary-rgb), 0.55) 100%);
             box-shadow: 0 15px 45px rgba(0, 0, 0, 0.7), 0 0 35px rgba(var(--primary-rgb), 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-            filter: brightness(1.2);
-            color: #ffffff;
+            filter: brightness(1.15);
+            color: var(--primary) !important;
         }
 
         .btn-cyber-primary:hover svg {
-            stroke: #ffffff;
-            color: #ffffff;
-            filter: drop-shadow(0 0 8px #ffffff);
+            stroke: var(--primary) !important;
+            color: var(--primary) !important;
+            filter: drop-shadow(0 0 8px var(--primary));
         }
 
         .btn-cyber-outline {
             background: rgba(var(--primary-rgb), 0.08);
             border-color: var(--primary);
-            color: var(--primary);
+            color: var(--primary) !important;
             text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.6);
         }
 
         .btn-cyber-outline:hover {
             background: rgba(var(--primary-rgb), 0.25);
             border-color: var(--primary);
-            color: #ffffff;
-            text-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+            color: var(--primary) !important;
+            text-shadow: 0 0 14px var(--primary);
             transform: translateY(-4px) scale(1.035);
             box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 30px rgba(var(--primary-rgb), 0.5);
         }
 
         .btn-cyber-outline:hover svg {
-            stroke: #ffffff;
-            color: #ffffff;
-            filter: drop-shadow(0 0 8px #ffffff);
+            stroke: var(--primary) !important;
+            color: var(--primary) !important;
+            filter: drop-shadow(0 0 8px var(--primary));
         }
 
         /* Cursor Spotlight Reflection Glow */
@@ -624,7 +657,11 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(var(--acrylic-blur));
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            animation: cardFloat 6s ease-in-out infinite;
         }
+
+        .domain-card:nth-child(2) { animation-delay: 2s; }
+        .domain-card:nth-child(3) { animation-delay: 4s; }
 
         .domain-card:hover {
             border-color: var(--primary);
@@ -1065,6 +1102,7 @@
             .section-block { padding: 25px 20px; border-radius: 24px; }
             .domain-grid, .dev-grid, .specs-grid, .contact-grid { grid-template-columns: 1fr; }
             .contact-card { padding: 22px 20px; }
+            #vlinks-version-badge { bottom: 10px; left: 10px; font-size: 0.65rem; }
         }
     </style>
 </head>
@@ -1085,6 +1123,12 @@
     <!-- System Maintenance Banner (Toggled ON/OFF) -->
     <div id="maintenance-banner">
         ⚡ [SYSTEM MAINTENANCE ACTIVE: VIBE CODING & KERNEL UTILITY UPDATES IN PROGRESS]
+    </div>
+
+    <!-- Bottom-Left vLinks Style Version Badge Widget -->
+    <div id="vlinks-version-badge">
+        <span style="color: #47fd48; font-size: 1rem; line-height: 1;">●</span>
+        <span>pxlz.pro v3.5 • HYPERVISOR STABLE</span>
     </div>
 
     <!-- Acrylic Navigation Header -->
@@ -1123,6 +1167,7 @@
         <button onclick="toggleLiveAutoSave()" id="quick-btn-autosave" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #47fd48; color: #47fd48; background: rgba(71,253,72,0.15); font-size: 0.72rem; padding: 5px 12px;">[⚡ LIVE AUTOSAVE: ON]</button>
         <button onclick="toggleInlineEditMode()" id="quick-btn-inline" class="btn-cyber btn-cyber-outline btn-sm" style="font-size: 0.72rem; padding: 5px 12px;">[✏️ INLINE EDIT: OFF]</button>
         <button onclick="toggleMaintenanceMode()" id="quick-btn-maint" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #ff9900; color: #ff9900; font-size: 0.72rem; padding: 5px 12px;">[🛠️ MAINT MODE]</button>
+        <button onclick="toggleDevStealthMode()" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #c77dff; color: #c77dff; font-size: 0.72rem; padding: 5px 12px;" title="Temporarily hide all dev UI elements until page refresh">[👻 HIDE DEV UI]</button>
     </div>
 
     <!-- Ultra Wide Layout Wrapper -->
@@ -1529,7 +1574,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                         • Instant live sync engine (BroadcastChannel & Firebase listener) — type anywhere, updates everywhere live with zero page refreshes!<br>
                         • Added Web Audio API cyber synth sound effects for clicks & modal operations.<br>
                         • Integrated Physical Point Light simulation canvas with dynamic inverse-square falloff.<br>
-                        • Real-time System Maintenance Banner mode & Quick Control Bar.
+                        • Fixed button color stability, added secret stealth mode toggle & vLinks version badge.
                     </p>
                 </div>
 
@@ -1657,8 +1702,10 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
 
             <div style="display: flex; gap: 12px; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 15px; margin-top: 15px; flex-wrap: wrap;">
                 <button onclick="toggleLiveAutoSave()" class="btn-cyber btn-cyber-primary" id="btn-toggle-autosave" style="flex: 1; border-color: #47fd48; color: #47fd48; background: linear-gradient(135deg, rgba(71,253,72,0.25) 0%, rgba(0,143,17,0.45) 100%);">[⚡ LIVE AUTOSAVE: ON]</button>
+                <button onclick="toggleVersionBadge()" class="btn-cyber btn-cyber-outline btn-sm" id="btn-toggle-badge" style="border-color: #47fd48; color: #47fd48;">[📌 VERSION BADGE: ON]</button>
                 <button onclick="toggleInlineEditMode()" class="btn-cyber btn-cyber-outline btn-sm" id="btn-toggle-inline">[INLINE EDIT: OFF]</button>
                 <button onclick="toggleMaintenanceMode()" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #ff9900; color: #ff9900;">[MAINTENANCE MODE]</button>
+                <button onclick="toggleDevStealthMode()" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #c77dff; color: #c77dff;">[👻 HIDE DEV UI]</button>
                 <button onclick="resetDevDefaults()" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #ff4d4d; color: #ff4d4d;">[RESET DEFAULTS]</button>
             </div>
         </div>
@@ -1731,6 +1778,48 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                 window.showToast('[LIVE AUTOSAVE & SYNC: OFF]');
             }
         };
+
+        // Version Badge Toggle
+        let showVersionBadge = true;
+        window.toggleVersionBadge = () => {
+            playCyberBeep(820, 0.08, 'sine');
+            showVersionBadge = !showVersionBadge;
+            const badge = document.getElementById('vlinks-version-badge');
+            const btn = document.getElementById('btn-toggle-badge');
+            if (showVersionBadge) {
+                if (badge) badge.style.display = 'flex';
+                if (btn) btn.innerText = '[📌 VERSION BADGE: ON]';
+                window.showToast('[VERSION BADGE SHOWN]');
+            } else {
+                if (badge) badge.style.display = 'none';
+                if (btn) btn.innerText = '[📌 VERSION BADGE: OFF]';
+                window.showToast('[VERSION BADGE HIDDEN]');
+            }
+        };
+
+        // Secret Dev Stealth Mode Toggle — Hides Dev UI until page refresh!
+        window.toggleDevStealthMode = () => {
+            playCyberBeep(450, 0.15, 'sawtooth');
+            const quickBar = document.getElementById('dev-quick-bar');
+            const navBtn = document.getElementById('nav-dev-panel-btn');
+            const secretDot = document.getElementById('secret-green-dot');
+            const badge = document.getElementById('vlinks-version-badge');
+
+            if (quickBar) quickBar.style.display = 'none';
+            if (navBtn) navBtn.style.display = 'none';
+            if (secretDot) secretDot.style.display = 'none';
+            if (badge) badge.style.display = 'none';
+
+            window.closeModal('dev-panel-modal');
+            window.showToast('[DEV STEALTH MODE: HIDE DEV UI UNTIL REFRESH]');
+        };
+
+        // Keyboard Shortcut: Ctrl + Shift + H for Dev Stealth Mode
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'h') {
+                window.toggleDevStealthMode();
+            }
+        });
 
         // Core Live Sync Update Engine — Instantly updates DOM + Storage + Firebase without refreshing!
         window.applyLiveConfigUpdate = (data, broadcast = true) => {
