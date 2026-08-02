@@ -329,6 +329,42 @@
             gap: 50px;
         }
 
+        /* Sliding Dev Drawer Panel */
+        .dev-drawer-panel {
+            position: fixed;
+            top: 0;
+            right: -460px;
+            width: 440px;
+            max-width: 90vw;
+            height: 100vh;
+            background: rgba(8, 6, 12, 0.94);
+            backdrop-filter: blur(28px) saturate(200%);
+            -webkit-backdrop-filter: blur(28px) saturate(200%);
+            border-left: 2px solid #47fd48;
+            box-shadow: -15px 0 50px rgba(0, 0, 0, 0.9), 0 0 35px rgba(71, 253, 72, 0.35);
+            z-index: 35000;
+            transition: right 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            padding: 26px;
+            gap: 18px;
+            overflow-y: auto;
+        }
+
+        .dev-drawer-panel.active {
+            right: 0;
+        }
+
+        /* Shift Entire UI Body / Wrapper to the left when drawer is active */
+        body.dev-drawer-open .cyber-nav,
+        body.dev-drawer-open .page-wrapper {
+            transform: translateX(-220px);
+        }
+
+        .cyber-nav, .page-wrapper {
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
         /* Acrylic Section Block Styling */
         .section-block {
             position: relative;
@@ -1031,6 +1067,8 @@
             .section-block { padding: 25px 20px; border-radius: 24px; }
             .domain-grid, .dev-grid, .specs-grid, .contact-grid { grid-template-columns: 1fr; }
             .contact-card { padding: 22px 20px; }
+            .dev-drawer-panel { width: 100vw; right: -100vw; }
+            body.dev-drawer-open .cyber-nav, body.dev-drawer-open .page-wrapper { transform: none; }
         }
     </style>
 </head>
@@ -1064,7 +1102,7 @@
             </ul>
 
             <div class="nav-actions">
-                <button id="nav-dev-panel-btn" onclick="openModal('dev-panel-modal')" class="btn-cyber btn-sm" style="border-color: #47fd48; color: #47fd48; background: rgba(71,253,72,0.15);">[⚡ DEV DASHBOARD]</button>
+                <button id="nav-dev-panel-btn" onclick="toggleDevDrawer()" class="btn-cyber btn-sm" style="border-color: #47fd48; color: #47fd48; background: rgba(71,253,72,0.15);">[⚡ DEV PANEL]</button>
                 <a href="https://github.com/pixxella" class="nav-github-btn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
@@ -1075,6 +1113,79 @@
             </div>
         </div>
     </header>
+
+    <!-- Sliding Right Side Developer Drawer Panel -->
+    <div id="dev-drawer-panel" class="dev-drawer-panel">
+        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #47fd48; padding-bottom: 12px; margin-bottom: 5px;">
+            <span style="color: #47fd48; font-weight: 900; font-size: 0.95rem;">⚡ [PXLZ.PRO DEV CONTROL]</span>
+            <span style="color: #888; font-size: 1rem; cursor: pointer; font-weight: 900;" onclick="toggleDevDrawer()">[X]</span>
+        </div>
+
+        <div style="display: flex; gap: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap;">
+            <button class="btn-cyber btn-sm dev-tab-btn" onclick="switchDevTab('contact-tab', this)" style="border-color: #47fd48; color: #47fd48; background: rgba(71,253,72,0.15); font-size: 0.72rem; padding: 6px 10px;">[1. CONTACT]</button>
+            <button class="btn-cyber btn-sm dev-tab-btn" onclick="switchDevTab('bio-tab', this)" style="font-size: 0.72rem; padding: 6px 10px;">[2. BIO]</button>
+            <button class="btn-cyber btn-sm dev-tab-btn" onclick="switchDevTab('theme-tab', this)" style="font-size: 0.72rem; padding: 6px 10px;">[3. COLORS]</button>
+            <button class="btn-cyber btn-sm dev-tab-btn" onclick="switchDevTab('specs-tab', this)" style="font-size: 0.72rem; padding: 6px 10px;">[4. SPECS]</button>
+        </div>
+
+        <!-- Tab 1: Contact & Links -->
+        <div id="dev-tab-contact" class="dev-panel-tab" style="display: flex; flex-direction: column; gap: 14px;">
+            <div>
+                <label style="font-size: 0.75rem; color: #47fd48; font-weight: 900; text-transform: uppercase;">Official Contact Email:</label>
+                <input type="text" id="dev-input-email" value="pxlz@pxlz.pro" style="width: 100%; margin-top: 5px; padding: 10px 14px; background: #000; border: 1.5px solid rgba(71,253,72,0.5); border-radius: 10px; color: #fff; font-weight: 700;">
+            </div>
+            <div>
+                <label style="font-size: 0.75rem; color: #7289da; font-weight: 900; text-transform: uppercase;">Discord Tag / Username:</label>
+                <input type="text" id="dev-input-discord" value="pxlzfr" style="width: 100%; margin-top: 5px; padding: 10px 14px; background: #000; border: 1.5px solid #7289da; border-radius: 10px; color: #7289da; font-weight: 700;">
+            </div>
+        </div>
+
+        <!-- Tab 2: Creator Bio -->
+        <div id="dev-tab-bio" class="dev-panel-tab" style="display: none; flex-direction: column; gap: 14px;">
+            <div>
+                <label style="font-size: 0.75rem; color: #47fd48; font-weight: 900; text-transform: uppercase;">WHOAMI Creator Bio Text:</label>
+                <textarea id="dev-input-bio" rows="6" style="width: 100%; margin-top: 5px; padding: 12px 14px; background: #000; border: 1.5px solid rgba(71,253,72,0.5); border-radius: 12px; color: #fff; line-height: 1.6;">Hey! I'm nPixel. I'm a vibe coder (I don't design shit) and a tech enthusiast learning about virtual machines, operating systems, and kernel-level architecture. I'm also a gamer who loves exploring OS internals.</textarea>
+            </div>
+        </div>
+
+        <!-- Tab 3: Theme & Colors -->
+        <div id="dev-tab-theme" class="dev-panel-tab" style="display: none; flex-direction: column; gap: 14px;">
+            <label style="font-size: 0.75rem; color: #47fd48; font-weight: 900; text-transform: uppercase;">Preset Theme Colors:</label>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button onclick="setCustomPrimary('#ffaaff', '#d966d9')" class="btn-cyber btn-sm" style="border-color: #ffaaff; color: #ffaaff; font-size: 0.72rem;">#ffaaff (Soft Pink)</button>
+                <button onclick="setCustomPrimary('#c77dff', '#7b2cbf')" class="btn-cyber btn-sm" style="border-color: #c77dff; color: #c77dff; font-size: 0.72rem;">#c77dff (Neon Violet)</button>
+                <button onclick="setCustomPrimary('#7289da', '#5865F2')" class="btn-cyber btn-sm" style="border-color: #7289da; color: #7289da; font-size: 0.72rem;">#7289da (Discord Blue)</button>
+            </div>
+        </div>
+
+        <!-- Tab 4: PC & VM Specs -->
+        <div id="dev-tab-specs" class="dev-panel-tab" style="display: none; flex-direction: column; gap: 12px;">
+            <div>
+                <label style="font-size: 0.72rem; color: #aaa;">CPU Model:</label>
+                <input type="text" id="dev-input-cpu" value="AMD Ryzen 5 7600X (6C/12T)" style="width: 100%; margin-top: 4px; padding: 8px 12px; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff;">
+            </div>
+            <div>
+                <label style="font-size: 0.72rem; color: #aaa;">GPU Model:</label>
+                <input type="text" id="dev-input-gpu" value="AMD Radeon RX 6700XT XTX" style="width: 100%; margin-top: 4px; padding: 8px 12px; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff;">
+            </div>
+            <div>
+                <label style="font-size: 0.72rem; color: #aaa;">RAM Memory:</label>
+                <input type="text" id="dev-input-ram" value="32GB DDR5 Dual-Channel" style="width: 100%; margin-top: 4px; padding: 8px 12px; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff;">
+            </div>
+            <div>
+                <label style="font-size: 0.72rem; color: #aaa;">Operating System:</label>
+                <input type="text" id="dev-input-os" value="Windows 11 Pro" style="width: 100%; margin-top: 4px; padding: 8px 12px; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff;">
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 15px; margin-top: auto;">
+            <button onclick="saveDevPanelEdits()" class="btn-cyber btn-cyber-primary" style="width: 100%; border-color: #47fd48; color: #47fd48; background: linear-gradient(135deg, rgba(71,253,72,0.25) 0%, rgba(0,143,17,0.45) 100%);">SAVE & SYNC TO FIREBASE</button>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="toggleInlineEditMode()" class="btn-cyber btn-cyber-outline btn-sm" id="btn-toggle-inline" style="flex: 1; font-size: 0.72rem;">[INLINE EDIT: OFF]</button>
+                <button onclick="resetDevDefaults()" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #ff4d4d; color: #ff4d4d; font-size: 0.72rem;">[RESET]</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Ultra Wide Layout Wrapper -->
     <div class="page-wrapper">
@@ -1107,7 +1218,7 @@
             </div>
         </section>
 
-        <!-- Creator Bio & WHOAMI Card (With Secret Dev Activation Green Dot) -->
+        <!-- Creator Bio & WHOAMI Card -->
         <section id="whoami" class="section-block">
             <div class="section-header">
                 <div>
@@ -1129,7 +1240,7 @@
                         </span>
                     </div>
                     <span class="hero-badge online" id="vibe-badge" style="font-size: 0.82rem; padding: 6px 16px;">
-                        <span id="secret-green-dot" onclick="openModal('dev-panel-modal')" style="cursor: pointer; display: inline-block; font-size: 1.1rem; vertical-align: middle; transition: all 0.3s ease;" title="Click dot to open Developer Control Dashboard">●</span> VIBE CODER
+                        <span id="secret-green-dot" onclick="toggleDevDrawer()" style="cursor: pointer; display: inline-block; font-size: 1.1rem; vertical-align: middle; transition: all 0.3s ease;" title="Click dot to toggle Developer Control Drawer Panel">●</span> VIBE CODER
                     </span>
                 </div>
 
@@ -1143,7 +1254,7 @@
                     </span>
 
                     <div style="display: flex; gap: 10px;">
-                        <button class="btn-cyber btn-cyber-outline btn-sm" onclick="openModal('dev-panel-modal')" style="border-color: #47fd48; color: #47fd48;">
+                        <button class="btn-cyber btn-cyber-outline btn-sm" onclick="toggleDevDrawer()" style="border-color: #47fd48; color: #47fd48;">
                             [⚡ DEV PANEL]
                         </button>
                         <button class="btn-cyber btn-cyber-primary btn-sm" onclick="openTerminalModal()">
@@ -1484,84 +1595,6 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
         </div>
     </div>
 
-    <!-- High-Tech Central Dev Control Dashboard Panel Modal -->
-    <div id="dev-panel-modal" class="modal-overlay">
-        <div class="modal-box" style="width: 720px; max-width: 95vw; border-color: #47fd48; box-shadow: 0 35px 120px rgba(0, 0, 0, 0.95), 0 0 50px rgba(71, 253, 72, 0.35); max-height: 90vh; overflow-y: auto;">
-            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #47fd48; padding-bottom: 12px; margin-bottom: 8px;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <span style="color: #47fd48; font-weight: 900; font-size: 1rem;">⚡ [PXLZ.PRO CENTRAL DEV CONTROL DASHBOARD]</span>
-                </div>
-                <span style="color: #888; font-size: 1rem; cursor: pointer; font-weight: 900;" onclick="closeModal('dev-panel-modal')">[X]</span>
-            </div>
-
-            <div style="display: flex; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px; flex-wrap: wrap;">
-                <button class="btn-cyber btn-sm dev-tab-btn" onclick="switchDevTab('contact-tab', this)" style="border-color: #47fd48; color: #47fd48; background: rgba(71,253,72,0.15);">[1. CONTACT & LINKS]</button>
-                <button class="btn-cyber btn-sm dev-tab-btn" onclick="switchDevTab('bio-tab', this)">[2. CREATOR BIO]</button>
-                <button class="btn-cyber btn-sm dev-tab-btn" onclick="switchDevTab('theme-tab', this)">[3. THEME & COLORS]</button>
-                <button class="btn-cyber btn-sm dev-tab-btn" onclick="switchDevTab('specs-tab', this)">[4. PC & VM SPECS]</button>
-            </div>
-
-            <!-- Tab 1: Contact & Links -->
-            <div id="dev-tab-contact" class="dev-panel-tab" style="display: flex; flex-direction: column; gap: 14px;">
-                <div>
-                    <label style="font-size: 0.78rem; color: #47fd48; font-weight: 900; text-transform: uppercase;">Official Contact Email:</label>
-                    <input type="text" id="dev-input-email" value="pxlz@pxlz.pro" style="width: 100%; margin-top: 5px; padding: 10px 14px; background: #000; border: 1.5px solid rgba(71,253,72,0.5); border-radius: 10px; color: #fff; font-weight: 700;">
-                </div>
-                <div>
-                    <label style="font-size: 0.78rem; color: #7289da; font-weight: 900; text-transform: uppercase;">Discord Tag / Username:</label>
-                    <input type="text" id="dev-input-discord" value="pxlzfr" style="width: 100%; margin-top: 5px; padding: 10px 14px; background: #000; border: 1.5px solid #7289da; border-radius: 10px; color: #7289da; font-weight: 700;">
-                </div>
-            </div>
-
-            <!-- Tab 2: Creator Bio -->
-            <div id="dev-tab-bio" class="dev-panel-tab" style="display: none; flex-direction: column; gap: 14px;">
-                <div>
-                    <label style="font-size: 0.78rem; color: #47fd48; font-weight: 900; text-transform: uppercase;">WHOAMI Creator Bio Text:</label>
-                    <textarea id="dev-input-bio" rows="4" style="width: 100%; margin-top: 5px; padding: 12px 14px; background: #000; border: 1.5px solid rgba(71,253,72,0.5); border-radius: 12px; color: #fff; line-height: 1.6;">Hey! I'm nPixel. I'm a vibe coder (I don't design shit) and a tech enthusiast learning about virtual machines, operating systems, and kernel-level architecture. I'm also a gamer who loves exploring OS internals.</textarea>
-                </div>
-            </div>
-
-            <!-- Tab 3: Theme & Colors -->
-            <div id="dev-tab-theme" class="dev-panel-tab" style="display: none; flex-direction: column; gap: 14px;">
-                <label style="font-size: 0.78rem; color: #47fd48; font-weight: 900; text-transform: uppercase;">Preset Theme Colors:</label>
-                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button onclick="setCustomPrimary('#ffaaff', '#d966d9')" class="btn-cyber btn-sm" style="border-color: #ffaaff; color: #ffaaff;">#ffaaff (Soft Pink)</button>
-                    <button onclick="setCustomPrimary('#00f5d4', '#00b894')" class="btn-cyber btn-sm" style="border-color: #00f5d4; color: #00f5d4;">#00f5d4 (Cyber Mint)</button>
-                    <button onclick="setCustomPrimary('#c77dff', '#7b2cbf')" class="btn-cyber btn-sm" style="border-color: #c77dff; color: #c77dff;">#c77dff (Neon Violet)</button>
-                    <button onclick="setCustomPrimary('#7289da', '#5865F2')" class="btn-cyber btn-sm" style="border-color: #7289da; color: #7289da;">#7289da (Discord Blue)</button>
-                </div>
-            </div>
-
-            <!-- Tab 4: PC & VM Specs -->
-            <div id="dev-tab-specs" class="dev-panel-tab" style="display: none; flex-direction: column; gap: 14px;">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                    <div>
-                        <label style="font-size: 0.72rem; color: #aaa;">CPU Model:</label>
-                        <input type="text" id="dev-input-cpu" value="AMD Ryzen 5 7600X (6C/12T)" style="width: 100%; margin-top: 4px; padding: 8px 12px; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff;">
-                    </div>
-                    <div>
-                        <label style="font-size: 0.72rem; color: #aaa;">GPU Model:</label>
-                        <input type="text" id="dev-input-gpu" value="AMD Radeon RX 6700XT XTX" style="width: 100%; margin-top: 4px; padding: 8px 12px; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff;">
-                    </div>
-                    <div>
-                        <label style="font-size: 0.72rem; color: #aaa;">RAM Memory:</label>
-                        <input type="text" id="dev-input-ram" value="32GB DDR5 Dual-Channel" style="width: 100%; margin-top: 4px; padding: 8px 12px; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff;">
-                    </div>
-                    <div>
-                        <label style="font-size: 0.72rem; color: #aaa;">Operating System:</label>
-                        <input type="text" id="dev-input-os" value="Windows 11 Pro" style="width: 100%; margin-top: 4px; padding: 8px 12px; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #fff;">
-                    </div>
-                </div>
-            </div>
-
-            <div style="display: flex; gap: 12px; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 15px; margin-top: 15px; flex-wrap: wrap;">
-                <button onclick="saveDevPanelEdits()" class="btn-cyber btn-cyber-primary" style="flex: 1; border-color: #47fd48; color: #47fd48; background: linear-gradient(135deg, rgba(71,253,72,0.25) 0%, rgba(0,143,17,0.45) 100%);">SAVE & SYNC TO FIREBASE</button>
-                <button onclick="toggleInlineEditMode()" class="btn-cyber btn-cyber-outline btn-sm" id="btn-toggle-inline">[INLINE EDITING: OFF]</button>
-                <button onclick="resetDevDefaults()" class="btn-cyber btn-cyber-outline btn-sm" style="border-color: #ff4d4d; color: #ff4d4d;">[RESET DEFAULTS]</button>
-            </div>
-        </div>
-    </div>
-
     <script>
         // Firebase Initialization & Configuration
         const firebaseConfig = {
@@ -1584,6 +1617,21 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
         } catch (e) {
             console.warn("Firebase initialization notice:", e.message);
         }
+
+        // Toggle Sliding Dev Drawer Panel and Shift UI
+        window.toggleDevDrawer = () => {
+            const drawer = document.getElementById('dev-drawer-panel');
+            if (drawer) {
+                drawer.classList.toggle('active');
+                document.body.classList.toggle('dev-drawer-open');
+                const isOpen = drawer.classList.contains('active');
+                if (isOpen) {
+                    window.showToast('[DEV CONTROL PANEL: OPEN]');
+                } else {
+                    window.showToast('[DEV CONTROL PANEL: CLOSED]');
+                }
+            }
+        };
 
         // Load Saved Configuration from LocalStorage / Firebase
         const loadSavedConfig = () => {
@@ -1945,8 +1993,8 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
                 }
             }
 
-            window.showToast('[DASHBOARD EDITS SAVED & SYNCED]');
-            window.closeModal('dev-panel-modal');
+            window.showToast('[DEV PANEL EDITS SAVED & SYNCED]');
+            window.toggleDevDrawer();
         };
 
         // Inline Direct Click-To-Edit Toggle
@@ -1962,14 +2010,14 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
 
             if (inlineEditingEnabled) {
                 document.body.classList.add('inline-editable-active');
-                if (btn) btn.innerText = '[INLINE EDITING: ON]';
+                if (btn) btn.innerText = '[INLINE EDIT: ON]';
                 editableElements.forEach(el => {
                     if (el) el.contentEditable = "true";
                 });
                 window.showToast('[INLINE DIRECT CLICK-TO-EDIT ENABLED]');
             } else {
                 document.body.classList.remove('inline-editable-active');
-                if (btn) btn.innerText = '[INLINE EDITING: OFF]';
+                if (btn) btn.innerText = '[INLINE EDIT: OFF]';
                 editableElements.forEach(el => {
                     if (el) el.contentEditable = "false";
                 });
