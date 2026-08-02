@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html class="notranslate" translate="no">
+<html class="notranslate" translate="no" lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google" content="notranslate">
     <base target="_blank">
-    <title>nPixel</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>pxlz.pro | nPixel Developer Hub & Ecosystem</title>
+    <meta name="description" content="Official developer hub for pxlz.pro (nPixel / pixxella). Featuring subdomains (/dl, /vlinks, /dreamlex), AutoHotkey scripts, VM tweaks, and tech specs.">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
 
     <script>
         const savedTheme = localStorage.getItem('vTheme') || 'pink';
@@ -18,24 +19,29 @@
         :root {
             --primary: #ffa2fd;
             --secondary: #a349a4;
+            --bg-dark: #07070a;
+            --card-bg: rgba(18, 18, 26, 0.75);
+            --card-border: rgba(255, 162, 253, 0.22);
         }
 
         [data-theme="blue"] {
             --primary: #a2d2ff;
             --secondary: #5b67f1;
+            --card-border: rgba(162, 210, 255, 0.22);
         }
 
         [data-theme="red"] {
             --primary: #ff4d4d;
             --secondary: #8b0000;
+            --card-border: rgba(255, 77, 77, 0.22);
         }
 
         [data-theme="green"] {
             --primary: #47fd48;
             --secondary: #008f11;
+            --card-border: rgba(71, 253, 72, 0.22);
         }
 
-        /* enforce font and smooth global transitions */
         * {
             font-family: 'JetBrains Mono', monospace !important;
             box-sizing: border-box;
@@ -48,12 +54,18 @@
 
         input,
         textarea,
+        pre,
+        code,
         [contenteditable="true"],
         .selectable {
             user-select: text;
             -webkit-user-select: text;
             -moz-user-select: text;
             -ms-user-select: text;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         @keyframes devPulse {
@@ -74,25 +86,20 @@
         }
 
         body {
-            background: linear-gradient(135deg, #07070a 0%, #110822 50%, #07070a 100%);
+            background: linear-gradient(135deg, #050508 0%, #0d061a 50%, #050508 100%);
             color: #eeeeee;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 10px;
+            padding: 0;
             overflow-x: hidden;
             overflow-y: auto;
-            border: 4px solid transparent;
-            animation: devPulse 6s infinite ease-in-out;
             position: relative;
             background-attachment: fixed;
         }
 
-        /* particles */
+        /* Ambient Particle System */
         #dev-particles {
-            position: absolute;
+            position: fixed;
             inset: 0;
             pointer-events: none;
             overflow: hidden;
@@ -112,167 +119,599 @@
             color: var(--primary);
             opacity: 0;
             font-weight: 900;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
-        /* floats keyframes */
         @keyframes float-up-sway-left {
-            0% {
-                transform: translateY(105vh) translateX(0px) rotate(0deg);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: var(--max-opacity, 0.2);
-            }
-
-            50% {
-                transform: translateY(50vh) translateX(-40px) rotate(-15deg);
-            }
-
-            90% {
-                opacity: var(--max-opacity, 0.2);
-            }
-
-            100% {
-                transform: translateY(-10vh) translateX(20px) rotate(-35deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(105vh) translateX(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: var(--max-opacity, 0.18); }
+            50% { transform: translateY(50vh) translateX(-40px) rotate(-15deg); }
+            90% { opacity: var(--max-opacity, 0.18); }
+            100% { transform: translateY(-10vh) translateX(20px) rotate(-35deg); opacity: 0; }
         }
 
         @keyframes float-up-sway-right {
-            0% {
-                transform: translateY(105vh) translateX(0px) rotate(0deg);
-                opacity: 0;
-            }
-
-            15% {
-                opacity: var(--max-opacity, 0.2);
-            }
-
-            50% {
-                transform: translateY(45vh) translateX(50px) rotate(20deg);
-            }
-
-            85% {
-                opacity: var(--max-opacity, 0.2);
-            }
-
-            100% {
-                transform: translateY(-10vh) translateX(-20px) rotate(45deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(105vh) translateX(0px) rotate(0deg); opacity: 0; }
+            15% { opacity: var(--max-opacity, 0.18); }
+            50% { transform: translateY(45vh) translateX(50px) rotate(20deg); }
+            85% { opacity: var(--max-opacity, 0.18); }
+            100% { transform: translateY(-10vh) translateX(-20px) rotate(45deg); opacity: 0; }
         }
 
         @keyframes float-up-drift {
-            0% {
-                transform: translateY(105vh) translateX(0px) rotate(-5deg);
-                opacity: 0;
-            }
-
-            12% {
-                opacity: var(--max-opacity, 0.2);
-            }
-
-            50% {
-                transform: translateY(48vh) translateX(20px) rotate(5deg);
-            }
-
-            88% {
-                opacity: var(--max-opacity, 0.2);
-            }
-
-            100% {
-                transform: translateY(-10vh) translateX(-40px) rotate(-10deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(105vh) translateX(0px) rotate(-5deg); opacity: 0; }
+            12% { opacity: var(--max-opacity, 0.18); }
+            50% { transform: translateY(48vh) translateX(20px) rotate(5deg); }
+            88% { opacity: var(--max-opacity, 0.18); }
+            100% { transform: translateY(-10vh) translateX(-40px) rotate(-10deg); opacity: 0; }
         }
 
-        /* screens and modals */
+        /* Navigation Header */
+        .cyber-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            background: rgba(7, 7, 12, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(var(--primary), 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+            padding: 12px 24px;
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+        }
+
+        .nav-logo-tag {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: #000;
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: all 0.25s ease;
+            position: relative;
+            padding: 4px 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 8px rgba(var(--primary), 0.5);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-github-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-github-btn:hover {
+            background: rgba(var(--primary), 0.15);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        #theme-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--primary), 0 0 30px var(--primary);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: dotPulse 2s infinite;
+            flex-shrink: 0;
+        }
+
+        #theme-dot:hover {
+            transform: scale(1.3) rotate(180deg);
+        }
+
+        @keyframes dotPulse {
+            0%, 100% { box-shadow: 0 0 12px var(--primary), 0 0 25px var(--primary); }
+            50% { box-shadow: 0 0 22px var(--primary), 0 0 40px var(--primary); }
+        }
+
+        /* Page Layout Container */
+        .page-wrapper {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        /* Section Styling */
+        .section-block {
+            position: relative;
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 35px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: 1px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+        }
+
+        .section-subtitle {
+            font-size: 0.8rem;
+            color: #888;
+            margin: 0;
+        }
+
+        /* Hero Banner Block */
+        .hero-banner {
+            text-align: center;
+            padding: 50px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            background: linear-gradient(135deg, rgba(16, 16, 25, 0.9) 0%, rgba(22, 14, 38, 0.95) 100%);
+            border: 2px solid var(--card-border);
+            border-radius: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
+            animation: textShimmer 3s infinite alternate;
+        }
+
+        .hero-badge-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .hero-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero-badge.online {
+            color: #47fd48;
+            border-color: rgba(71, 253, 72, 0.3);
+            background: rgba(71, 253, 72, 0.08);
+        }
+
+        .hero-title {
+            font-size: 3.4rem;
+            font-weight: 900;
+            margin: 0;
+            background: linear-gradient(135deg, #ffffff 0%, var(--primary) 60%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.5));
+        }
+
+        .hero-subtitle {
+            font-size: 1.05rem;
+            color: #ccc;
+            max-width: 750px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        /* Buttons & Spotlight Elements */
+        .btn-cyber {
+            padding: 12px 24px;
+            font-size: 0.88rem;
+            font-weight: 900;
+            border-radius: 16px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .btn-cyber-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: #000;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(var(--primary), 0.25);
+        }
+
+        .btn-cyber-primary:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(var(--primary), 0.45);
+            filter: brightness(1.1);
+        }
+
+        .btn-cyber-outline {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(var(--primary), 0.4);
+            color: #fff;
+        }
+
+        .btn-cyber-outline:hover {
+            background: rgba(var(--primary), 0.12);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 0 20px rgba(var(--primary), 0.3);
+        }
+
+        /* Spotlight Cursor Glow Effect */
+        .btn-cyber::after, .domain-card::after, .dev-card::after, .log-entry::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(120px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--primary), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .btn-cyber:hover::after, .domain-card:hover::after, .dev-card:hover::after, .log-entry:hover::after {
+            opacity: 0.18;
+        }
+
+        /* Domains Grid */
+        .domain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 22px;
+        }
+
+        .domain-card {
+            background: linear-gradient(135deg, rgba(22, 22, 32, 0.8) 0%, rgba(12, 12, 18, 0.95) 100%);
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            border-top: 3px solid var(--primary);
+            border-radius: 24px;
+            padding: 26px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .domain-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(var(--primary), 0.2);
+            background: linear-gradient(135deg, rgba(30, 30, 45, 0.9) 0%, rgba(16, 16, 24, 0.98) 100%);
+        }
+
+        .domain-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .domain-tag {
+            font-size: 0.68rem;
+            font-weight: 900;
+            color: var(--primary);
+            background: rgba(var(--primary), 0.1);
+            border: 1px solid rgba(var(--primary), 0.3);
+            padding: 3px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .domain-url {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #fff;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+
+        .domain-desc {
+            font-size: 0.86rem;
+            line-height: 1.6;
+            color: #bbb;
+            margin: 0;
+        }
+
+        .domain-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+            z-index: 2;
+        }
+
+        .btn-sm {
+            padding: 8px 14px;
+            font-size: 0.75rem;
+            border-radius: 12px;
+            font-weight: 900;
+        }
+
+        /* Dev Showcase & Code Blocks */
+        .dev-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 22px;
+        }
+
+        .dev-card {
+            background: linear-gradient(135deg, rgba(20, 20, 28, 0.85) 0%, rgba(10, 10, 15, 0.95) 100%);
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            border-left: 4px solid var(--primary);
+            border-radius: 24px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.35s ease;
+        }
+
+        .dev-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(var(--primary), 0.18);
+        }
+
+        .dev-card-title {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: #fff;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dev-card-desc {
+            font-size: 0.82rem;
+            line-height: 1.5;
+            color: #aaa;
+            margin: 0;
+        }
+
+        .code-box {
+            background: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 14px;
+            position: relative;
+            font-size: 0.74rem;
+            line-height: 1.5;
+            overflow-x: auto;
+            color: #47fd48;
+            text-shadow: 0 0 3px rgba(71, 253, 72, 0.3);
+            max-height: 220px;
+        }
+
+        .code-box pre {
+            margin: 0;
+            white-space: pre;
+        }
+
+        .code-copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 0.65rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .code-copy-btn:hover {
+            background: var(--primary);
+            color: #000;
+        }
+
+        /* Three Columns Spec & Gaming Grid */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .spec-column {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .spec-column-header {
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 8px;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.82rem;
+            color: #eee;
+        }
+
+        .spec-item img, .spec-item svg {
+            flex-shrink: 0;
+        }
+
+        /* Modal Overlay & Diagnostics Terminal */
         .modal-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0);
-            backdrop-filter: blur(0px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(16px);
             z-index: 30000;
             justify-content: center;
             align-items: center;
-            transition: background 0.4s ease, backdrop-filter 0.4s ease;
+            transition: all 0.4s ease;
         }
 
         .modal-overlay.active {
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(16px);
+            display: flex;
         }
 
         .modal-box {
-            background: linear-gradient(135deg, #121214 0%, #18182a 100%);
+            background: #050508;
             border: 2px solid var(--primary);
             padding: 25px;
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.75), 0 0 30px rgba(var(--primary), 0.15);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.85), 0 0 35px rgba(var(--primary), 0.2);
             display: flex;
             flex-direction: column;
             gap: 15px;
-            text-align: center;
-            width: 320px;
-            max-width: 90vw;
+            width: 520px;
+            max-width: 92vw;
             border-radius: 24px;
-            transform: scale(0.9) translateY(40px);
-            opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
         }
 
-        .modal-overlay.active .modal-box {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-        }
-
-        /* custom scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 50px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
-            border-radius: 50px;
-            border: 2px solid rgba(0, 0, 0, 0.1);
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary);
-            box-shadow: 0 0 10px var(--primary);
-        }
-
-        /* toast notification */
+        /* Toast Notifications */
         #toast {
             position: fixed;
-            top: 20px;
-            right: -320px;
+            top: 75px;
+            right: -340px;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: #000;
-            padding: 15px 25px;
+            padding: 14px 22px;
             font-weight: 900;
             z-index: 40000;
-            font-size: 0.85rem;
-            border: none;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 0.82rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border-radius: 16px;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
         }
 
         #toast.show {
             right: 20px;
-            transform: rotate(-1deg);
         }
 
         #toast-progress {
@@ -291,855 +730,28 @@
             transform: scaleX(0);
         }
 
-        /* container layout styling */
-        @keyframes containerEntrance {
-            from {
-                opacity: 0;
-                transform: scale(0.96) translateY(40px);
-                filter: blur(8px);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-                filter: blur(0px);
-            }
-        }
-
-        .container {
-            position: relative;
-            border: 3px solid var(--secondary);
-            padding: 25px 35px;
-            width: 100%;
-            max-width: 720px;
-            background: linear-gradient(135deg, #101014 0%, #15152a 100%);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            display: flex;
-            flex-direction: column;
-            z-index: 10;
-            backdrop-filter: blur(10px);
-            border-radius: 32px;
-            opacity: 0;
-            animation: containerEntrance 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        .container:hover {
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9), 0 0 45px rgba(var(--primary), 0.15);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        #theme-dot {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--primary);
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 0 15px var(--primary), 0 0 30px var(--primary);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            animation: dotPulse 2s infinite;
-            z-index: 100;
-        }
-
-        #theme-dot:hover {
-            transform: scale(1.3) rotate(180deg);
-            box-shadow: 0 0 25px var(--primary), 0 0 45px var(--primary);
-        }
-
-        @keyframes dotPulse {
-
-            0%,
-            100% {
-                box-shadow: 0 0 12px var(--primary), 0 0 25px var(--primary);
-            }
-
-            50% {
-                box-shadow: 0 0 22px var(--primary), 0 0 40px var(--primary);
-            }
-        }
-
-        @keyframes ripple-effect {
-            0% {
-                transform: scale(1);
-                opacity: 0.8;
-                box-shadow: 0 0 0 0px var(--primary);
-            }
-
-            100% {
-                transform: scale(3.5);
-                opacity: 0;
-                box-shadow: 0 0 0 30px var(--primary);
-            }
-        }
-
-        .theme-dot-ripple {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            pointer-events: none;
-            border: 2px solid var(--primary);
-            animation: ripple-effect 0.8s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
-            z-index: 99;
-        }
-
-        h1 {
-            font-size: 2.8rem;
-            margin: 0 0 20px 0;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-align: center;
-            letter-spacing: -1px;
-            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: textShimmer 3s ease-in-out infinite alternate;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        h1:hover {
-            animation: cyberGlitch 0.3s linear;
-        }
-
-        @keyframes cyberGlitch {
-            0% {
-                transform: translate(2px, -1px) skewX(2deg);
-                filter: drop-shadow(-2px 0 #ff0050) drop-shadow(2px 0 #00f2fe);
-            }
-
-            20% {
-                transform: translate(-1px, 2px) skewX(-3deg);
-                filter: drop-shadow(2px -2px #ff0050) drop-shadow(-2px 2px #00f2fe);
-            }
-
-            40% {
-                transform: translate(1px, -2px) skewX(1deg);
-                filter: drop-shadow(-1px 2px #ff0050) drop-shadow(1px -2px #00f2fe);
-            }
-
-            60% {
-                transform: translate(-2px, 1px) skewX(-1deg);
-                filter: drop-shadow(2px 1px #ff0050) drop-shadow(-2px -1px #00f2fe);
-            }
-
-            80% {
-                transform: translate(2px, 2px) skewX(2deg);
-                filter: drop-shadow(-2px -2px #ff0050) drop-shadow(2px 2px #00f2fe);
-            }
-
-            100% {
-                transform: translate(0) skewX(0);
-                filter: drop-shadow(0 4px 18px rgba(var(--primary), 0.55));
-            }
-        }
-
-        @keyframes textShimmer {
-            from {
-                filter: drop-shadow(0 2px 8px rgba(var(--primary), 0.2)) brightness(1);
-            }
-
-            to {
-                filter: drop-shadow(0 4px 18px rgba(var(--primary), 0.55)) brightness(1.15);
-            }
-        }
-
-        .links {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .link-group {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-
-        /* sequential button reveal transitions */
-        @keyframes linkReveal {
-            from {
-                opacity: 0;
-                translate: 0px 25px;
-                scale: 0.95;
-                filter: blur(8px);
-            }
-
-            to {
-                opacity: 1;
-                translate: 0px 0px;
-                scale: 1;
-                filter: blur(0px);
-            }
-        }
-
-        @keyframes buttonFloat {
-
-            0%,
-            100% {
-                translate: 0px 0px;
-            }
-
-            50% {
-                translate: 2px -4px;
-            }
-        }
-
-        .links a {
-            opacity: 0;
-            animation: linkReveal 0.75s cubic-bezier(0.16, 1, 0.3, 1) both, buttonFloat 5s ease-in-out infinite alternate;
-            animation-delay: calc(var(--i) * 0.08s + 0.2s), calc(var(--i) * 0.5s + 0.8s);
-        }
-
-        .links a svg {
-            flex-shrink: 0;
-        }
-
-        .links .link-group {
-            opacity: 0;
-            animation: linkReveal 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
-            animation-delay: calc(var(--i) * 0.08s + 0.2s);
-        }
-
-        a {
-            color: #fff;
-            text-decoration: none;
-            padding: 16px;
-            font-size: 1.2rem;
-            text-align: center;
-            font-weight: bold;
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), translate 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
-            border: 3px solid;
-            background: linear-gradient(135deg, #161616 0%, #1e1e1e 100%);
-            position: relative;
-            overflow: hidden;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* modern Slanted Gradient Shimmer Sweep */
-        a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-            transform: skewX(-20deg);
-            transition: left 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-            pointer-events: none;
-        }
-
-        /* responsive cursor spotlight glow */
-        a::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(100px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--primary), transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        a:hover {
-            transform: translate(6px, -6px) scale(1.035);
-            filter: brightness(1.15);
-        }
-
-        a:hover::before {
-            left: 150%;
-        }
-
-        a:hover::after {
-            opacity: 0.22;
-        }
-
-        /* glowing borders for brand icons */
-        .roblox {
-            border-color: #fff #555 #555 #fff;
-        }
-
-        .roblox:hover {
-            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.15), 0 0 10px rgba(255, 255, 255, 0.1);
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-        }
-
-        .youtube {
-            border-color: #FF0000 #8b0000 #8b0000 #FF0000;
-        }
-
-        .youtube:hover {
-            box-shadow: 0 12px 30px rgba(255, 0, 0, 0.4), 0 0 12px rgba(255, 0, 0, 0.25);
-            text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
-        }
-
-        .twitch {
-            border-color: #9146FF #bf94ff #bf94ff #9146FF;
-        }
-
-        .twitch:hover {
-            box-shadow: 0 12px 30px rgba(145, 70, 255, 0.45), 0 0 12px rgba(145, 70, 255, 0.25);
-            text-shadow: 0 0 8px rgba(191, 148, 255, 0.5);
-        }
-
-        .tiktok {
-            border-color: #ff0050 #ff0050 #ff0050 #ff0050;
-            border-radius: 12px;
-        }
-
-        .tiktok:hover {
-            box-shadow: 0 12px 30px rgba(255, 0, 80, 0.4), 0 0 12px rgba(0, 242, 254, 0.25);
-            text-shadow: 0 0 8px rgba(255, 0, 80, 0.5);
-        }
-
-        .discord {
-            border-color: #5865F2 #7289da #7289da #5865F2;
-        }
-
-        .discord:hover {
-            box-shadow: 0 12px 30px rgba(88, 101, 242, 0.4), 0 0 12px rgba(88, 101, 242, 0.25);
-            text-shadow: 0 0 8px rgba(114, 137, 218, 0.5);
-        }
-
-        .server-vip {
-            border-color: #ffd700 #b8860b #b8860b #ffd700;
-            color: #f9d824;
-        }
-
-        .server-vip:hover {
-            box-shadow: 0 14px 35px rgba(255, 215, 0, 0.45), 0 0 15px rgba(255, 215, 0, 0.3);
-            text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
-        }
-
-        .src-link {
-            border-color: var(--primary);
-            font-size: 0.8rem;
-            opacity: 0.6;
-            margin-top: 5px;
-            background: transparent;
-            color: #fff;
-            cursor: pointer;
-            padding: 8px;
-            border-style: dashed;
-            flex: 1;
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-width: 2px;
-        }
-
-        .src-link::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(80px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--primary), transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .src-link:hover {
-            opacity: 1;
-            border-style: solid;
-            transform: translate(4px, -4px) scale(1.05);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .src-link:hover::after {
-            opacity: 0.22;
-        }
-
-        .src-code-btn {
-            border-color: #666;
-            font-size: 0.65rem;
-            opacity: 0.4;
-            margin-top: 5px;
-            background: transparent;
-            color: #888;
-            cursor: pointer;
-            padding: 5px;
-            border-style: dashed;
-            border-width: 1px;
-            flex: 1;
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .src-code-btn::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(80px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--primary), transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .src-code-btn:hover {
-            opacity: 0.7;
-            transform: translate(4px, -4px) scale(1.05);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .src-code-btn:hover::after {
-            opacity: 0.22;
-        }
-
-        .status {
-            font-size: 0.8rem;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
-
-        .status-working {
-            color: #00ff00;
-            text-shadow: 0 0 5px #00ff00;
-        }
-
-        .status-down {
-            color: #ff0000;
-            text-shadow: 0 0 5px #ff0000;
-        }
-
-        .notice {
-            font-size: 0.65rem;
-            text-align: center;
-            font-weight: bold;
-            line-height: 1.2;
-        }
-
-        .gold-text {
-            color: #ffff00;
-        }
-
-        .green-text {
-            color: #00ff00;
-        }
-
-        .footer {
-            margin-top: 15px;
-            border-top: 1px dashed var(--secondary);
-            padding-top: 15px;
-        }
-
-        .update-log {
-            font-size: 0.75rem;
-            opacity: 0.7;
-            margin-bottom: 10px;
-            line-height: 1.5;
-        }
-
-        .btn-row-small {
-            display: flex;
-            gap: 10px;
-            margin-top: 8px;
-            margin-bottom: 8px;
-        }
-
-        .one-liner {
-            display: block;
-            margin-top: 4px;
-            font-style: italic;
-            color: var(--primary);
-        }
-
-        /* Contact Grid & Stylish Cyber Cards */
-        .contact-grid {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-            margin-bottom: 10px;
-            width: 100%;
-        }
-
-        .contact-card {
-            flex: 1;
-            min-width: 250px;
-            background: linear-gradient(135deg, rgba(20, 20, 30, 0.7) 0%, rgba(10, 10, 15, 0.9) 100%);
-            border: 1.5px solid rgba(var(--primary), 0.25);
-            border-left: 4px solid var(--primary);
-            padding: 14px 18px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            backdrop-filter: blur(12px);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-        }
-
-        .contact-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
-            transform: skewX(-20deg);
-            transition: left 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-            pointer-events: none;
-        }
-
-        .contact-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(120px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--primary), transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .contact-card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(var(--primary), 0.25);
-            transform: translateY(-3px) scale(1.02);
-            background: linear-gradient(135deg, rgba(25, 25, 40, 0.8) 0%, rgba(15, 15, 22, 0.95) 100%);
-        }
-
-        .contact-card:hover::before {
-            left: 150%;
-        }
-
-        .contact-card:hover::after {
-            opacity: 0.18;
-        }
-
-        .contact-icon-wrapper {
-            width: 42px;
-            height: 42px;
-            border-radius: 14px;
-            background: rgba(var(--primary), 0.12);
-            border: 1px solid rgba(var(--primary), 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .contact-card:hover .contact-icon-wrapper {
-            background: rgba(var(--primary), 0.25);
-            box-shadow: 0 0 15px rgba(var(--primary), 0.4);
-            transform: scale(1.1) rotate(-5deg);
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            min-width: 0;
-            flex: 1;
-            z-index: 2;
-        }
-
-        .contact-label {
-            font-size: 0.65rem;
-            color: var(--primary);
-            font-weight: 900;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .contact-value {
-            font-size: 0.9rem;
-            color: #ffffff;
-            font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .contact-actions {
-            display: flex;
-            gap: 6px;
-            flex-shrink: 0;
-            z-index: 2;
-        }
-
-        .contact-btn {
-            padding: 6px 12px;
-            font-size: 0.72rem;
-            font-weight: 900;
-            border-radius: 10px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.25s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            border: 1px solid transparent;
-            text-decoration: none;
-            font-family: 'JetBrains Mono', monospace !important;
-        }
-
-        .contact-btn-outline {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.15);
-            color: #eee;
-        }
-
-        .contact-btn-outline:hover {
-            background: rgba(var(--primary), 0.15);
-            border-color: var(--primary);
-            color: var(--primary);
-            box-shadow: 0 0 12px rgba(var(--primary), 0.3);
-            transform: translateY(-2px);
-        }
-
-        .contact-btn-solid {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: #000;
-            font-weight: 900;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .contact-btn-solid:hover {
-            filter: brightness(1.2);
-            box-shadow: 0 0 18px rgba(var(--primary), 0.5);
-            transform: translateY(-2px);
-        }
-
-        .dm-section {
-            background: #1e0a2d;
-            padding: 10px 18px;
-            border: 1px solid rgba(var(--primary), 0.2);
-            border-left: 4px solid var(--primary);
-            margin-bottom: 10px;
-            font-size: 0.85rem;
-            display: flex;
-            justify-content: space-between;
-            border-radius: 16px;
-            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        .dm-section:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(var(--primary), 0.25);
-            transform: scale(1.02);
-        }
-
-        .discord-icon-container {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .discord-easter-egg {
-            cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
-        }
-
-        .discord-icon-container:hover .discord-easter-egg {
-            transform: scale(1.35) rotate(15deg);
-            filter: drop-shadow(0 0 8px #5865F2);
-        }
-
-        .discord-egg-tooltip {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            background: linear-gradient(135deg, #151515 0%, #222 100%);
-            border: 1px solid var(--primary);
-            color: #fff;
-            padding: 8px 12px;
-            border-radius: 12px;
-            font-size: 0.65rem;
-            white-space: normal;
-            width: 220px;
-            text-align: center;
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 10px rgba(var(--primary), 0.2);
-            z-index: 1000;
-            line-height: 1.4;
-        }
-
-        .discord-egg-tooltip::after {
-            content: '';
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 5px;
-            border-style: solid;
-            border-color: #222 transparent transparent transparent;
-        }
-
-        .discord-icon-container:hover .discord-egg-tooltip {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .copyright {
-            font-size: 0.7rem;
-            opacity: 0.4;
-            text-align: center;
-            border-top: 1px solid #222;
-            padding-top: 8px;
-        }
-
-        #dev-badge {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: #000000;
-            text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
-            font-size: 0.7rem;
-            padding: 2px 10px;
-            border-radius: 50px;
-            margin-left: 10px;
-            font-weight: 900;
-            text-transform: uppercase;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            animation: badgeGlow 2s infinite;
-            white-space: nowrap;
-            display: inline-block;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        @keyframes badgeGlow {
-
-            0%,
-            100% {
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            }
-
-            50% {
-                box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5);
-            }
-        }
-
-        /* log entries card formatting */
-        .log-entry {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 16px 20px;
-            text-align: left;
-            border-radius: 16px;
-            margin-bottom: 12px;
-            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        .log-entry:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: var(--primary);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25), 0 0 12px rgba(var(--primary), 0.15);
-            transform: translateX(5px) scale(1.015);
-        }
-
-        .log-date {
-            color: var(--primary);
-            font-size: 0.85rem;
-            display: block;
-            margin-bottom: 4px;
-            font-weight: 900;
-        }
-
-        a {
-            border-radius: 16px !important;
-        }
-
-        button {
-            border-radius: 16px !important;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 30px 20px !important;
-                max-width: 95vw !important;
-                min-height: auto !important;
-                border-width: 2px !important;
-            }
-
-            h1 {
-                font-size: 2rem !important;
-            }
-
-            a {
-                padding: 12px !important;
-                font-size: 1rem !important;
-            }
-
-            #read-more-btn, .src-link {
-                font-size: 0.95rem !important;
-                padding: 10px 14px !important;
-            }
-        }
-
-        /* Blinking terminal console cursor */
-        @keyframes console-blink {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
-        }
-        .console-cursor {
-            color: var(--primary);
-            font-weight: 900;
-            animation: console-blink 1s infinite step-end;
-            margin-left: 2px;
-        }
-
-        /* Copy Tooltip Confirmation Bubble */
         .copy-tooltip {
             position: absolute;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: #000;
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 6px 12px;
+            border-radius: 16px;
             font-weight: 900;
-            font-size: 0.8rem;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 15px var(--primary);
+            font-size: 0.75rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
             opacity: 0;
             transform: translate(-50%, -20px) scale(0.85);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.35s ease;
             pointer-events: none;
             z-index: 10000;
             white-space: nowrap;
-            top: 0;
+            top: -35px;
             left: 50%;
         }
 
         .copy-tooltip.show {
             opacity: 1;
-            transform: translate(-50%, -50px) scale(1);
+            transform: translate(-50%, 0) scale(1);
         }
 
         .clickable-dm {
@@ -1148,393 +760,357 @@
             color: var(--primary);
             font-weight: 900;
             transition: all 0.3s ease;
-            display: inline-block;
         }
 
         .clickable-dm:hover {
             color: #fff;
             text-shadow: 0 0 10px var(--primary);
-            transform: scale(1.05);
         }
 
-        /* Hover Preview Cards for Twitch and YouTube */
-        .hover-preview-card {
-            position: absolute;
-            bottom: calc(100% + 15px);
-            left: 50%;
-            transform: translateX(-50%) translateY(15px) scale(0.9);
-            background: rgba(10, 10, 15, 0.95);
-            border: 2px solid var(--primary);
-            border-radius: 16px;
-            padding: 14px;
-            width: 300px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 25px rgba(var(--primary), 0.25);
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 9999;
+        /* Footer */
+        .site-footer {
+            border-top: 1px dashed rgba(var(--primary), 0.3);
+            padding-top: 25px;
+            margin-top: 20px;
+            text-align: center;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            text-align: left;
-            backdrop-filter: blur(16px);
-            line-height: 1.4;
-        }
-
-        a.youtube .hover-preview-card {
-            border-color: #FF0000;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 0, 0, 0.3);
-        }
-
-        a.twitch .hover-preview-card {
-            border-color: #9146FF;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 25px rgba(145, 70, 255, 0.3);
-        }
-
-        .links a:hover .hover-preview-card {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0) scale(1);
-        }
-
-        .preview-card-header {
-            display: flex;
             align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 6px;
-            margin-bottom: 2px;
+            gap: 15px;
         }
 
-        .preview-channel-name {
-            font-size: 0.85rem;
-            font-weight: 900;
-            color: #fff;
+        .copyright {
+            font-size: 0.72rem;
+            color: #777;
         }
 
-        .preview-status-badge {
-            font-size: 0.65rem;
-            font-weight: 900;
-            padding: 2px 8px;
-            border-radius: 50px;
-            text-transform: uppercase;
-        }
-
-        .preview-status-badge.live {
-            background: rgba(0, 255, 0, 0.2);
-            color: #00ff00;
-            border: 1px solid #00ff00;
-            animation: livePulse 1.5s infinite;
-        }
-
-        .preview-status-badge.offline {
-            background: rgba(255, 255, 255, 0.1);
-            color: #888;
-            border: 1px solid #444;
-        }
-
-        @keyframes livePulse {
-
-            0%,
-            100% {
-                opacity: 0.8;
-            }
-
-            50% {
-                opacity: 1;
-                box-shadow: 0 0 8px rgba(0, 255, 0, 0.4);
-            }
-        }
-
-        .preview-card-content {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .preview-card-label {
-            font-size: 0.6rem;
-            font-weight: 900;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        a.youtube .preview-card-label {
-            color: #FF0000;
-        }
-
-        a.twitch .preview-card-label {
-            color: #bf94ff;
-        }
-
-        .preview-card-title {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #eee;
-            white-space: normal;
-            word-break: break-word;
-        }
-
-        .preview-card-stats {
-            font-size: 0.65rem;
-            color: #888;
-            margin-top: 2px;
-        }
-
-        .log-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.65rem;
-            font-weight: 900;
-            padding: 3px 8px;
-            border-radius: 6px;
-            margin-right: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            vertical-align: middle;
-            border: 1px solid transparent;
-        }
-
-        .log-badge svg {
-            display: inline-block;
-            vertical-align: middle;
-        }
-
-        .log-badge.bugfix {
-            background: rgba(255, 77, 77, 0.15);
-            color: #ff4d4d;
-            border-color: rgba(255, 77, 77, 0.3);
-            box-shadow: 0 0 8px rgba(255, 77, 77, 0.15);
-        }
-
-        .log-badge.feature {
-            background: rgba(71, 253, 72, 0.15);
-            color: #47fd48;
-            border-color: rgba(71, 253, 72, 0.3);
-            box-shadow: 0 0 8px rgba(71, 253, 72, 0.15);
-        }
-
-        .log-badge.maintenance {
-            background: rgba(255, 165, 0, 0.15);
-            color: #ffa500;
-            border-color: rgba(255, 165, 0, 0.3);
-            box-shadow: 0 0 8px rgba(255, 165, 0, 0.15);
-        }
-
-
-
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-                min-height: 100vh;
-                display: flex;
-                align-items: flex-start;
-                justify-content: center;
-                overflow-y: auto;
-            }
-
-            .container {
-                padding: 20px 15px !important;
-                border-radius: 20px !important;
-                margin-top: 15px;
-                margin-bottom: 70px;
-            }
-
-            h1 {
-                font-size: 1.8rem !important;
-                margin-bottom: 15px !important;
-            }
-
-            a {
-                padding: 12px !important;
-                font-size: 1rem !important;
-                border-radius: 12px !important;
-            }
-
-
+            .cyber-nav { padding: 10px 16px; }
+            .nav-links { display: none; }
+            .hero-title { font-size: 2.2rem; }
+            .hero-banner { padding: 35px 20px; }
+            .section-block { padding: 22px 18px; border-radius: 22px; }
+            .domain-grid, .dev-grid, .specs-grid { grid-template-columns: 1fr; }
+            .page-wrapper { padding: 20px 12px; gap: 30px; }
         }
     </style>
 </head>
 
 <body>
 
+    <!-- Ambient Particle System -->
     <div id="dev-particles">
         <div id="dev-particles-inner"></div>
     </div>
 
+    <!-- Notification Toast -->
     <div id="toast">SYSTEM NOTIFICATION</div>
 
-    <div id="terminal-modal" class="modal-overlay">
-        <div class="modal-box" style="width: 450px; max-width: 90vw; background: #050508; border-color: var(--primary); font-family: 'JetBrains Mono', monospace !important;">
-            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--secondary); padding-bottom: 8px; margin-bottom: 10px;">
-                <span style="color: var(--primary); font-weight: bold; font-size: 0.8rem;">[SYS_DIAGNOSTIC_TERMINAL]</span>
-                <span style="color: #666; font-size: 0.8rem; cursor: pointer;" onclick="closeModal('terminal-modal')">[X]</span>
+    <!-- Navigation Header -->
+    <header class="cyber-nav">
+        <div class="nav-inner">
+            <a href="#hero" class="nav-logo" target="_self">
+                pxlz.pro <span class="nav-logo-tag">HUB</span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#domains" target="_self">[01. DOMAINS]</a></li>
+                <li><a href="#dev-tools" target="_self">[02. DEV LAB]</a></li>
+                <li><a href="#specs" target="_self">[03. SPECS]</a></li>
+                <li><a href="#contact" target="_self">[04. CONNECT]</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <a href="https://github.com/pixxella" class="nav-github-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                    @pixxella
+                </a>
+                <button id="theme-dot" onclick="cycleTheme()" title="Switch Theme (Pink, Blue, Red, Green)"></button>
             </div>
-            <div id="terminal-content" style="text-align: left; font-size: 0.7rem; line-height: 1.5; color: #00ff00; text-shadow: 0 0 4px rgba(0,255,0,0.5); max-height: 250px; overflow-y: auto; padding: 10px; background: #000; border-radius: 12px; border: 1px solid #222;">
-            </div>
-            <button onclick="closeModal('terminal-modal')" style="background: var(--primary); color: #000; font-weight: bold; margin-top: 10px; width: 100%; border: none; padding: 10px; border-radius: 12px; cursor: pointer;">CLOSE SESSION</button>
         </div>
-    </div>
+    </header>
 
-    <div class="container">
-        <button id="theme-dot" onclick="cycleTheme()"></button>
-        <h1><span id="live-title">nPixel</span><span id="dev-badge">[TECH]</span></h1>
+    <!-- Main Content Wrapper -->
+    <div class="page-wrapper">
 
-        <div class="links">
-            <!-- About Me Card (Active) -->
-            <div class="log-entry"
-                style="margin-bottom: 12px; border: 2px solid var(--secondary); background: rgba(255, 255, 255, 0.04); padding: 18px 22px; border-radius: 20px;">
-                <span class="log-date"
-                    style="font-size: 0.85rem; letter-spacing: 1px; color: var(--primary); font-weight: 900;">[WHOAMI]</span>
-                <h2
-                    style="font-size: 1.5rem; margin: 8px 0 4px 0; color: #fff; font-weight: 900; letter-spacing: -0.5px;">
-                    nPixel (pixel)</h2>
-                <span class="one-liner"
-                    style="margin-top: 0; margin-bottom: 12px; font-size: 0.8rem; opacity: 0.9;">aka pxlzfr, nPixelz, pxlzs</span>
+        <!-- Hero Section -->
+        <section id="hero" class="hero-banner">
+            <div class="hero-badge-row">
+                <span class="hero-badge online">● SYSTEM ONLINE</span>
+                <span class="hero-badge">⚡ HYPERVISOR: VMWARE</span>
+                <span class="hero-badge">💻 OS: WINDOWS 11</span>
+                <span class="hero-badge">🔥 AHK & UTILS: READY</span>
+            </div>
 
-                <p style="font-size: 0.85rem; line-height: 1.6; margin: 0 0 15px 0; color: #ccc;" class="selectable">
-                    Hey! I'm nPixel. I'm a vibe coder (I don't design shit) and a tech enthusiast learning about virtual machines, operating systems, and kernel-level architecture. I'm also a gamer who loves exploring OS internals.<span class="console-cursor">_</span>
-                </p>
+            <h1 class="hero-title">pxlz.pro</h1>
+            <p class="hero-subtitle">
+                Central developer hub & ecosystem for <strong>nPixel (pixxella)</strong>. Vibe coding, OS internal mechanics, kernel tweaks, custom AutoHotkey scripts, and hypervisor optimizations.
+            </p>
 
-                <!-- Three Columns Grid for Tech, Specs, & Gaming -->
-                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; text-align: left;">
-                    <!-- Tech & OS column -->
-                    <div style="flex: 1; min-width: 180px;">
-                        <span class="log-date" style="font-size: 0.75rem; color: var(--primary); letter-spacing: 1px; font-weight: 900; margin-bottom: 8px; display: block;">[ENV_SOFTWARE]</span>
-                        <div style="display: flex; flex-direction: column; gap: 6px;">
-                            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #eee;">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="#0078d4" style="flex-shrink: 0; display: inline-block; vertical-align: middle;"><path d="M0 0h11v11H0zm13 0h11v11H13zM0 13h11v11H0zm13 0h11v11H13z"/></svg>
-                                <span>OS: <strong>Windows 11</strong></span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #eee;">
-                                <img src="https://api.iconify.design/devicon:vsphere.svg" width="15" height="15" style="flex-shrink: 0; object-fit: contain;" alt="VMware">
-                                <span>Hypervisor: <strong>VMware</strong></span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #eee;">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary); flex-shrink: 0;"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                                <span>Type: <strong>Vibe Coder</strong></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PC Specs column -->
-                    <div style="flex: 1; min-width: 180px;">
-                        <span class="log-date" style="font-size: 0.75rem; color: var(--primary); letter-spacing: 1px; font-weight: 900; margin-bottom: 8px; display: block;">[PC_SPECS]</span>
-                        <div style="display: flex; flex-direction: column; gap: 6px;">
-                            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #eee;">
-                                <img src="https://api.iconify.design/simple-icons:amd.svg?color=%23ED1C24" width="15" height="15" style="flex-shrink: 0; object-fit: contain;" alt="AMD CPU">
-                                <span>CPU: <strong>R5 7600X</strong></span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #eee;">
-                                <img src="https://api.iconify.design/simple-icons:amd.svg?color=%23ED1C24" width="15" height="15" style="flex-shrink: 0; object-fit: contain;" alt="AMD GPU">
-                                <span>GPU: <strong>RX 6700XT XTX</strong></span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #eee;">
-                                <img src="https://api.iconify.design/bi:memory.svg?color=%2300E676" width="15" height="15" style="flex-shrink: 0; object-fit: contain;" alt="RAM">
-                                <span>RAM: <strong>32GB DDR5</strong></span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #eee;">
-                                <img src="https://api.iconify.design/lucide:hard-drive.svg?color=%2300B0FF" width="15" height="15" style="flex-shrink: 0; object-fit: contain;" alt="SSD">
-                                <span>SSD: <strong>2TB Gen4 SSD</strong></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Games column -->
-                    <div style="flex: 1; min-width: 180px;">
-                        <span class="log-date" style="font-size: 0.75rem; color: var(--primary); letter-spacing: 1px; font-weight: 900; margin-bottom: 8px; display: block;">[GAMING_LOG]</span>
-                        <div style="display: flex; flex-direction: column; gap: 6px;">
-                            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #eee;">
-                                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/236390/logo.png" width="15" height="15" style="flex-shrink: 0; object-fit: contain;" alt="War Thunder">
-                                <span><strong>War Thunder</strong></span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #eee;">
-                                <img src="https://api.iconify.design/simple-icons:roblox.svg?color=%23FF3E3E" width="15" height="15" style="flex-shrink: 0; object-fit: contain;" alt="Roblox">
-                                <span><strong>Roblox</strong></span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #eee;">
-                                <img src="https://api.iconify.design/simple-icons:minecraft.svg?color=%235A8F29" width="15" height="15" style="flex-shrink: 0; object-fit: contain;" alt="Minecraft">
-                                <span><strong>Minecraft</strong></span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #eee;">
-                                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/250900/logo.png" width="15" height="15" style="flex-shrink: 0; object-fit: contain;" alt="Geometry Dash">
-                                <span><strong>Geometry Dash</strong></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cool matching glowy Read More button -->
-                <button class="src-link" id="read-more-btn" onclick="openTerminalModal()" style="width: 100%; border-style: solid; border-color: var(--primary); color: var(--primary); font-weight: bold; text-transform: uppercase; letter-spacing: 1px; padding: 10px 15px; font-size: 1rem; margin-top: 5px; background: rgba(255, 162, 253, 0.05); text-shadow: 0 0 8px var(--primary); box-shadow: 0 0 12px rgba(var(--primary), 0.15); border-radius: 12px; transition: all 0.3s ease; cursor: pointer;">
-                    [BOOT DIAGNOSTIC LOG]
+            <div class="hero-actions">
+                <a href="#domains" target="_self" class="btn-cyber btn-cyber-primary">
+                    [EXPLORE DOMAINS]
+                </a>
+                <a href="https://github.com/pixxella" class="btn-cyber btn-cyber-outline">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    GITHUB REPOS
+                </a>
+                <button onclick="openTerminalModal()" class="btn-cyber btn-cyber-outline">
+                    [BOOT DIAGNOSTICS]
                 </button>
             </div>
+        </section>
 
-            <!-- UNCOMMENT TO SHOW BUTTONS -->
-            <!--
-            <a href="https://roblox.com" id="link-roblox" class="roblox" style="--i: 1;"><svg width="20" height="20" viewBox="0 0 24 24"
-                    fill="#FF3E3E" fill-rule="evenodd"
-                    style="margin-right: 10px; vertical-align: middle; display: inline-block; filter: drop-shadow(0 0 4px rgba(255,62,62,0.4));">
-                    <path
-                        d="M18.575 24L0 20.42 5.424 0 24 3.58 18.575 24zM13.684 10.428l-3.32-.64-.64 3.32 3.32.64.64-3.32z" />
-                </svg> Roblox</a>
-            <a href="https://youtube.com" id="link-youtube" class="youtube" style="--i: 2;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="#FF0000"
-                    style="margin-right: 10px; vertical-align: middle; display: inline-block; filter: drop-shadow(0 0 4px rgba(255,0,0,0.4));">
-                    <path
-                        d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.507a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.507 9.388.507 9.388.507s7.518 0 9.388-.507a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-                </svg> YouTube
-                <div class="hover-preview-card" id="yt-preview-card"></div>
-            </a>
-            <a href="https://twitch.tv" id="link-twitch" class="twitch" style="--i: 3;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="#A970FF"
-                    style="margin-right: 10px; vertical-align: middle; display: inline-block; filter: drop-shadow(0 0 4px rgba(169,112,255,0.4));">
-                    <path
-                        d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z" />
-                </svg> Twitch
-                <div class="hover-preview-card" id="twitch-preview-card"></div>
-            </a>
-            <a href="https://tiktok.com" id="link-tiktok" class="tiktok" style="--i: 4;"><svg width="20" height="20" viewBox="0 0 24 24"
-                    fill="#FFFFFF"
-                    style="margin-right: 10px; vertical-align: middle; display: inline-block; filter: drop-shadow(-1.5px -1.5px 0 #fe0979) drop-shadow(1.5px 1.5px 0 #25F4EE);">
-                    <path
-                        d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.89-.74-3.99-1.72-.08-.07-.17-.17-.25-.25v6.56c.02 1.93-.5 3.95-1.76 5.43-1.4 1.64-3.57 2.53-5.69 2.45-2.22-.08-4.43-1.12-5.63-3-1.46-2.29-1.4-5.41.34-7.5 1.4-1.68 3.66-2.58 5.84-2.3v4.06c-1.18-.18-2.47.16-3.23 1.11-.79.99-.75 2.53-.02 3.52.79 1.07 2.22 1.54 3.48 1.25 1.19-.27 2.12-1.32 2.23-2.54.07-1.33.02-2.66.04-4v-11.4Z" />
-                </svg> TikTok</a>
-            <a href="#" id="link-discord" class="discord" style="--i: 5;"
-                onclick="copyDiscordUsername(event, this)"><svg width="20" height="20" viewBox="0 0 24 24"
-                    fill="#5865F2"
-                    style="margin-right: 10px; vertical-align: middle; display: inline-block; filter: drop-shadow(0 0 4px rgba(88,101,242,0.4));">
-                    <path
-                        d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.972.074.074 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.971a.075.075 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.094-.838-9.42-3.543-13.673a.066.066 0 0 0-.035-.026ZM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z" />
-                </svg> Discord</a>
-
-            <div class="link-group" style="--i: 6;">
-                <a href="#" id="live-vip" class="server-vip"><svg width="20" height="20" viewBox="0 0 24 24"
-                        fill="#FFD700"
-                        style="margin-right: 10px; vertical-align: middle; display: inline-block; filter: drop-shadow(0 0 4px rgba(255,215,0,0.4));">
-                        <path d="M2 22h20v-2H2v2zm1-3h18V10l-4 4-5-8-5 8-4-4v9z" />
-                    </svg> Private server <span id="vip-status" class="status status-working">WORKING</span></a>
-                <span class="notice gold-text">may not work; tell us in stream. fixed if pixel is online.</span>
+        <!-- Domains & Ecosystem Section -->
+        <section id="domains" class="section-block">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">[01 // PXLZ.PRO ECOSYSTEM & DOMAINS]</h2>
+                    <p class="section-subtitle">Dedicated subdomains, utility endpoints, and specialized web tools.</p>
+                </div>
             </div>
-            -->
-        </div>
 
-        <div class="footer">
-            <div class="update-log" style="text-align: center;">
-                <div class="btn-row-small" style="justify-content: center; margin-top: 15px; width: 100%;">
-                    <button class="src-link" style="width: 100%; max-width: 100%; padding: 12px 18px; font-size: 1.05rem; font-weight: bold; border-style: dashed; border-color: var(--primary); color: #fff; background: rgba(255, 255, 255, 0.03); cursor: pointer; border-radius: 16px; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 10px rgba(var(--primary), 0.05);" onclick="window.open('https://github.com/pxlzfr/About')">
-                        [Source Code]
-                    </button>
+            <div class="domain-grid">
+                <!-- pxlz.pro/dl -->
+                <div class="domain-card">
+                    <div class="domain-card-header">
+                        <span class="domain-tag">[UTILITY_DL]</span>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="domain-url">pxlz.pro/dl</h3>
+                        <p class="domain-desc">
+                            High-speed script & utility payload downloader. Tailored for instant environment setup on clean Windows installations and VMware virtual machines.
+                        </p>
+                    </div>
+                    <div class="domain-actions">
+                        <a href="https://pxlz.pro/dl" class="btn-cyber btn-cyber-primary btn-sm">VISIT /DL</a>
+                        <button class="btn-cyber btn-cyber-outline btn-sm" onclick="copyText('https://pxlz.pro/dl', this)">COPY LINK</button>
+                    </div>
                 </div>
 
-                <span class="one-liner" style="margin-top: 15px; font-size: 0.85rem;"><strong>made by pxlzfr (nPixelz)</strong> - "i'm the one developing this-" -pixel</span>
+                <!-- pxlz.pro/vlinks -->
+                <div class="domain-card">
+                    <div class="domain-card-header">
+                        <span class="domain-tag">[DIRECTORY]</span>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="domain-url">pxlz.pro/vlinks</h3>
+                        <p class="domain-desc">
+                            Virtual link directory & resource database. Collection of hypervisor downloads, OS ISO mirrors, registry tweaks, and developer bookmarks.
+                        </p>
+                    </div>
+                    <div class="domain-actions">
+                        <a href="https://pxlz.pro/vlinks" class="btn-cyber btn-cyber-primary btn-sm">VISIT /VLINKS</a>
+                        <button class="btn-cyber btn-cyber-outline btn-sm" onclick="copyText('https://pxlz.pro/vlinks', this)">COPY LINK</button>
+                    </div>
+                </div>
+
+                <!-- pxlz.pro/dreamlex -->
+                <div class="domain-card">
+                    <div class="domain-card-header">
+                        <span class="domain-tag">[PROJECT_DREAMLEX]</span>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="domain-url">pxlz.pro/dreamlex</h3>
+                        <p class="domain-desc">
+                            DreamLex custom suite & kernel-level experimental scripts. Built for ultra-low latency, input responsiveness, and high-performance gaming tweaks.
+                        </p>
+                    </div>
+                    <div class="domain-actions">
+                        <a href="https://pxlz.pro/dreamlex" class="btn-cyber btn-cyber-primary btn-sm">EXPLORE DREAMLEX</a>
+                        <button class="btn-cyber btn-cyber-outline btn-sm" onclick="copyText('https://pxlz.pro/dreamlex', this)">COPY LINK</button>
+                    </div>
+                </div>
             </div>
-            <!-- Stylish Cyber Contact Grid (Email & Discord DMs) -->
+        </section>
+
+        <!-- Dev Lab & GitHub Scripts Section -->
+        <section id="dev-tools" class="section-block">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">[02 // DEVELOPER LAB & GITHUB REPOS]</h2>
+                    <p class="section-subtitle">Open-source AutoHotkey scripts, system tweaks, and GitHub repositories (@pixxella).</p>
+                </div>
+                <a href="https://github.com/pixxella" class="btn-cyber btn-cyber-outline btn-sm">GITHUB PROFILE (@pixxella)</a>
+            </div>
+
+            <div class="dev-grid">
+                <!-- AHK Script Showcase -->
+                <div class="dev-card">
+                    <h3 class="dev-card-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                        AutoHotkey v2 Multitool & Macros
+                    </h3>
+                    <p class="dev-card-desc">
+                        Custom AHK v2 script for fast window pinning, rapid VM toggling, memory purging, and key remapping for gaming & dev workflows.
+                    </p>
+
+                    <div class="code-box">
+                        <button class="code-copy-btn" onclick="copyCodeSnippet(this)">COPY CODE</button>
+                        <pre><code>; ============================================================
+; pxlz.pro AutoHotkey v2 Window & VM Manager Utility
+; Author: pixxella (nPixel) | License: MIT
+; ============================================================
+#Requires AutoHotkey v2.0
+SetWorkingDir A_ScriptDir
+
+; Win + Shift + T -> Toggle Always-On-Top for active window
+#+t:: {
+    WinSetAlwaysOnTop -1, "A"
+    ToolTip("📌 Window Pin Toggled!")
+    SetTimer () => ToolTip(), -1500
+}
+
+; Win + Shift + V -> Instant Focus / Launch VMware Workstation
+#+v:: {
+    if WinExist("ahk_exe vmware.exe") {
+        WinActivate
+    } else {
+        Run("C:\Program Files (x86)\VMware\VMware Workstation\vmware.exe")
+    }
+}
+
+; Win + Shift + R -> Fast RAM Working Set Purge
+#+r:: {
+    DllCall("psapi.dll\EmptyWorkingSet", "Ptr", -1)
+    ToolTip("⚡ System Memory Trimmed!")
+    SetTimer () => ToolTip(), -1500
+}</code></pre>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-top: 5px;">
+                        <a href="https://github.com/pixxella" class="btn-cyber btn-cyber-primary btn-sm">VIEW REPO ON GITHUB</a>
+                    </div>
+                </div>
+
+                <!-- VMware & Kernel Tweaks -->
+                <div class="dev-card">
+                    <h3 class="dev-card-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                        VMware & Hypervisor Latency Tweaks
+                    </h3>
+                    <p class="dev-card-desc">
+                        Optimized VMX parameter configurations for VMware Workstation. Reduces input latency, disables hypervisor throttling, and optimizes 3D acceleration.
+                    </p>
+
+                    <div class="code-box">
+                        <button class="code-copy-btn" onclick="copyCodeSnippet(this)">COPY CODE</button>
+                        <pre><code># ============================================================
+# pxlz.pro VMX Hypervisor Optimization Flags
+# ============================================================
+mks.enable3d = "TRUE"
+mks.gl.allowDirectMemoryAccess = "TRUE"
+svga.vramSize = "268435456"
+isolation.tools.copy.disable = "FALSE"
+isolation.tools.paste.disable = "FALSE"
+mainMem.useNamedFile = "FALSE"
+MemTrimRate = "0"
+sched.mem.pshare.enable = "FALSE"
+prefvmx.minVmMemPct = "100"
+hypervisor.cpuid.v0 = "FALSE"</code></pre>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-top: 5px;">
+                        <a href="https://github.com/pixxella" class="btn-cyber btn-cyber-primary btn-sm">VIEW CONFIGS</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- System Specs & Gaming Log Section -->
+        <section id="specs" class="section-block">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">[03 // ENVIRONMENT, SPECS & GAMING LOG]</h2>
+                    <p class="section-subtitle">Personal hardware setup, hypervisor environment, and current active titles.</p>
+                </div>
+            </div>
+
+            <div class="specs-grid">
+                <!-- ENV & Software -->
+                <div class="spec-column">
+                    <span class="spec-column-header">[ENV_SOFTWARE]</span>
+                    <div class="spec-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#0078d4"><path d="M0 0h11v11H0zm13 0h11v11H13zM0 13h11v11H0zm13 0h11v11H13z"/></svg>
+                        <span>OS: <strong>Windows 11 Pro</strong></span>
+                    </div>
+                    <div class="spec-item">
+                        <img src="https://api.iconify.design/devicon:vsphere.svg" width="16" height="16" alt="VMware">
+                        <span>Hypervisor: <strong>VMware Workstation Pro</strong></span>
+                    </div>
+                    <div class="spec-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                        <span>Role: <strong>Vibe Coder & OS Enthusiast</strong></span>
+                    </div>
+                </div>
+
+                <!-- Hardware Specs -->
+                <div class="spec-column">
+                    <span class="spec-column-header">[PC_SPECS]</span>
+                    <div class="spec-item">
+                        <img src="https://api.iconify.design/simple-icons:amd.svg?color=%23ED1C24" width="16" height="16" alt="AMD CPU">
+                        <span>CPU: <strong>AMD Ryzen 5 7600X (6C/12T)</strong></span>
+                    </div>
+                    <div class="spec-item">
+                        <img src="https://api.iconify.design/simple-icons:amd.svg?color=%23ED1C24" width="16" height="16" alt="AMD GPU">
+                        <span>GPU: <strong>AMD Radeon RX 6700XT XTX</strong></span>
+                    </div>
+                    <div class="spec-item">
+                        <img src="https://api.iconify.design/bi:memory.svg?color=%2300E676" width="16" height="16" alt="RAM">
+                        <span>RAM: <strong>32GB DDR5 Dual-Channel</strong></span>
+                    </div>
+                    <div class="spec-item">
+                        <img src="https://api.iconify.design/lucide:hard-drive.svg?color=%2300B0FF" width="16" height="16" alt="SSD">
+                        <span>Storage: <strong>2TB Gen4 NVMe SSD</strong></span>
+                    </div>
+                </div>
+
+                <!-- Gaming Log -->
+                <div class="spec-column">
+                    <span class="spec-column-header">[GAMING_LOG]</span>
+                    <div class="spec-item">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/236390/logo.png" width="16" height="16" alt="War Thunder">
+                        <span><strong>War Thunder</strong></span>
+                    </div>
+                    <div class="spec-item">
+                        <img src="https://api.iconify.design/simple-icons:roblox.svg?color=%23FF3E3E" width="16" height="16" alt="Roblox">
+                        <span><strong>Roblox</strong></span>
+                    </div>
+                    <div class="spec-item">
+                        <img src="https://api.iconify.design/simple-icons:minecraft.svg?color=%235A8F29" width="16" height="16" alt="Minecraft">
+                        <span><strong>Minecraft</strong></span>
+                    </div>
+                    <div class="spec-item">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/250900/logo.png" width="16" height="16" alt="Geometry Dash">
+                        <span><strong>Geometry Dash</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 25px;">
+                <button class="btn-cyber btn-cyber-primary" onclick="openTerminalModal()" style="width: 100%;">
+                    [RUN LIVE SYS DIAGNOSTICS LOG]
+                </button>
+            </div>
+        </section>
+
+        <!-- Direct Contact Section -->
+        <section id="contact" class="section-block">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">[04 // DIRECT COMMUNICATION & CONTACT]</h2>
+                    <p class="section-subtitle">Reach out directly via email or Discord for inquiries and script collaborations.</p>
+                </div>
+            </div>
+
             <div class="contact-grid">
-                <!-- Direct Email Contact Card -->
+                <!-- Direct Email Card -->
                 <div class="contact-card">
                     <div class="contact-icon-wrapper">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 4px var(--primary));">
@@ -1549,7 +1125,7 @@
                     <div class="contact-actions">
                         <button class="contact-btn contact-btn-outline" onclick="copyText('pxlz@pxlz.pro', this)" title="Copy Email">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                            Copy
+                            Copy Email
                         </button>
                     </div>
                 </div>
@@ -1561,7 +1137,6 @@
                             <svg class="discord-easter-egg" width="20" height="20" viewBox="0 0 24 24" fill="#5865F2">
                                 <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.972.074.074 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.971a.075.075 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.094-.838-9.42-3.543-13.673a.066.066 0 0 0-.035-.026ZM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z"/>
                             </svg>
-                            <div class="discord-egg-tooltip">use DMs tags or copy link!</div>
                         </div>
                     </div>
                     <div class="contact-info">
@@ -1571,13 +1146,36 @@
                     <div class="contact-actions">
                         <button class="contact-btn contact-btn-outline" onclick="copyText('pxlzfr', this)" title="Copy Username">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                            Copy
+                            Copy Discord
                         </button>
                     </div>
                 </div>
             </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <a href="https://github.com/pxlzfr/About" class="btn-cyber btn-cyber-outline btn-sm">
+                [VIEW SOURCE CODE ON GITHUB]
+            </a>
+            <div class="copyright">
+                © Copyright 2026 <strong>pxlz.pro</strong> (nPixel / pixxella) • All rights reserved ®
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Diagnostic Terminal Modal -->
+    <div id="terminal-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--secondary); padding-bottom: 8px;">
+                <span style="color: var(--primary); font-weight: bold; font-size: 0.82rem;">[SYS_DIAGNOSTIC_TERMINAL]</span>
+                <span style="color: #666; font-size: 0.8rem; cursor: pointer;" onclick="closeModal('terminal-modal')">[X]</span>
+            </div>
+            <div id="terminal-content" style="text-align: left; font-size: 0.72rem; line-height: 1.6; color: #00ff00; text-shadow: 0 0 4px rgba(0,255,0,0.5); max-height: 280px; overflow-y: auto; padding: 12px; background: #000; border-radius: 12px; border: 1px solid #222;">
+            </div>
+            <button onclick="closeModal('terminal-modal')" class="btn-cyber btn-cyber-primary" style="width: 100%;">CLOSE SESSION</button>
         </div>
-        <div class="copyright">© Copyright 2026 The Huge nPixelz™ | All rights reserved ®</div>
     </div>
 
     <script>
@@ -1594,7 +1192,7 @@
         // Ambient Particle System
         const particleContainer = document.getElementById('dev-particles-inner');
         if (particleContainer) {
-            const variants = ['[nPixel]', '[pxlzfr]', '[DEV]', '[CREATOR]', '[ABOUT]', '[PORTFOLIO]', '[pxlzs]'];
+            const variants = ['[pxlz.pro]', '[/dl]', '[/vlinks]', '[/dreamlex]', '[AHK]', '[@pixxella]', '[VMware]', '[Windows 11]'];
             const particleCount = 75;
 
             for (let i = 0; i < particleCount; i++) {
@@ -1630,22 +1228,14 @@
             const btn = document.getElementById('theme-dot');
             if (btn) {
                 btn.style.transform = 'scale(1.3) rotate(360deg)';
-                setTimeout(() => {
-                    btn.style.transform = 'none';
-                }, 500);
-
-                const ripple = document.createElement('div');
-                ripple.className = 'theme-dot-ripple';
-                btn.parentNode.appendChild(ripple);
-                setTimeout(() => ripple.remove(), 800);
+                setTimeout(() => { btn.style.transform = 'none'; }, 500);
             }
 
             const nextTheme = themes[(themes.indexOf(currentTheme) + 1) % themes.length];
             document.documentElement.setAttribute('data-theme', nextTheme);
             localStorage.setItem('vTheme', nextTheme);
             currentTheme = nextTheme;
-            window.showToast(`THEME: ${nextTheme.toUpperCase()}`);
-            if (window.updateDebugWidget) window.updateDebugWidget();
+            window.showToast(`THEME CHANGED: ${nextTheme.toUpperCase()}`);
         };
 
         // Toast notifications
@@ -1684,7 +1274,7 @@
 
                 void tooltip.offsetWidth;
                 tooltip.classList.add('show');
-                window.showToast(`COPIED: ${text}`);
+                window.showToast(`COPIED TO CLIPBOARD: ${text}`);
 
                 setTimeout(() => {
                     tooltip.classList.remove('show');
@@ -1696,37 +1286,31 @@
             });
         };
 
-        window.copyDiscordUsername = (event, element) => {
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
+        window.copyCodeSnippet = (btn) => {
+            const codeBox = btn.nextElementSibling;
+            if (codeBox) {
+                const codeText = codeBox.innerText;
+                window.copyText(codeText, btn);
             }
-            window.copyText('pxlzfr', element);
         };
 
         // Modal triggers
         window.openModal = (id) => {
             const modal = document.getElementById(id);
             if (modal) {
-                modal.style.display = 'flex';
-                setTimeout(() => {
-                    modal.classList.add('active');
-                }, 10);
+                modal.classList.add('active');
             }
         };
         window.closeModal = (id) => {
             const modal = document.getElementById(id);
             if (modal) {
                 modal.classList.remove('active');
-                setTimeout(() => {
-                    modal.style.display = 'none';
-                }, 400);
             }
         };
 
         // Hover spotlight reflection effect setup
         const setupSpotlights = () => {
-            const targets = document.querySelectorAll('.links a, .src-link, .src-code-btn, .contact-card, .contact-btn');
+            const targets = document.querySelectorAll('.btn-cyber, .domain-card, .dev-card, .contact-card');
             targets.forEach(btn => {
                 btn.addEventListener('mousemove', (e) => {
                     const rect = btn.getBoundingClientRect();
@@ -1738,54 +1322,6 @@
             });
         };
         setupSpotlights();
-        window.setupSpotlights = setupSpotlights;
-
-        // Hover Preview Card details generators for social links (in case they are uncommented)
-        const ytVideos = [
-            { title: "Building a Cyberpunk UI with Vanilla CSS...", views: "10K views", time: "5 hours ago" },
-            { title: "How to create advanced glassmorphism grids!", views: "25K views", time: "2 days ago" }
-        ];
-
-        const twitchStreams = [
-            { live: true, title: "🔴 Sleek Coding Session | UI Design & CSS Art", viewers: "450 viewers" },
-            { live: false, title: "HTML & JS Game Development", viewers: "Last streamed yesterday" }
-        ];
-
-        window.generatePreviews = () => {
-            const ytCard = document.getElementById('yt-preview-card');
-            const twitchCard = document.getElementById('twitch-preview-card');
-
-            if (ytCard) {
-                const video = ytVideos[Math.floor(Math.random() * ytVideos.length)];
-                ytCard.innerHTML = `
-                    <div class="preview-card-header">
-                        <span class="preview-channel-name">nPixel YouTube</span>
-                        <span class="preview-status-badge offline">LATEST</span>
-                    </div>
-                    <div class="preview-card-content">
-                        <span class="preview-card-label">Last Uploaded Video</span>
-                        <span class="preview-card-title">${video.title}</span>
-                        <span class="preview-card-stats">${video.views} • ${video.time}</span>
-                    </div>
-                `;
-            }
-
-            if (twitchCard) {
-                const stream = twitchStreams[Math.floor(Math.random() * twitchStreams.length)];
-                twitchCard.innerHTML = `
-                    <div class="preview-card-header">
-                        <span class="preview-channel-name">nPixel Twitch</span>
-                        <span class="preview-status-badge ${stream.live ? 'live' : 'offline'}">${stream.live ? '● LIVE' : 'OFFLINE'}</span>
-                    </div>
-                    <div class="preview-card-content">
-                        <span class="preview-card-label">${stream.live ? 'Currently Streaming' : 'Last Streamed'}</span>
-                        <span class="preview-card-title">${stream.title}</span>
-                        <span class="preview-card-stats">${stream.live ? stream.viewers : stream.viewers}</span>
-                    </div>
-                `;
-            }
-        };
-        setTimeout(window.generatePreviews, 150);
 
         // Terminal Boot Sequence (Simulated Virtual Machine Diagnostic)
         window.openTerminalModal = () => {
@@ -1794,22 +1330,19 @@
             if (terminal) {
                 terminal.innerHTML = '';
                 const lines = [
-                    "> INITIALIZING nPixel VIRTUAL HYPERVISOR...",
-                    "> HOST OS: Windows 11 [OK]",
+                    "> INITIALIZING pxlz.pro VIRTUAL HYPERVISOR...",
+                    "> HOST OS: Windows 11 Pro (23H2) [OK]",
                     "> HYPERVISOR: VMware Workstation Pro [RUNNING]",
                     "> CPU DETECTED: AMD Ryzen 5 7600X (6C/12T) [OK]",
                     "> GPU DETECTED: AMD Radeon RX 6700XT XTX [OK]",
                     "> SYSTEM RAM: 32GB DDR5 Dual-Channel [OK]",
                     "> STORAGE DRIVE: 2TB Gen4 NVMe SSD [OK]",
-                    "> LOADING KERNEL: nPixelOS-Kernel-v4.19... [OK]",
-                    "> ALLOCATING VM CORES: 8 vCPUs [OK]",
-                    "> NETWORK ADAPTER: bridged (tap0) up 1000mbps [OK]",
-                    "> ",
-                    "> [nPixel VIBE CHECK]",
-                    "> Design skills: 0% (Vibe coder only)",
-                    "> OS/Kernel knowledge: 99% (Tech enthusiast)",
-                    "> Gaming Mode: ACTIVE (WT, Roblox, MC, GD running)",
-                    "> STATUS: STABLE - CODES FOR VIBES ONLY."
+                    "> DOMAIN STATUS: pxlz.pro/dl [ONLINE]",
+                    "> DOMAIN STATUS: pxlz.pro/vlinks [ONLINE]",
+                    "> DOMAIN STATUS: pxlz.pro/dreamlex [ONLINE]",
+                    "> GITHUB AUTHOR: pixxella [ACTIVE]",
+                    "> AHK v2 UTILITIES: LOADED [OK]",
+                    "> STATUS: STABLE - ALL SYSTEMS NOMINAL."
                 ];
                 let currentLine = 0;
                 const printNextLine = () => {
@@ -1817,17 +1350,14 @@
                         const p = document.createElement('p');
                         p.innerText = lines[currentLine];
                         p.style.margin = "4px 0";
-                        if (lines[currentLine].includes('[OK]')) {
+                        if (lines[currentLine].includes('[OK]') || lines[currentLine].includes('[ONLINE]')) {
                             p.style.color = '#47fd48';
                             p.style.textShadow = '0 0 4px #47fd48';
-                        } else if (lines[currentLine].includes('0%')) {
-                            p.style.color = '#ff4d4d';
-                            p.style.textShadow = '0 0 4px #ff4d4d';
                         }
                         terminal.appendChild(p);
                         terminal.scrollTop = terminal.scrollHeight;
                         currentLine++;
-                        setTimeout(printNextLine, 80 + Math.random() * 50);
+                        setTimeout(printNextLine, 70 + Math.random() * 40);
                     }
                 };
                 setTimeout(printNextLine, 150);
@@ -1835,8 +1365,5 @@
         };
 
     </script>
-
-
 </body>
-
 </html>
