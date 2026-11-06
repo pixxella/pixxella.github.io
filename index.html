@@ -11,8 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
 
     <!-- Firebase Compatibility SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
     <script>
         const savedTheme = localStorage.getItem('vTheme') || 'pink';
@@ -1849,16 +1847,7 @@ hypervisor.cpuid.v0 = "FALSE"</code></pre>
             } catch (e) {}
         };
 
-        // Firebase Initialization & Configuration from Solution1
-        const firebaseConfig = {
-            apiKey: "AIzaSyASdvWuvLUUm7-oU4qRBK2vhIVMWCtJkFc",
-            authDomain: "vlinks-backend.firebaseapp.com",
-            projectId: "vlinks-backend",
-            storageBucket: "vlinks-backend.firebasestorage.app",
-            messagingSenderId: "1054304746220",
-            appId: "1:1054304746220:web:758c6a365191abe4ce03c9",
-            databaseURL: "https://vlinks-backend-default-rtdb.europe-west1.firebasedatabase.app"
-        };
+        // Firebase Initialization & Configuration from Solutio
 
         let db = null;
         try {
